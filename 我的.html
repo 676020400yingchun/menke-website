@@ -36,20 +36,24 @@ a{color:inherit;text-decoration:none}
   position:fixed;top:0;left:0;right:0;z-index:60;
   display:flex;align-items:center;justify-content:space-between;padding:14px clamp(16px,4vw,40px);
 }
-.topbar.on-light{background:rgba(255,255,255,.85);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 4px 20px rgba(10,30,74,.10)}
+.topbar.on-light{background:rgba(255,255,255,.82);-webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2);box-shadow:0 4px 20px rgba(10,30,74,.10);border-bottom:1px solid rgba(22,119,255,.12)}
 .brand{display:flex;align-items:center;gap:10px}
-.brand img{height:40px;width:auto}
-.brand .brand-name{font-family:var(--serif);font-weight:900;font-size:1.15rem;letter-spacing:.08em;color:var(--ink)}
-.brand-name .b-suffix{font-size:.78rem;letter-spacing:.18em;color:var(--muted)}
+.brand-logo{width:36px;height:36px;display:flex;align-items:center;justify-content:center;flex:none;filter:drop-shadow(0 3px 8px rgba(22,119,255,.28));transition:transform .25s}
+.brand:hover .brand-logo{transform:translateY(-1px)}
+.brand-logo svg{width:34px;height:34px}
+.brand-text{display:flex;align-items:center;gap:10px}
+.brand .brand-name{font-family:var(--serif);font-weight:900;font-size:1.34rem;letter-spacing:.04em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;position:relative;padding-right:10px}
+.brand .brand-name::after{content:"";position:absolute;right:0;top:50%;transform:translateY(-50%);width:1px;height:15px;background:linear-gradient(180deg,transparent,#a5c6ff,transparent)}
+.brand .b-suffix{font-size:.62rem;font-weight:600;letter-spacing:.3em;color:var(--muted);text-transform:uppercase}
 .nav{display:flex;gap:6px;align-items:center}
 .nav a{font-family:var(--sans);font-size:.95rem;font-weight:500;letter-spacing:.06em;color:var(--text);cursor:pointer;padding:8px 16px;border-radius:999px;transition:all .25s}
-.nav a:hover{color:var(--warm)}
-.nav a.active{background:var(--grad);color:#fff}
-.nav .nav-cta{margin-left:8px;background:var(--grad);color:#fff !important;font-weight:700;box-shadow:0 8px 20px rgba(22,119,255,.35)}
+.nav a:hover{background:rgba(22,119,255,.08);color:var(--warm)}
+.nav a.active{background:var(--grad);color:#fff;box-shadow:0 4px 14px rgba(22,119,255,.3)}
+.nav .nav-cta{margin-left:8px;background:var(--grad);color:#fff !important;font-weight:700;box-shadow:0 8px 20px rgba(22,119,255,.35),0 0 0 1px rgba(122,190,255,.45)}
 .nav .nav-cta:hover{transform:translateY(-1px)}
 
 /* 通用 section */
-.section{padding:clamp(64px,10vw,110px) clamp(20px,5vw,56px);position:relative}
+.section{padding:clamp(96px,11vw,124px) clamp(20px,5vw,56px);position:relative}
 .section > .wrap{width:min(1120px,100%);margin:0 auto}
 .sec-head{max-width:46em;margin-bottom:clamp(36px,5vw,60px)}
 .sec-head .sec-kicker{display:flex;align-items:center;gap:12px;font-size:.84rem;font-weight:700;letter-spacing:.22em;color:var(--cool-d)}
@@ -167,8 +171,8 @@ a{color:inherit;text-decoration:none}
 <!-- ===== 顶部条 ===== -->
 <header class="topbar on-light">
   <a class="brand" href="首页.html" aria-label="门客 首页">
-    <img src="assets/logo-main.png" alt="门客Logo">
-    <span class="brand-name">门客<span class="b-suffix">· MENKE</span></span>
+    <span class="brand-logo"><svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><defs><linearGradient id="mblg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1677FF"/><stop offset="1" stop-color="#00B4FF"/></linearGradient></defs><rect x="1" y="1" width="46" height="46" rx="14" fill="url(#mblg)"/><path d="M13 35V15h4l7 10 7-10h4v20h-4V23l-7 10-7-10v12z" fill="#fff"/></svg></span>
+    <span class="brand-text"><span class="brand-name">门客</span><span class="b-suffix">MENKE</span></span>
   </a>
   <nav class="nav" aria-label="主导航">
     <a href="首页.html">首页</a>
