@@ -16,7 +16,7 @@ REMOTE_DIR="/www/wwwroot/menke-web"
 SSH_ALIAS="${1:-menke-aliyun}"
 PASS="${2:-}"
 
-PAGES="首页.html 业务.html 案例.html 我的.html"
+PAGES="首页.html 业务.html 案例.html 我的.html 首页-en.html 业务-en.html 案例-en.html 我的-en.html"
 
 SCP_FLAGS=(-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null)
 SSH_FLAGS=(-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=10)
@@ -44,7 +44,7 @@ fi
 
 echo "==> 1/4 上传页面与素材…"
 "${SSH_CMD[@]}" "mkdir -p '$REMOTE_DIR/assets'"
-"${SCP_CMD[@]}" "$PROJ_DIR/首页.html" "$PROJ_DIR/业务.html" "$PROJ_DIR/案例.html" "$PROJ_DIR/我的.html" "$REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR/"
+"${SCP_CMD[@]}" "$PROJ_DIR/首页.html" "$PROJ_DIR/业务.html" "$PROJ_DIR/案例.html" "$PROJ_DIR/我的.html" "$PROJ_DIR/首页-en.html" "$PROJ_DIR/业务-en.html" "$PROJ_DIR/案例-en.html" "$PROJ_DIR/我的-en.html" "$REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR/"
 "${SCP_CMD[@]}" -r "$PROJ_DIR/assets/." "$REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR/assets/"
 
 echo "==> 2/4 设置入口(index.html)与权限…"
