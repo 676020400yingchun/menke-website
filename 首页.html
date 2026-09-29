@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>首页 · 门客 — 成都门客文化传播有限公司</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B1626'/%3E%3Cpath d='M16 20 L28 40 L28 20 L40 40 L40 20' fill='none' stroke='%23E8602F' stroke-width='5' stroke-linejoin='round'/%3E%3Cpath d='M40 44 a4 4 0 1 1 0-8 a4 4 0 0 1 0 8 z' fill='%231B9E9C'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<style>
+:root{
+  --ink:#0A1E4A;            /* 深科技蓝 主深底 */
+  --ink2:#122A52;           /* 次级深蓝 */
+  --paper:#F5F9FF;          /* 清爽蓝白浅底 */
+  --card:#FFFFFF;
+  --text:#1F2D44;           /* 正文 */
+  --muted:#5A6B8C;          /* 次要文字 */
+  --line:rgba(13,33,74,.10);
+  --warm:#1677FF;          /* 科技蓝主色 */
+  --warm-d:#0A5FE0;
+  --cool:#00B4FF;          /* 亮蓝青 */
+  --cool-d:#0E87E0;
+  --grad:linear-gradient(120deg,#1677FF 0%,#1677FF 38%,#00B4FF 100%);
+  --grad-soft:linear-gradient(120deg,rgba(22,119,255,.10),rgba(0,180,255,.10));
+  --shadow:0 16px 44px rgba(10,30,74,.12);
+  --serif:"Noto Serif SC",Georgia,"Songti SC","STSong",serif;
+  --sans:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --fs-hero:clamp(2.3rem,7vw,4.3rem);
+  --fs-h2:clamp(1.75rem,4.6vw,2.8rem);
+  --fs-h3:1.28rem;
+  --fs-body:1rem;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  font-family:var(--sans);
+  color:var(--text);
+  background:var(--paper);
+  line-height:1.75;
+  overflow-x:hidden;
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.serif{font-family:var(--serif)}
+
+/* ===== 顶部条 ===== */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px clamp(16px,4vw,40px);
+  transition:background .35s,box-shadow .35s;
+}
+.topbar.solid{background:rgba(10,30,74,.72);backdrop-filter:blur(10px);box-shadow:0 4px 24px rgba(10,30,74,.25)}
+.topbar.on-light{background:rgba(255,255,255,.85);backdrop-filter:blur(10px);box-shadow:0 4px 20px rgba(10,30,74,.10)}
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{height:40px;width:auto}
+.brand .brand-name{font-family:var(--serif);font-weight:900;font-size:1.15rem;letter-spacing:.08em;color:#fff}
+.topbar.on-light .brand-name{color:var(--ink)}
+.topbar.on-light .brand-name .b-suffix{color:var(--muted)}
+.brand-name .b-suffix{font-size:.78rem;letter-spacing:.18em;color:rgba(255,255,255,.6)}
+.nav{display:flex;gap:6px;align-items:center}
+.nav a{
+  font-family:var(--sans);font-size:.95rem;font-weight:500;letter-spacing:.06em;
+  color:rgba(255,255,255,.82);background:transparent;border:none;cursor:pointer;
+  padding:8px 16px;border-radius:999px;transition:all .25s;
+}
+.topbar.on-light .nav a{color:var(--text)}
+.nav a:hover{color:#fff}
+.topbar.on-light .nav a:hover{color:var(--warm)}
+.nav a.active{background:rgba(255,255,255,.14);color:#fff}
+.topbar.on-light .nav a.active{background:var(--grad);color:#fff}
+.nav .nav-cta{
+  margin-left:8px;background:var(--grad);color:#fff !important;font-weight:700;
+  box-shadow:0 8px 20px rgba(22,119,255,.35);
+}
+.nav .nav-cta:hover{transform:translateY(-1px)}
+
+/* ===== Hero ===== */
+.hero{
+  position:relative;min-height:100dvh;display:flex;flex-direction:column;
+  color:#fff;overflow:hidden;background:var(--ink);
+}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center;opacity:.55;filter:saturate(.9)}
+.hero-bg::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(10,30,74,.90) 0%,rgba(9,52,120,.58) 42%,rgba(10,30,74,.97) 100%);
+}
+.hero-inner{
+  position:relative;z-index:2;flex:1;
+  width:min(1120px,100%);margin:0 auto;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:96px clamp(20px,4vw,40px) 30px;
+}
+.hero-kicker{
+  display:inline-flex;align-items:center;gap:12px;
+  font-size:.86rem;letter-spacing:.26em;font-weight:500;color:rgba(255,255,255,.82);
+}
+.hero-kicker::before{content:"";width:34px;height:1px;background:var(--grad)}
+.hero h1{
+  font-family:var(--serif);font-weight:900;line-height:1.12;
+  font-size:var(--fs-hero);letter-spacing:.02em;margin-top:18px;
+}
+.hero h1 .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-lead{
+  margin-top:22px;max-width:40em;font-size:clamp(1.02rem,2.6vw,1.2rem);
+  color:rgba(255,255,255,.88);font-weight:300;line-height:1.9;
+}
+.hero-metrics{
+  margin-top:38px;display:flex;flex-wrap:wrap;gap:clamp(18px,4vw,56px);
+}
+.metric .num{font-family:var(--serif);font-weight:900;font-size:clamp(2rem,5vw,3.1rem);line-height:1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.metric .num .unit{font-size:.5em;margin-left:2px;color:rgba(255,255,255,.7);-webkit-text-fill-color:rgba(255,255,255,.7)}
+.metric .cap{margin-top:8px;font-size:.82rem;letter-spacing:.14em;color:rgba(255,255,255,.6)}
+.metric:not(:last-child){padding-right:clamp(18px,4vw,56px);border-right:1px solid rgba(255,255,255,.16)}
+
+/* 核心业务四宫格 */
+.biz-grid-hero{
+  margin-top:44px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
+}
+.biz-tile{
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);
+  border-radius:18px;padding:20px 18px 18px;cursor:pointer;display:block;
+  transition:all .3s;position:relative;overflow:hidden;
+}
+.biz-tile::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--grad);opacity:0;transition:opacity .3s}
+.biz-tile:hover{background:rgba(255,255,255,.12);transform:translateY(-4px);border-color:rgba(255,255,255,.28)}
+.biz-tile:hover::before{opacity:1}
+.biz-tile .t-icon{width:44px;height:44px;border-radius:12px;background:var(--grad);display:flex;align-items:center;justify-content:center;color:#fff;margin-bottom:14px}
+.biz-tile h4{font-family:var(--serif);font-weight:700;font-size:1.06rem;line-height:1.4}
+.biz-tile p{margin-top:6px;font-size:.82rem;color:rgba(255,255,255,.68);line-height:1.6}
+
+.scroll-hint{
+  position:relative;z-index:2;margin:34px auto 6px;display:flex;flex-direction:column;align-items:center;gap:8px;
+  color:rgba(255,255,255,.5);font-size:.76rem;letter-spacing:.3em;
+}
+.scroll-hint .wheel{width:22px;height:34px;border:1.5px solid rgba(255,255,255,.4);border-radius:12px;position:relative}
+.scroll-hint .wheel::after{content:"";position:absolute;left:50%;top:7px;width:3px;height:7px;border-radius:2px;background:var(--warm);transform:translateX(-50%);animation:wheel 1.8s ease-in-out infinite}
+@keyframes wheel{0%{opacity:1;top:7px}70%{opacity:0;top:16px}100%{opacity:0;top:7px}}
+
+/* footer */
+.footer{padding:30px clamp(20px,5vw,56px);border-top:1px solid var(--line);color:var(--muted);font-size:.84rem;background:var(--card)}
+.footer .wrap{width:min(1120px,100%);margin:0 auto;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+.footer .f-brand{display:flex;align-items:center;gap:10px;color:var(--ink);font-family:var(--serif);font-weight:700}
+.footer .f-brand img{height:26px}
+
+/* 移动端底部tab */
+.tabbar{
+  position:fixed;left:0;right:0;bottom:0;z-index:70;
+  display:none;grid-template-columns:repeat(4,1fr);
+  background:rgba(255,255,255,.92);backdrop-filter:blur(14px);
+  border-top:1px solid var(--line);box-shadow:0 -8px 30px rgba(10,30,74,.10);
+  padding:8px 8px calc(10px + env(safe-area-inset-bottom));
+}
+.tabbar a{
+  background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;
+  color:var(--muted);font-size:.74rem;font-weight:600;padding:6px 0;transition:color .25s;letter-spacing:.02em;
+}
+.tabbar a svg{width:22px;height:22px}
+.tabbar a.active{color:var(--warm)}
+.tabbar a.active svg{stroke:var(--warm)}
+@media (max-width:860px){
+  .nav{display:none}
+  .tabbar{display:grid}
+  .biz-grid-hero{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:520px){
+  .biz-grid-hero{grid-template-columns:1fr 1fr;gap:10px}
+  .biz-tile{padding:16px 14px;border-radius:14px}
+  .metric:not(:last-child){border-right:none}
+  .hero-metrics{gap:24px}
+}
+
+/* 滚动揭示 */
+[data-reveal]{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+[data-reveal].in{opacity:1;transform:none}
+.hero-load{opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s ease}
+.hero-load.in{opacity:1;transform:none}
+.hero-load.d1{transition-delay:.05s}
+.hero-load.d2{transition-delay:.2s}
+.hero-load.d3{transition-delay:.36s}
+.hero-load.d4{transition-delay:.52s}
+.hero-load.d5{transition-delay:.7s}
+@media (prefers-reduced-motion:reduce){
+  [data-reveal],.hero-load{opacity:1;transform:none;transition:none}
+}
+
+/* toast */
+.toast{
+  position:fixed;left:50%;bottom:96px;transform:translate(-50%,20px);z-index:90;
+  background:var(--ink);color:#fff;padding:12px 22px;border-radius:999px;font-size:.9rem;
+  box-shadow:0 12px 30px rgba(10,30,74,.3);opacity:0;transition:all .35s;pointer-events:none;max-width:86vw;text-align:center;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+
+<!-- ===== 顶部条 ===== -->
+<header class="topbar" id="topbar">
+  <a class="brand" href="首页.html" aria-label="门客 首页">
+    <img src="assets/logo-main.png" alt="门客Logo">
+    <span class="brand-name">门客<span class="b-suffix">· MENKE</span></span>
+  </a>
+  <nav class="nav" aria-label="主导航">
+    <a href="首页.html" class="active">首页</a>
+    <a href="业务.html">业务</a>
+    <a href="案例.html">案例</a>
+    <a href="我的.html">我的</a>
+    <a class="nav-cta" href="我的.html#contact">联系我们</a>
+  </nav>
+</header>
+
+<!-- ===== 首页 Hero ===== -->
+<section class="hero" id="home">
+  <div class="hero-bg"><img src="assets/hero.jpg" alt="夜色山水与数字光带"></div>
+  <div class="hero-inner">
+    <div class="hero-load d1 hero-kicker">成都门客文化传播有限公司 · 十二年数字深耕</div>
+    <h1 class="hero-load d2">以数字为笔，<br><span class="grad">为产业立传</span></h1>
+    <p class="hero-lead hero-load d3">十二年，我们不曾离开现场。真正的数字化，从来不在机房，而在游客的脚步、孩子的课堂、田埂上的收成里。我们愿做每一位合作伙伴身边，那位"最懂行的座上客"。</p>
+    <div class="hero-metrics hero-load d4">
+      <div class="metric"><div class="num" data-count="12">0</div><div class="cap">年专注深耕</div></div>
+      <div class="metric"><div class="num" data-count="4">0</div><div class="cap">大行业纵深</div></div>
+      <div class="metric"><div class="num"><span data-count="300">0</span><span class="unit">+</span></div><div class="cap">标杆项目落地</div></div>
+      <div class="metric"><div class="num"><span data-count="200">0</span><span class="unit">+</span></div><div class="cap">家合作伙伴</div></div>
+    </div>
+    <div class="biz-grid-hero hero-load d5">
+      <a class="biz-tile" href="业务.html" data-tag="文旅">
+        <div class="t-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 19 L9 9 L13 13 L17 5 L21 19 Z"/><path d="M3 21 h18"/></svg></div>
+        <h4>文旅数字化建设</h4><p>让山水会说话，让景区会思考</p>
+      </a>
+      <a class="biz-tile" href="业务.html" data-tag="教育">
+        <div class="t-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19 L12 14 L20 19 L12 24 Z"/><path d="M4 19 L4 10"/><path d="M20 19 L20 10"/><path d="M4 10 L12 5 L20 10 L12 15 Z"/></svg></div>
+        <h4>教育信息化</h4><p>让知识跨越山海，让课堂触手可及</p>
+      </a>
+      <a class="biz-tile" href="业务.html" data-tag="农业">
+        <div class="t-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 21 C11 14 13 8 19 4 C20 10 19 15 13 20 Z"/><path d="M6 21 C6 17 8 13 13 10"/><path d="M11 21 h5"/></svg></div>
+        <h4>农业数字化</h4><p>让土地长出数据，让丰收有据可依</p>
+      </a>
+      <a class="biz-tile" href="业务.html" data-tag="运营">
+        <div class="t-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2 v4 M12 18 v4 M2 12 h4 M18 12 h4 M5 5 l3 3 M16 16 l3 3 M19 5 l-3 3 M8 16 l-3 3"/></svg></div>
+        <h4>建设与运营服务</h4><p>从蓝图到落地，从上线到生长</p>
+      </a>
+    </div>
+  </div>
+  <div class="scroll-hint hero-load d5"><span>向下滑动 · 遇见门客</span><span class="wheel"></span></div>
+</section>
+
+<!-- ===== footer ===== -->
+<footer class="footer">
+  <div class="wrap">
+    <span class="f-brand"><img src="assets/logo-main.png" alt="门客">成都门客文化传播有限公司</span>
+    <span>官网 www.mk-cd.cn · © 2026 门客 MENKE</span>
+  </div>
+</footer>
+
+<!-- ===== 移动端底部 tab ===== -->
+<nav class="tabbar" aria-label="板块导航">
+  <a href="首页.html" class="active">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11 L12 3 L21 11"/><path d="M5 9.5 V21 H19 V9.5"/><path d="M10 21 V14 H14 V21"/></svg>
+    首页</a>
+  <a href="业务.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2 v4 M12 18 v4 M2 12 h4 M18 12 h4 M5 5 l3 3 M16 16 l3 3 M19 5 l-3 3 M8 16 l-3 3"/></svg>
+    业务</a>
+  <a href="案例.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M8 4 V2 M16 4 V2"/></svg>
+    案例</a>
+  <a href="我的.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21 C4 16 7 14 12 14 C17 14 20 16 20 21"/></svg>
+    我的</a>
+</nav>
+
+<div class="toast" id="toast" role="status">这是一个可交互的 H5 原型稿，演示中……</div>
+
+<script>
+(function(){
+  "use strict";
+  var topbar = document.getElementById("topbar");
+  var toast = document.getElementById("toast");
+
+  function showToast(msg){
+    toast.textContent = msg || "这是一个可交互的 H5 原型稿，演示中……";
+    toast.classList.add("show");
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(function(){ toast.classList.remove("show"); }, 2200);
+  }
+
+  // 联系我们 CTA → 跳转到「我的」页联系区
+  Array.prototype.slice.call(document.querySelectorAll("[data-action='contact']")).forEach(function(b){
+    b.addEventListener("click", function(){ window.location.href = "我的.html#contact"; });
+  });
+
+  // 数字滚动
+  function animateCount(el){
+    var target = parseInt(el.getAttribute("data-count"),10) || 0;
+    if(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches){ el.textContent = target; return; }
+    var start = null, dur = 1300;
+    function step(ts){
+      if(!start) start = ts;
+      var p = Math.min((ts-start)/dur, 1);
+      var eased = 1-Math.pow(1-p,3);
+      el.textContent = Math.round(target*eased);
+      if(p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  function runCounts(){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ animateCount(en.target); io.unobserve(en.target); }
+      });
+    },{threshold:.5});
+    Array.prototype.slice.call(document.querySelectorAll("[data-count]")).forEach(function(el){ io.observe(el); });
+  }
+
+  // 滚动揭示
+  function runReveal(){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); }
+      });
+    },{threshold:.12,rootMargin:"0px 0px -40px 0px"});
+    Array.prototype.slice.call(document.querySelectorAll("[data-reveal]")).forEach(function(el){ io.observe(el); });
+  }
+
+  // hero 加载序列 + 顶栏滚动变实
+  function heroLoad(){
+    Array.prototype.slice.call(document.querySelectorAll(".hero-load")).forEach(function(el,i){
+      setTimeout(function(){ el.classList.add("in"); }, 120 + i*120);
+    });
+    window.addEventListener("scroll", function(){
+      topbar.classList.toggle("solid", window.scrollY > 10);
+    }, {passive:true});
+  }
+
+  runReveal();
+  runCounts();
+  heroLoad();
+})();
+</script>
+
+</body>
+</html>

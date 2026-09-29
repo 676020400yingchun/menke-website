@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>案例介绍 · 门客 — 成都门客文化传播有限公司</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B1626'/%3E%3Cpath d='M16 20 L28 40 L28 20 L40 40 L40 20' fill='none' stroke='%23E8602F' stroke-width='5' stroke-linejoin='round'/%3E%3Cpath d='M40 44 a4 4 0 1 1 0-8 a4 4 0 0 1 0 8 z' fill='%231B9E9C'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<style>
+:root{
+  --ink:#0A1E4A;--ink2:#122A52;--paper:#F5F9FF;--card:#FFFFFF;
+  --text:#1F2D44;--muted:#5A6B8C;--line:rgba(13,33,74,.10);
+  --warm:#1677FF;--warm-d:#0A5FE0;--cool:#00B4FF;--cool-d:#0E87E0;
+  --grad:linear-gradient(120deg,#1677FF 0%,#1677FF 38%,#00B4FF 100%);
+  --grad-soft:linear-gradient(120deg,rgba(22,119,255,.10),rgba(0,180,255,.10));
+  --shadow:0 16px 44px rgba(10,30,74,.12);
+  --serif:"Noto Serif SC",Georgia,"Songti SC","STSong",serif;
+  --sans:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --fs-h2:clamp(1.75rem,4.6vw,2.8rem);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{font-family:var(--sans);color:var(--text);background:var(--paper);line-height:1.75;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.serif{font-family:var(--serif)}
+
+/* 顶部条 */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  display:flex;align-items:center;justify-content:space-between;padding:14px clamp(16px,4vw,40px);
+}
+.topbar.on-light{background:rgba(255,255,255,.85);backdrop-filter:blur(10px);box-shadow:0 4px 20px rgba(10,30,74,.10)}
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{height:40px;width:auto}
+.brand .brand-name{font-family:var(--serif);font-weight:900;font-size:1.15rem;letter-spacing:.08em;color:var(--ink)}
+.brand-name .b-suffix{font-size:.78rem;letter-spacing:.18em;color:var(--muted)}
+.nav{display:flex;gap:6px;align-items:center}
+.nav a{font-family:var(--sans);font-size:.95rem;font-weight:500;letter-spacing:.06em;color:var(--text);cursor:pointer;padding:8px 16px;border-radius:999px;transition:all .25s}
+.nav a:hover{color:var(--warm)}
+.nav a.active{background:var(--grad);color:#fff}
+.nav .nav-cta{margin-left:8px;background:var(--grad);color:#fff !important;font-weight:700;box-shadow:0 8px 20px rgba(22,119,255,.35)}
+.nav .nav-cta:hover{transform:translateY(-1px)}
+
+/* 通用 section */
+.section{padding:clamp(64px,10vw,110px) clamp(20px,5vw,56px);position:relative}
+.section > .wrap{width:min(1120px,100%);margin:0 auto}
+.sec-head{max-width:46em;margin-bottom:clamp(36px,5vw,60px)}
+.sec-head .sec-kicker{display:flex;align-items:center;gap:12px;font-size:.84rem;font-weight:700;letter-spacing:.22em;color:var(--cool-d)}
+.sec-head .sec-kicker::before{content:"";width:26px;height:2px;background:var(--grad)}
+.sec-head h2{font-family:var(--serif);font-weight:900;color:var(--ink);line-height:1.16;font-size:var(--fs-h2);margin-top:14px}
+.sec-head .sec-sub{margin-top:14px;color:var(--muted);font-weight:300;line-height:1.9;font-size:1.02rem}
+#cases{background:var(--card)}
+
+/* 案例 */
+.case-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(20px,3vw,34px)}
+.case-card{
+  border-radius:22px;overflow:hidden;background:#fff;box-shadow:var(--shadow);
+  display:flex;flex-direction:column;transition:transform .35s;border:1px solid var(--line);
+}
+.case-card:hover{transform:translateY(-6px)}
+.case-card .c-media{position:relative;aspect-ratio:16/10;overflow:hidden}
+.case-card .c-media::after{content:"";position:absolute;inset:0;z-index:1;background:#1677FF;mix-blend-mode:color;opacity:.36;pointer-events:none;transition:opacity .4s}
+.case-card:hover .c-media::after{opacity:.28}
+.case-card .c-media img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.case-card:hover .c-media img{transform:scale(1.05)}
+.case-card .c-media .c-tag{position:absolute;left:14px;top:14px;z-index:2;font-size:.74rem;letter-spacing:.16em;font-weight:700;color:#fff;background:rgba(10,30,74,.6);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.25);padding:5px 13px;border-radius:999px}
+.case-card .c-body{padding:clamp(18px,3vw,26px);display:flex;flex-direction:column;flex:1}
+.case-card .c-body h3{font-family:var(--serif);font-weight:900;color:var(--ink);font-size:clamp(1.15rem,2.6vw,1.4rem);line-height:1.4}
+.case-card .c-slogan{font-family:var(--serif);color:var(--warm-d);font-weight:700;font-size:1rem;margin-top:10px}
+.case-card .c-desc{margin-top:10px;color:var(--muted);line-height:1.9;font-size:.95rem}
+.case-card .c-foot{margin-top:auto;padding-top:16px;font-size:.8rem;color:var(--cool-d);font-weight:600}
+.case-note{margin-top:26px;font-size:.84rem;color:var(--muted);background:var(--paper);border-left:3px solid var(--cool);padding:12px 18px;border-radius:0 12px 12px 0;line-height:1.8}
+
+/* footer */
+.footer{padding:30px clamp(20px,5vw,56px);border-top:1px solid var(--line);color:var(--muted);font-size:.84rem;background:var(--card)}
+.footer .wrap{width:min(1120px,100%);margin:0 auto;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+.footer .f-brand{display:flex;align-items:center;gap:10px;color:var(--ink);font-family:var(--serif);font-weight:700}
+.footer .f-brand img{height:26px}
+
+/* 移动端底部tab */
+.tabbar{
+  position:fixed;left:0;right:0;bottom:0;z-index:70;
+  display:none;grid-template-columns:repeat(4,1fr);
+  background:rgba(255,255,255,.92);backdrop-filter:blur(14px);
+  border-top:1px solid var(--line);box-shadow:0 -8px 30px rgba(10,30,74,.10);
+  padding:8px 8px calc(10px + env(safe-area-inset-bottom));
+}
+.tabbar a{background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--muted);font-size:.74rem;font-weight:600;padding:6px 0;transition:color .25s;letter-spacing:.02em}
+.tabbar a svg{width:22px;height:22px}
+.tabbar a.active{color:var(--warm)}
+.tabbar a.active svg{stroke:var(--warm)}
+@media (max-width:860px){.nav{display:none}.tabbar{display:grid}.case-grid{grid-template-columns:1fr}}
+
+/* 滚动揭示 */
+[data-reveal]{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+[data-reveal].in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1;transform:none;transition:none}}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:96px;transform:translate(-50%,20px);z-index:90;background:var(--ink);color:#fff;padding:12px 22px;border-radius:999px;font-size:.9rem;box-shadow:0 12px 30px rgba(10,30,74,.3);opacity:0;transition:all .35s;pointer-events:none;max-width:86vw;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+
+<!-- ===== 顶部条 ===== -->
+<header class="topbar on-light">
+  <a class="brand" href="首页.html" aria-label="门客 首页">
+    <img src="assets/logo-main.png" alt="门客Logo">
+    <span class="brand-name">门客<span class="b-suffix">· MENKE</span></span>
+  </a>
+  <nav class="nav" aria-label="主导航">
+    <a href="首页.html">首页</a>
+    <a href="业务.html">业务</a>
+    <a href="案例.html" class="active">案例</a>
+    <a href="我的.html">我的</a>
+    <a class="nav-cta" href="我的.html#contact">联系我们</a>
+  </nav>
+</header>
+
+<!-- ===== 案例介绍 ===== -->
+<section class="section" id="cases">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div class="sec-kicker">案例介绍 · 用作品说话</div>
+      <h2>让每一个项目，<br>都成为行业的一次进阶</h2>
+      <p class="sec-sub">十二年，我们与房地产、文旅、教育、农业等行业深度合作。以下案例覆盖门客服务的四大赛道，皆以真实交付为底色。</p>
+    </div>
+
+    <div class="case-grid">
+      <article class="case-card" data-reveal>
+        <div class="c-media">
+          <span class="c-tag">文旅</span>
+          <img src="assets/case-tourism.jpg" alt="古城光影夜游">
+        </div>
+        <div class="c-body">
+          <h3>让一座古城，重新开口说话</h3>
+          <div class="c-slogan">技术不是目的，让山水拥有记忆，才是目的。</div>
+          <p class="c-desc">【项目名称】，一座有千年底色的【古城 / 景区】。游客来了又走，故事却一直沉默。门客以数字光影为笔，把沉睡的历史编排成一场沉浸式叙事——夜游不再是"看灯"，而是一段可以走进的历史。上线后，夜间客流与二次消费显著提升，游客从"半天逛完就走"，变成留下来、慢下来。</p>
+          <div class="c-foot">文旅数字化 · 【项目落地年份】</div>
+        </div>
+      </article>
+
+      <article class="case-card" data-reveal>
+        <div class="c-media">
+          <span class="c-tag">教育</span>
+          <img src="assets/case-edu.jpg" alt="城乡共享课堂">
+        </div>
+        <div class="c-body">
+          <h3>让城乡孩子，共上一堂课</h3>
+          <div class="c-slogan">数字化的温度，藏在不该有差距的地方。</div>
+          <p class="c-desc">【项目名称】覆盖【N】所学校，连接城市与乡镇课堂。门客搭起一张资源共享的网络，让优质师资跨越山海，让乡村孩子在家门口听见最好的课。真正打动人心的，不是设备有多先进，而是一节节被共享的课，一次次被抹平的差距。</p>
+          <div class="c-foot">教育信息化 · 【项目落地年份】</div>
+        </div>
+      </article>
+
+      <article class="case-card" data-reveal>
+        <div class="c-media">
+          <span class="c-tag">农业</span>
+          <img src="assets/case-farm.jpg" alt="智慧果园与数据监测">
+        </div>
+        <div class="c-body">
+          <h3>让一片果园，不再赌天气</h3>
+          <div class="c-slogan">把不确定交给系统，把确定还给农民。</div>
+          <p class="c-desc">【项目名称】从种到销，一条数据链贯穿始终。门客为【N】亩基地建立产销一体化平台，让收成、价格、订单都清清楚楚、有据可依。农民第一次可以看着数据做决定，丰收不再是一场和老天爷的豪赌。</p>
+          <div class="c-foot">农业数字化 · 【项目落地年份】</div>
+        </div>
+      </article>
+
+      <article class="case-card" data-reveal>
+        <div class="c-media">
+          <span class="c-tag">房地产</span>
+          <img src="assets/case-community.jpg" alt="智慧社区夜景">
+        </div>
+        <div class="c-body">
+          <h3>让一方社区，住成"家"</h3>
+          <div class="c-slogan">房子是容器，运营才是让人留下来的理由。</div>
+          <p class="c-desc">【项目名称】是门客十二年征程的起点。我们协助【开发商 / 物业】完成数字化运营体系建设，让一个楼盘，从交付钢筋水泥，到交付一种生活方式——活动有人组织，诉求有人回应，邻里有人连接。</p>
+          <div class="c-foot">房地产信息化 · 门客起点</div>
+        </div>
+      </article>
+    </div>
+    <p class="case-note" data-reveal>注：以上案例为示范文案框架，方括号处待替换为真实项目名称、数据与成果，可显著增强说服力与真实感。</p>
+  </div>
+</section>
+
+<!-- ===== footer ===== -->
+<footer class="footer">
+  <div class="wrap">
+    <span class="f-brand"><img src="assets/logo-main.png" alt="门客">成都门客文化传播有限公司</span>
+    <span>官网 www.mk-cd.cn · © 2026 门客 MENKE</span>
+  </div>
+</footer>
+
+<!-- ===== 移动端底部 tab ===== -->
+<nav class="tabbar" aria-label="板块导航">
+  <a href="首页.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11 L12 3 L21 11"/><path d="M5 9.5 V21 H19 V9.5"/><path d="M10 21 V14 H14 V21"/></svg>
+    首页</a>
+  <a href="业务.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2 v4 M12 18 v4 M2 12 h4 M18 12 h4 M5 5 l3 3 M16 16 l3 3 M19 5 l-3 3 M8 16 l-3 3"/></svg>
+    业务</a>
+  <a href="案例.html" class="active">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M8 4 V2 M16 4 V2"/></svg>
+    案例</a>
+  <a href="我的.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21 C4 16 7 14 12 14 C17 14 20 16 20 21"/></svg>
+    我的</a>
+</nav>
+
+<div class="toast" id="toast" role="status">这是一个可交互的 H5 原型稿，演示中……</div>
+
+<script>
+(function(){
+  "use strict";
+  var toast = document.getElementById("toast");
+  function showToast(msg){
+    toast.textContent = msg || "这是一个可交互的 H5 原型稿，演示中……";
+    toast.classList.add("show");
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(function(){ toast.classList.remove("show"); }, 2200);
+  }
+  Array.prototype.slice.call(document.querySelectorAll("[data-action='contact']")).forEach(function(b){
+    b.addEventListener("click", function(){ window.location.href = "我的.html#contact"; });
+  });
+  function runReveal(){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); }
+      });
+    },{threshold:.12,rootMargin:"0px 0px -40px 0px"});
+    Array.prototype.slice.call(document.querySelectorAll("[data-reveal]")).forEach(function(el){ io.observe(el); });
+  }
+  runReveal();
+})();
+</script>
+
+</body>
+</html>

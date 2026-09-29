@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>我的 · 门客 — 成都门客文化传播有限公司</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B1626'/%3E%3Cpath d='M16 20 L28 40 L28 20 L40 40 L40 20' fill='none' stroke='%23E8602F' stroke-width='5' stroke-linejoin='round'/%3E%3Cpath d='M40 44 a4 4 0 1 1 0-8 a4 4 0 0 1 0 8 z' fill='%231B9E9C'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<style>
+:root{
+  --ink:#0A1E4A;--ink2:#122A52;--paper:#F5F9FF;--card:#FFFFFF;
+  --text:#1F2D44;--muted:#5A6B8C;--line:rgba(13,33,74,.10);
+  --warm:#1677FF;--warm-d:#0A5FE0;--cool:#00B4FF;--cool-d:#0E87E0;
+  --grad:linear-gradient(120deg,#1677FF 0%,#1677FF 38%,#00B4FF 100%);
+  --grad-soft:linear-gradient(120deg,rgba(22,119,255,.10),rgba(0,180,255,.10));
+  --shadow:0 16px 44px rgba(10,30,74,.12);
+  --serif:"Noto Serif SC",Georgia,"Songti SC","STSong",serif;
+  --sans:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --fs-h2:clamp(1.75rem,4.6vw,2.8rem);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{font-family:var(--sans);color:var(--text);background:var(--paper);line-height:1.75;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.serif{font-family:var(--serif)}
+
+/* 顶部条 */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  display:flex;align-items:center;justify-content:space-between;padding:14px clamp(16px,4vw,40px);
+}
+.topbar.on-light{background:rgba(255,255,255,.85);backdrop-filter:blur(10px);box-shadow:0 4px 20px rgba(10,30,74,.10)}
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{height:40px;width:auto}
+.brand .brand-name{font-family:var(--serif);font-weight:900;font-size:1.15rem;letter-spacing:.08em;color:var(--ink)}
+.brand-name .b-suffix{font-size:.78rem;letter-spacing:.18em;color:var(--muted)}
+.nav{display:flex;gap:6px;align-items:center}
+.nav a{font-family:var(--sans);font-size:.95rem;font-weight:500;letter-spacing:.06em;color:var(--text);cursor:pointer;padding:8px 16px;border-radius:999px;transition:all .25s}
+.nav a:hover{color:var(--warm)}
+.nav a.active{background:var(--grad);color:#fff}
+.nav .nav-cta{margin-left:8px;background:var(--grad);color:#fff !important;font-weight:700;box-shadow:0 8px 20px rgba(22,119,255,.35)}
+.nav .nav-cta:hover{transform:translateY(-1px)}
+
+/* 通用 section */
+.section{padding:clamp(64px,10vw,110px) clamp(20px,5vw,56px);position:relative}
+.section > .wrap{width:min(1120px,100%);margin:0 auto}
+.sec-head{max-width:46em;margin-bottom:clamp(36px,5vw,60px)}
+.sec-head .sec-kicker{display:flex;align-items:center;gap:12px;font-size:.84rem;font-weight:700;letter-spacing:.22em;color:var(--cool-d)}
+.sec-head .sec-kicker::before{content:"";width:26px;height:2px;background:var(--grad)}
+.sec-head h2{font-family:var(--serif);font-weight:900;color:var(--ink);line-height:1.16;font-size:var(--fs-h2);margin-top:14px}
+.sec-head .sec-sub{margin-top:14px;color:var(--muted);font-weight:300;line-height:1.9;font-size:1.02rem}
+#company{background:var(--paper)}
+
+/* 品牌故事 */
+.story{
+  display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(28px,4.5vw,60px);align-items:center;
+  background:var(--ink);color:#fff;border-radius:26px;overflow:hidden;position:relative;
+  padding:clamp(30px,5vw,52px);
+}
+.story::before{content:"";position:absolute;right:-70px;bottom:-70px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(0,180,255,.4),transparent 70%)}
+.story .s-chapter{font-family:var(--serif);font-size:clamp(2.6rem,6vw,3.6rem);font-weight:900;line-height:1.1;position:relative;z-index:1}
+.story .s-chapter small{display:block;font-size:.78rem;font-weight:500;letter-spacing:.28em;color:rgba(255,255,255,.55);margin-bottom:16px;font-family:var(--sans)}
+.story .s-chapter .c1{color:var(--warm)}
+.story .s-chapter .c2{color:var(--cool)}
+.story .s-body p{font-size:clamp(.98rem,2.2vw,1.1rem);line-height:2.1;color:rgba(255,255,255,.86);position:relative;z-index:1}
+.story .s-body p + p{margin-top:14px}
+.story .s-body .s-quote{margin-top:22px;font-family:var(--serif);font-weight:700;font-size:1.25rem;line-height:1.8;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* 使命愿景价值观 */
+.mvv{margin-top:clamp(44px,6vw,72px);display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,3vw,30px)}
+.mvv .mvv-item{background:var(--card);border-radius:20px;padding:clamp(24px,3.5vw,36px);border:1px solid var(--line);box-shadow:0 10px 30px rgba(10,30,74,.06);transition:transform .3s}
+.mvv .mvv-item:hover{transform:translateY(-5px)}
+.mvv .mvv-item .mvv-k{font-size:.78rem;letter-spacing:.2em;font-weight:700;color:var(--cool-d)}
+.mvv .mvv-item h4{font-family:var(--serif);font-weight:900;font-size:1.5rem;color:var(--ink);margin-top:10px}
+.mvv .mvv-item p{margin-top:10px;color:var(--muted);font-size:.94rem;line-height:1.9}
+.mvv .mvv-item .mvv-line{width:38px;height:3px;background:var(--grad);border-radius:2px;margin-top:16px}
+
+/* 时间轴 */
+.timeline{margin-top:clamp(44px,6vw,72px)}
+.timeline h3{font-family:var(--serif);font-weight:900;color:var(--ink);font-size:clamp(1.3rem,3vw,1.7rem);margin-bottom:30px}
+.tl{display:flex;flex-direction:column}
+.tl-row{display:grid;grid-template-columns:190px 46px 1fr;align-items:center}
+.tl-time{font-family:var(--serif);font-weight:700;color:var(--cool-d);font-size:1.02rem;text-align:right;padding-right:24px;line-height:1.4}
+.tl-axis{position:relative;height:100%;min-height:96px;display:flex;justify-content:center}
+.tl-axis::before{content:"";position:absolute;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--warm),var(--cool));left:50%;transform:translateX(-50%)}
+.tl-dot{position:relative;z-index:2;align-self:center;width:16px;height:16px;border-radius:50%;background:#fff;border:4px solid var(--warm);box-shadow:0 0 0 5px rgba(22,119,255,.18)}
+.tl-row:nth-child(2) .tl-dot{border-color:var(--cool);box-shadow:0 0 0 5px rgba(0,180,255,.18)}
+.tl-row:nth-child(3) .tl-dot{border-color:#7B61FF;box-shadow:0 0 0 5px rgba(123,97,255,.20)}
+.tl-content{padding:6px 0 34px 24px}
+.tl-content h4{font-family:var(--serif);font-weight:900;color:var(--ink);font-size:1.12rem}
+.tl-content p{margin-top:6px;color:var(--muted);font-size:.9rem;line-height:1.85;max-width:40em}
+
+/* 团队 */
+.team{margin-top:clamp(44px,6vw,72px);background:var(--card);border-radius:24px;box-shadow:var(--shadow);padding:clamp(28px,4vw,46px);border:1px solid var(--line)}
+.team h3{font-family:var(--serif);font-weight:900;color:var(--ink);font-size:clamp(1.3rem,3vw,1.7rem)}
+.team p{margin-top:14px;color:var(--muted);line-height:2;font-size:1rem;max-width:52em}
+.team-points{margin-top:22px;display:flex;flex-wrap:wrap;gap:12px}
+.team-points span{background:var(--grad-soft);color:var(--ink);font-size:.9rem;font-weight:600;padding:8px 16px;border-radius:999px}
+
+/* 联系 */
+.contact{margin-top:clamp(44px,6vw,72px);background:var(--ink);border-radius:26px;color:#fff;padding:clamp(30px,5vw,50px);position:relative;overflow:hidden;scroll-margin-top:80px}
+.contact::before{content:"";position:absolute;right:-80px;top:-90px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(22,119,255,.4),transparent 70%)}
+.contact-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(26px,4vw,50px);align-items:center}
+.contact h3{font-family:var(--serif);font-weight:900;font-size:clamp(1.6rem,4vw,2.2rem);line-height:1.35}
+.contact h3 .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.contact .c-line{margin-top:22px;font-size:1.05rem;color:rgba(255,255,255,.85);display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.contact .c-line svg{flex:none;color:var(--cool)}
+.contact .c-line a{color:#fff;text-decoration:none;border-bottom:1px dashed rgba(255,255,255,.35);transition:all .25s}
+.contact .c-line a:hover{border-color:var(--warm);color:var(--warm)}
+.contact .c-cta{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.contact .btn-primary{background:var(--grad);border:none;color:#fff;font-family:var(--sans);font-weight:700;font-size:1rem;padding:14px 30px;border-radius:999px;cursor:pointer;box-shadow:0 12px 28px rgba(22,119,255,.4);transition:all .3s;letter-spacing:.04em}
+.contact .btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(22,119,255,.5)}
+.contact .c-hint{font-size:.82rem;color:rgba(255,255,255,.55)}
+
+/* footer */
+.footer{padding:30px clamp(20px,5vw,56px);border-top:1px solid var(--line);color:var(--muted);font-size:.84rem;background:var(--card)}
+.footer .wrap{width:min(1120px,100%);margin:0 auto;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+.footer .f-brand{display:flex;align-items:center;gap:10px;color:var(--ink);font-family:var(--serif);font-weight:700}
+.footer .f-brand img{height:26px}
+
+/* 移动端底部tab */
+.tabbar{
+  position:fixed;left:0;right:0;bottom:0;z-index:70;
+  display:none;grid-template-columns:repeat(4,1fr);
+  background:rgba(255,255,255,.92);backdrop-filter:blur(14px);
+  border-top:1px solid var(--line);box-shadow:0 -8px 30px rgba(10,30,74,.10);
+  padding:8px 8px calc(10px + env(safe-area-inset-bottom));
+}
+.tabbar a{background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--muted);font-size:.74rem;font-weight:600;padding:6px 0;transition:color .25s;letter-spacing:.02em}
+.tabbar a svg{width:22px;height:22px}
+.tabbar a.active{color:var(--warm)}
+.tabbar a.active svg{stroke:var(--warm)}
+@media (max-width:860px){.nav{display:none}.tabbar{display:grid}.story,.contact-grid{grid-template-columns:1fr}.mvv{grid-template-columns:1fr}.tl,.tl-row{grid-template-columns:96px 34px 1fr}.tl-time{font-size:.9rem;padding-right:14px}}
+
+/* 滚动揭示 */
+[data-reveal]{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+[data-reveal].in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1;transform:none;transition:none}}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:96px;transform:translate(-50%,20px);z-index:90;background:var(--ink);color:#fff;padding:12px 22px;border-radius:999px;font-size:.9rem;box-shadow:0 12px 30px rgba(10,30,74,.3);opacity:0;transition:all .35s;pointer-events:none;max-width:86vw;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+
+<!-- ===== 顶部条 ===== -->
+<header class="topbar on-light">
+  <a class="brand" href="首页.html" aria-label="门客 首页">
+    <img src="assets/logo-main.png" alt="门客Logo">
+    <span class="brand-name">门客<span class="b-suffix">· MENKE</span></span>
+  </a>
+  <nav class="nav" aria-label="主导航">
+    <a href="首页.html">首页</a>
+    <a href="业务.html">业务</a>
+    <a href="案例.html">案例</a>
+    <a href="我的.html" class="active">我的</a>
+    <a class="nav-cta" href="我的.html#contact">联系我们</a>
+  </nav>
+</header>
+
+<!-- ===== 我的 / 公司介绍 ===== -->
+<section class="section" id="company">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <div class="sec-kicker">我的 · 门客是谁</div>
+      <h2>一个名字，一种古老的精神契约</h2>
+    </div>
+
+    <div class="story" data-reveal>
+      <div class="s-chapter">
+        <small>品牌故事 · 门客二字</small>
+        战国养士<br><span class="c1">三千</span>门客<br><span class="c2">各怀绝技</span>
+      </div>
+      <div class="s-body">
+        <p>"门客"二字，取自战国养士之风。三千门客，各怀绝技，为明主出谋划策，以才华报知遇之恩。今天的门客，承接的正是这份古老的精神契约。</p>
+        <p>我们不做高高在上的"供应商"，而做躬身入局的"座上客"。入您的门，懂您的行，解您的难，陪您把事做成。</p>
+        <div class="s-quote">古之门客，以才华报知遇；今之门客，以专业守承诺。</div>
+      </div>
+    </div>
+
+    <div class="mvv">
+      <div class="mvv-item" data-reveal>
+        <div class="mvv-k">使命</div><h4>让每一次数字化，<br>都成为产业的进阶</h4>
+        <p>我们不追求系统的炫目，只在乎它是否真正推动了一个行业、一方土地向前一步。</p><div class="mvv-line"></div>
+      </div>
+      <div class="mvv-item" data-reveal>
+        <div class="mvv-k">愿景</div><h4>做最懂行业的<br>数字化谋士团</h4>
+        <p>像古之谋士一样深谙时势、贴身献策，成为每一位合作伙伴背后最稳的那股力。</p><div class="mvv-line"></div>
+      </div>
+      <div class="mvv-item" data-reveal>
+        <div class="mvv-k">价值观</div><h4>专业立身 · 长期主义<br>躬身入局 · 承诺必达</h4>
+        <p>说到的，就一定要做到；接下的，就一定要扛起。这四句话，是我们十二年不曾改的底色。</p><div class="mvv-line"></div>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <h3 data-reveal>十二年，一步一步走成方法论</h3>
+      <div class="tl">
+        <div class="tl-row" data-reveal>
+          <div class="tl-time">第一程 · 第一个四年</div>
+          <div class="tl-axis"><span class="tl-dot"></span></div>
+          <div class="tl-content"><h4>以房地产信息化奠基</h4><p>深耕房地产行业信息化建设，打磨"建设 + 运营"的基本功，为今天的一切扎下根。</p></div>
+        </div>
+        <div class="tl-row" data-reveal>
+          <div class="tl-time">第二程 · 第二个四年</div>
+          <div class="tl-axis"><span class="tl-dot"></span></div>
+          <div class="tl-content"><h4>进军文旅数字化</h4><p>确立"内容 + 技术 + 运营"的复合打法，让一座座山水有了数字化的新叙事。</p></div>
+        </div>
+        <div class="tl-row" data-reveal>
+          <div class="tl-time">第三程 · 第三个四年</div>
+          <div class="tl-axis"><span class="tl-dot"></span></div>
+          <div class="tl-content"><h4>延伸教育、农业</h4><p>形成"以文旅为核心、多行业协同"的版图，把方法复制到更需要它的地方。</p></div>
+        </div>
+        <div class="tl-row" data-reveal>
+          <div class="tl-time">今天 · 此刻</div>
+          <div class="tl-axis"><span class="tl-dot"></span></div>
+          <div class="tl-content"><h4>十二年，走成了方法论</h4><p>十二年的路，走成了方法论；十二年的信，换来了合作伙伴的尊重。而门客，还在路上。</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="team" data-reveal>
+      <h3>一支能写代码、更懂行业、还能长期陪跑的团队</h3>
+      <p>我们相信，服务行业十二年的价值，不在于系统做得有多炫，而在于我们始终站在客户的田里、园里、课堂里、景区里——听得懂行业的话，接得住真实的问题。</p>
+      <div class="team-points">
+        <span>复合型团队</span><span>懂行业、更懂落地</span><span>长期主义陪伴</span><span>建设 + 运营一体化</span>
+      </div>
+    </div>
+
+    <div class="contact" id="contact" data-reveal>
+      <div class="contact-grid">
+        <div>
+          <h3>如果您正在寻找一位<br><span class="grad">"懂行的座上客"</span></h3>
+          <p style="margin-top:16px;color:rgba(255,255,255,.7);line-height:1.9">欢迎与门客聊聊您的产业数字化构想。您出主意，我们出专业。</p>
+          <div class="c-line"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 L22 12 L12 22 L2 12 Z"/><path d="M12 2 L12 22"/><path d="M2 12 L22 12"/></svg>成都门客文化传播有限公司</div>
+          <div class="c-line"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4 h16 v16 H4 Z"/><path d="M4 8 L12 14 L20 8"/></svg>地址：成都市高新区梓州大道4111号易上创客中心</div>
+          <div class="c-line"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4 h14 a2 2 0 0 1 2 2 v12 a2 2 0 0 1-2 2 H5 a2 2 0 0 1-2-2 V6 a2 2 0 0 1 2-2 Z"/><path d="M4 7 L12 13 L20 7"/></svg>电话：<a href="tel:1898008681">1898008681</a></div>
+          <div class="c-line"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4 h16 a2 2 0 0 1 2 2 v12 a2 2 0 0 1-2 2 H4 a2 2 0 0 1-2-2 V6 a2 2 0 0 1 2-2 Z"/><path d="M3 8 L12 14 L21 8"/><path d="M7 20 L7 16 M17 20 L17 16"/></svg>邮箱：<a href="mailto:676020400@qq.com">676020400@qq.com</a></div>
+          <div class="c-line"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12 h18"/><path d="M12 3 a12 12 0 0 1 0 18 a12 12 0 0 1 0-18"/></svg>官网：<a href="https://www.mk-cd.cn" target="_blank" rel="noopener">www.mk-cd.cn</a></div>
+        </div>
+        <div class="c-cta">
+          <a class="btn-primary" href="mailto:676020400@qq.com">约一次上门拜访 · 我们聊聊</a>
+          <span class="c-hint">期待与您的第一次对话，从一杯茶开始。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== footer ===== -->
+<footer class="footer">
+  <div class="wrap">
+    <span class="f-brand"><img src="assets/logo-main.png" alt="门客">成都门客文化传播有限公司</span>
+    <span>官网 www.mk-cd.cn · © 2026 门客 MENKE</span>
+  </div>
+</footer>
+
+<!-- ===== 移动端底部 tab ===== -->
+<nav class="tabbar" aria-label="板块导航">
+  <a href="首页.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11 L12 3 L21 11"/><path d="M5 9.5 V21 H19 V9.5"/><path d="M10 21 V14 H14 V21"/></svg>
+    首页</a>
+  <a href="业务.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2 v4 M12 18 v4 M2 12 h4 M18 12 h4 M5 5 l3 3 M16 16 l3 3 M19 5 l-3 3 M8 16 l-3 3"/></svg>
+    业务</a>
+  <a href="案例.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M8 4 V2 M16 4 V2"/></svg>
+    案例</a>
+  <a href="我的.html" class="active">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21 C4 16 7 14 12 14 C17 14 20 16 20 21"/></svg>
+    我的</a>
+</nav>
+
+<div class="toast" id="toast" role="status">这是一个可交互的 H5 原型稿，演示中……</div>
+
+<script>
+(function(){
+  "use strict";
+  var toast = document.getElementById("toast");
+  function showToast(msg){
+    toast.textContent = msg || "这是一个可交互的 H5 原型稿，演示中……";
+    toast.classList.add("show");
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(function(){ toast.classList.remove("show"); }, 2200);
+  }
+  Array.prototype.slice.call(document.querySelectorAll("[data-action='contact']")).forEach(function(b){
+    b.addEventListener("click", function(){ showToast("电话 1898008681 · 邮箱 676020400@qq.com"); });
+  });
+  function runReveal(){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); }
+      });
+    },{threshold:.12,rootMargin:"0px 0px -40px 0px"});
+    Array.prototype.slice.call(document.querySelectorAll("[data-reveal]")).forEach(function(el){ io.observe(el); });
+  }
+  runReveal();
+})();
+</script>
+
+</body>
+</html>
