@@ -121,12 +121,13 @@ a{color:inherit;text-decoration:none}
   color:rgba(255,255,255,.88);font-weight:300;line-height:1.9;
 }
 .hero-metrics{
-  margin-top:38px;display:flex;flex-wrap:wrap;gap:clamp(18px,4vw,56px);
+  margin-top:38px;display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(20px,4vw,40px) clamp(16px,3vw,32px);max-width:560px;
 }
 .metric .num{font-family:var(--serif);font-weight:900;font-size:clamp(2rem,5vw,3.1rem);line-height:1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .metric .num .unit{font-size:.5em;margin-left:2px;color:rgba(255,255,255,.7);-webkit-text-fill-color:rgba(255,255,255,.7)}
 .metric .cap{margin-top:8px;font-size:.82rem;letter-spacing:.14em;color:rgba(255,255,255,.6)}
-.metric:not(:last-child){padding-right:clamp(18px,4vw,56px);border-right:1px solid rgba(255,255,255,.16)}
+.metric{position:relative}
+.metric::after{content:"";display:block;margin-top:14px;height:1px;background:linear-gradient(90deg,rgba(22,119,255,.55),rgba(0,180,255,.15) 55%,transparent)}
 
 /* 核心业务四宫格 */
 .biz-grid-hero{
@@ -183,8 +184,6 @@ a{color:inherit;text-decoration:none}
 @media (max-width:520px){
   .biz-grid-hero{grid-template-columns:1fr 1fr;gap:10px}
   .biz-tile{padding:16px 14px;border-radius:14px}
-  .metric:not(:last-child){border-right:none}
-  .hero-metrics{gap:24px}
 }
 
 /* 滚动揭示 */
