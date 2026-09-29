@@ -97,8 +97,10 @@ a{color:inherit;text-decoration:none}
 .biz-item .b-view{font-family:var(--serif);font-size:1.05rem;color:var(--warm-d);margin-top:12px;line-height:1.8;font-weight:600}
 .biz-item .b-desc{margin-top:12px;color:var(--muted);line-height:1.95;max-width:46em}
 .biz-svc{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;max-width:52em}
-.biz-svc span{font-size:.86rem;color:var(--text);background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 14px;transition:all .25s}
-.biz-svc span:hover{border-color:var(--cool);color:var(--cool-d)}
+.biz-svc span{position:relative;font-size:.86rem;color:#1256c4;background:linear-gradient(135deg,#fff,#f0f7ff);border:1px solid #d3e6ff;border-radius:999px;padding:7px 15px 7px 34px;transition:all .28s;font-weight:500;box-shadow:0 1px 3px rgba(22,119,255,.06)}
+.biz-svc span::before{content:"";position:absolute;left:14px;top:50%;width:9px;height:9px;transform:translateY(-50%) rotate(45deg);border-radius:2px;background:linear-gradient(135deg,#1677FF,#00B4FF)}
+.biz-svc span:hover{color:#fff;background:linear-gradient(135deg,#1677FF,#00B4FF);border-color:transparent;box-shadow:0 6px 18px rgba(22,119,255,.28);transform:translateY(-2px)}
+.biz-svc span:hover::before{background:#fff}
 .biz-item .b-no-wrap{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
 
 /* 方法论闭环 */
@@ -108,12 +110,17 @@ a{color:inherit;text-decoration:none}
 .method-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:16px;margin-bottom:32px;position:relative;z-index:1}
 .method-head h3{font-family:var(--serif);font-weight:900;font-size:clamp(1.4rem,3.4vw,1.9rem)}
 .method-head p{color:rgba(255,255,255,.66);font-size:.92rem}
-.method-steps{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.m-step{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:20px;transition:all .3s}
-.m-step:hover{background:rgba(255,255,255,.11);transform:translateY(-3px)}
-.m-step .m-no{font-family:var(--serif);font-weight:900;font-size:1.7rem;line-height:1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.m-step h4{margin-top:12px;font-family:var(--serif);font-size:1.05rem;font-weight:700}
-.m-step p{margin-top:6px;font-size:.8rem;color:rgba(255,255,255,.62);line-height:1.6}
+.method-steps{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.8vw,18px)}
+.m-step{position:relative;background:linear-gradient(135deg,rgba(255,255,255,.09),rgba(22,119,255,.06));border:1px solid rgba(255,255,255,.13);border-radius:18px;padding:24px 20px;transition:transform .35s,box-shadow .35s,border-color .35s;overflow:hidden}
+.m-step::before{content:"";position:absolute;inset:0;border-radius:18px;padding:1px;background:linear-gradient(160deg,rgba(0,180,255,.65),rgba(22,119,255,.06) 70%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;opacity:.7;transition:opacity .35s}
+.m-step::after{content:"";position:absolute;top:-46px;right:-46px;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle,rgba(0,180,255,.22),transparent 70%);pointer-events:none}
+.m-step:hover{transform:translateY(-5px);box-shadow:0 16px 44px rgba(22,119,255,.22);border-color:rgba(0,180,255,.42)}
+.m-step:hover::before{opacity:1}
+.m-ico{position:relative;z-index:1;width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(22,119,255,.30),rgba(0,180,255,.16));border:1px solid rgba(122,190,255,.30);box-shadow:inset 0 0 14px rgba(0,180,255,.18)}
+.m-ico svg{width:26px;height:26px}
+.m-no{position:absolute;top:18px;right:18px;font-family:var(--serif);font-weight:900;font-size:1rem;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:.14em}
+.m-step h4{position:relative;z-index:1;margin-top:15px;font-family:var(--serif);font-size:1.08rem;font-weight:700;letter-spacing:.01em}
+.m-step p{position:relative;z-index:1;margin-top:7px;font-size:.82rem;color:rgba(255,255,255,.64);line-height:1.7}
 
 /* footer */
 .footer{padding:30px clamp(20px,5vw,56px);border-top:1px solid var(--line);color:var(--muted);font-size:.84rem;background:var(--card)}
@@ -257,11 +264,12 @@ a{color:inherit;text-decoration:none}
         <h3>十二年，我们沉淀出一条完整闭环</h3>
         <p>需求探查 → 顶层设计 → 落地实施 → 运营陪跑</p>
       </div>
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="mblue" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#8ec9ff"/><stop offset="100%" stop-color="#00B4FF"/></linearGradient></defs></svg>
       <div class="method-steps">
-        <div class="m-step"><div class="m-no">壹</div><h4>需求探查</h4><p>走进现场，听懂真实的需求，而非纸上的假设。</p></div>
-        <div class="m-step"><div class="m-no">贰</div><h4>顶层设计</h4><p>一张蓝图绘到底，让每一处细节有章可循。</p></div>
-        <div class="m-step"><div class="m-no">叁</div><h4>落地实施</h4><p>把设计交付成真正可用、好用的系统。</p></div>
-        <div class="m-step"><div class="m-no">肆</div><h4>运营陪跑</h4><p>让系统被用起来、活起来、长起来。</p></div>
+        <div class="m-step"><span class="m-no">壹</span><div class="m-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#mblue)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6"/><path d="M20.5 20.5 L15.5 15.5"/><path d="M11 8.2 v5.6 M8.2 11 h5.6"/></svg></div><h4>需求探查</h4><p>走进现场，听懂真实的需求，而非纸上的假设。</p></div>
+        <div class="m-step"><span class="m-no">贰</span><div class="m-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#mblue)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 3.2 v3 M12 17.8 v3 M3.2 12 h3 M17.8 12 h3 M5.4 5.4 l2.1 2.1 M16.5 16.5 l2.1 2.1 M18.6 5.4 l-2.1 2.1 M7.5 16.5 l-2.1 2.1"/><path d="M12 12 l3.5 -1.5 -1.5 3.5 z"/></svg></div><h4>顶层设计</h4><p>一张蓝图绘到底，让每一处细节有章可循。</p></div>
+        <div class="m-step"><span class="m-no">叁</span><div class="m-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#mblue)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.6 v3.1 M12 18.3 v3.1 M2.6 12 h3.1 M18.3 12 h3.1 M5.2 5.2 l2.2 2.2 M16.6 16.6 l2.2 2.2 M18.8 5.2 l-2.2 2.2 M7.4 16.6 l-2.2 2.2"/></svg></div><h4>落地实施</h4><p>把设计交付成真正可用、好用的系统。</p></div>
+        <div class="m-step"><span class="m-no">肆</span><div class="m-ico"><svg viewBox="0 0 24 24" fill="none" stroke="url(#mblue)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20 H21"/><path d="M3 20 L9 13 L13 16.5 L21 6.5"/><path d="M17 6.5 H21 V10.5"/></svg></div><h4>运营陪跑</h4><p>让系统被用起来、活起来、长起来。</p></div>
       </div>
     </div>
   </div>

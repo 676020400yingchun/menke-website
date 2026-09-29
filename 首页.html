@@ -122,16 +122,18 @@ a{color:inherit;text-decoration:none}
   margin-top:44px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
 }
 .biz-tile{
-  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);
-  border-radius:18px;padding:20px 18px 18px;cursor:pointer;display:block;
-  transition:all .3s;position:relative;overflow:hidden;
+  position:relative;background:linear-gradient(150deg,rgba(255,255,255,.09),rgba(22,119,255,.05));
+  border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:22px 18px;cursor:pointer;display:block;
+  transition:transform .35s,box-shadow .35s,border-color .35s;overflow:hidden;
 }
-.biz-tile::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--grad);opacity:0;transition:opacity .3s}
-.biz-tile:hover{background:rgba(255,255,255,.12);transform:translateY(-4px);border-color:rgba(255,255,255,.28)}
+.biz-tile::before{content:"";position:absolute;inset:0;border-radius:18px;padding:1px;background:linear-gradient(160deg,rgba(0,180,255,.6),rgba(255,255,255,.04) 60%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.7;transition:opacity .35s;pointer-events:none}
+.biz-tile::after{content:"";position:absolute;top:-40px;right:-40px;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,rgba(0,180,255,.18),transparent 70%);pointer-events:none}
+.biz-tile:hover{transform:translateY(-4px);box-shadow:0 14px 40px rgba(22,119,255,.22);border-color:rgba(0,180,255,.4)}
 .biz-tile:hover::before{opacity:1}
-.biz-tile .t-icon{width:44px;height:44px;border-radius:12px;background:var(--grad);display:flex;align-items:center;justify-content:center;color:#fff;margin-bottom:14px}
-.biz-tile h4{font-family:var(--serif);font-weight:700;font-size:1.06rem;line-height:1.4}
-.biz-tile p{margin-top:6px;font-size:.82rem;color:rgba(255,255,255,.68);line-height:1.6}
+.t-no{position:absolute;top:16px;right:16px;font-family:var(--serif);font-weight:900;font-size:1.15rem;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:.1em}
+.biz-tile .t-icon{position:relative;z-index:1;width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,rgba(22,119,255,.34),rgba(0,180,255,.18));border:1px solid rgba(122,190,255,.32);box-shadow:inset 0 0 12px rgba(0,180,255,.16);display:flex;align-items:center;justify-content:center;color:#e8f4ff;margin-bottom:14px}
+.biz-tile h4{position:relative;z-index:1;font-family:var(--serif);font-weight:700;font-size:1.06rem;line-height:1.4}
+.biz-tile p{position:relative;z-index:1;margin-top:6px;font-size:.82rem;color:rgba(255,255,255,.68);line-height:1.6}
 
 .scroll-hint{
   position:relative;z-index:2;margin:34px auto 6px;display:flex;flex-direction:column;align-items:center;gap:8px;
@@ -229,18 +231,22 @@ a{color:inherit;text-decoration:none}
     </div>
     <div class="biz-grid-hero hero-load d5">
       <a class="biz-tile" href="业务.html" data-tag="文旅">
+        <span class="t-no">01</span>
         <div class="t-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 19 L9 9 L13 13 L17 5 L21 19 Z"/><path d="M3 21 h18"/></svg></div>
         <h4>文旅数字化建设</h4><p>让山水会说话，让景区会思考</p>
       </a>
       <a class="biz-tile" href="业务.html" data-tag="教育">
+        <span class="t-no">02</span>
         <div class="t-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19 L12 14 L20 19 L12 24 Z"/><path d="M4 19 L4 10"/><path d="M20 19 L20 10"/><path d="M4 10 L12 5 L20 10 L12 15 Z"/></svg></div>
         <h4>教育信息化</h4><p>让知识跨越山海，让课堂触手可及</p>
       </a>
       <a class="biz-tile" href="业务.html" data-tag="农业">
+        <span class="t-no">03</span>
         <div class="t-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 21 C11 14 13 8 19 4 C20 10 19 15 13 20 Z"/><path d="M6 21 C6 17 8 13 13 10"/><path d="M11 21 h5"/></svg></div>
         <h4>农业数字化</h4><p>让土地长出数据，让丰收有据可依</p>
       </a>
       <a class="biz-tile" href="业务.html" data-tag="运营">
+        <span class="t-no">04</span>
         <div class="t-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2 v4 M12 18 v4 M2 12 h4 M18 12 h4 M5 5 l3 3 M16 16 l3 3 M19 5 l-3 3 M8 16 l-3 3"/></svg></div>
         <h4>建设与运营服务</h4><p>从蓝图到落地，从上线到生长</p>
       </a>
