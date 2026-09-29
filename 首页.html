@@ -105,10 +105,12 @@ a{color:inherit;text-decoration:none}
   padding:96px clamp(20px,4vw,40px) 30px;
 }
 .hero-kicker{
-  display:inline-flex;align-items:center;gap:12px;
-  font-size:.86rem;letter-spacing:.26em;font-weight:500;color:rgba(255,255,255,.82);
+  display:flex;flex-direction:column;align-items:flex-start;gap:6px;
+  position:relative;padding-left:18px;
 }
-.hero-kicker::before{content:"";width:34px;height:1px;background:var(--grad)}
+.hero-kicker::before{content:"";position:absolute;left:0;top:4px;bottom:4px;width:3px;border-radius:2px;background:var(--grad)}
+.hero-kicker .k-line{font-size:.86rem;letter-spacing:.24em;font-weight:500;color:rgba(255,255,255,.88)}
+.hero-kicker .k-sub{margin-top:2px;font-size:.76rem;letter-spacing:.3em;font-weight:400;color:rgba(255,255,255,.55)}
 .hero h1{
   font-family:var(--serif);font-weight:900;line-height:1.12;
   font-size:var(--fs-hero);letter-spacing:.02em;margin-top:18px;
@@ -230,7 +232,7 @@ a{color:inherit;text-decoration:none}
 <section class="hero" id="home">
   <div class="hero-bg"><img src="assets/hero.jpg" alt="夜色山水与数字光带"></div>
   <div class="hero-inner">
-    <div class="hero-load d1 hero-kicker">成都门客文化传播有限公司 · 十二年数字深耕</div>
+    <div class="hero-load d1 hero-kicker"><span class="k-line">成都门客文化传播有限公司</span><span class="k-sub">十二年数字深耕 · 与产业同行</span></div>
     <h1 class="hero-load d2">以数字为笔，<br><span class="grad">为产业立传</span></h1>
     <p class="hero-lead hero-load d3">十二年，我们不曾离开现场。真正的数字化，从来不在机房，而在游客的脚步、孩子的课堂、田埂上的收成里。我们愿做每一位合作伙伴身边，那位"最懂行的座上客"。</p>
     <div class="hero-metrics hero-load d4">
