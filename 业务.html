@@ -90,7 +90,7 @@ a{color:inherit;text-decoration:none}
 .biz-statement p em{font-style:normal;background:var(--grad-soft);padding:0 .2em;border-radius:4px;font-weight:700}
 
 .biz-item{
-  position:relative;display:grid;grid-template-columns:88px 1fr;gap:clamp(18px,3.5vw,44px);
+  position:relative;display:grid;grid-template-columns:64px 1fr;gap:clamp(16px,3vw,34px);
   padding:clamp(26px,3.5vw,44px);border-radius:24px;align-items:start;
   background:linear-gradient(150deg,#fff,#f3f9ff);border:1px solid #e6f0ff;
   box-shadow:0 10px 30px rgba(22,119,255,.06);
@@ -103,21 +103,16 @@ a{color:inherit;text-decoration:none}
 .biz-item:hover{transform:translateY(-3px);box-shadow:0 18px 46px rgba(22,119,255,.15);border-color:rgba(22,119,255,.24)}
 .biz-item:hover::before{opacity:1}
 .biz-item:last-child{box-shadow:0 10px 30px rgba(22,119,255,.06)}
-.biz-item .b-no{position:relative;font-family:var(--serif);font-weight:900;font-size:clamp(1.7rem,4vw,2.4rem);color:transparent;background:var(--grad);-webkit-background-clip:text;background-clip:text;line-height:1;padding-left:16px}
-.biz-item .b-no::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:4px;border-radius:3px;background:var(--grad)}
-.biz-item .b-tag{display:flex;align-items:center;justify-content:center;width:68px;height:68px;border-radius:50%;margin-top:14px;background:linear-gradient(155deg,#103d85 0%,#1677FF 60%,#00B4FF 100%);border:1px solid rgba(122,190,255,.42);box-shadow:0 4px 16px rgba(22,119,255,.28),inset 0 0 16px rgba(0,180,255,.22);color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.02em;writing-mode:vertical-rl;text-orientation:upright;line-height:1.05;text-align:center;transition:transform .3s}
-.biz-item .b-tag:hover{transform:scale(1.06)}
-.biz-item .b-tag.core{width:auto;height:auto;border-radius:999px;padding:4px 14px;margin-top:12px;font-size:.74rem;letter-spacing:.2em;writing-mode:horizontal-tb;background:var(--grad);box-shadow:none;border:none;transform:none}
-.biz-item h3{position:relative;padding-left:15px;font-family:var(--serif);font-weight:900;font-size:clamp(1.3rem,3vw,1.7rem);color:var(--ink);line-height:1.3}
-.biz-item h3::before{content:"";position:absolute;left:0;top:.22em;width:4px;height:1em;border-radius:3px;background:var(--grad)}
-.biz-item .b-view{font-family:var(--serif);font-size:1.05rem;color:var(--warm-d);margin-top:14px;line-height:1.8;font-weight:600}
-.biz-item .b-desc{margin-top:12px;color:var(--muted);line-height:1.95;max-width:46em}
+.biz-item .b-no{font-family:var(--serif);font-weight:900;font-size:clamp(1.5rem,3.6vw,2rem);color:transparent;background:var(--grad);-webkit-background-clip:text;background-clip:text;line-height:1;padding-top:6px}
+.biz-item h3{font-family:var(--serif);font-weight:900;font-size:clamp(1.35rem,3.4vw,1.85rem);color:var(--ink);line-height:1.25;letter-spacing:.02em}
+.biz-item .b-view{font-family:var(--serif);font-size:1.08rem;color:var(--warm-d);margin-top:12px;line-height:1.7;font-weight:600}
+.biz-item .b-desc{margin-top:12px;color:var(--muted);line-height:1.9;max-width:44em}
+.biz-item .b-body{min-width:0}
 .biz-svc{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;max-width:52em}
 .biz-svc span{position:relative;font-size:.86rem;color:#1256c4;background:linear-gradient(135deg,#fff,#f0f7ff);border:1px solid #d3e6ff;border-radius:999px;padding:7px 15px 7px 34px;transition:all .28s;font-weight:500;box-shadow:0 1px 3px rgba(22,119,255,.06)}
 .biz-svc span::before{content:"";position:absolute;left:14px;top:50%;width:9px;height:9px;transform:translateY(-50%) rotate(45deg);border-radius:2px;background:linear-gradient(135deg,#1677FF,#00B4FF)}
 .biz-svc span:hover{color:#fff;background:linear-gradient(135deg,#1677FF,#00B4FF);border-color:transparent;box-shadow:0 6px 18px rgba(22,119,255,.28);transform:translateY(-2px)}
 .biz-svc span:hover::before{background:#fff}
-.biz-item .b-no-wrap{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
 
 /* 方法论闭环 */
 .method-wrap{margin-top:clamp(48px,7vw,80px);background:var(--ink);border-radius:26px;padding:clamp(28px,5vw,52px);color:#fff;position:relative;overflow:hidden}
@@ -163,7 +158,6 @@ a{color:inherit;text-decoration:none}
   .nav{display:none}
   .tabbar{display:grid}
   .biz-item{grid-template-columns:56px 1fr}
-  .biz-item .b-tag{width:auto;height:auto;border-radius:999px;padding:4px 12px;font-size:.7rem;letter-spacing:.15em;writing-mode:horizontal-tb;box-shadow:none;line-height:1.4}
   .method-steps{grid-template-columns:repeat(2,1fr)}
   .biz-statement{grid-template-columns:1fr}
 }
@@ -217,11 +211,9 @@ a{color:inherit;text-decoration:none}
     </div>
 
     <article class="biz-item" data-reveal>
-      <div class="b-no-wrap">
-        <div class="b-no">01</div>
-        <span class="b-tag core">文旅数字化</span>
-      </div>
-      <div>
+      <div class="b-no">01</div>
+      <div class="b-body">
+        <h3>文旅数字化</h3>
         <div class="b-view">文旅的本质不是卖门票，而是卖"一场值得被记住的相遇"。</div>
         <p class="b-desc">数字化要做的，不是给景区装一排屏幕，而是让游客踏入大门的那一刻起，就被一场精心编排的数字叙事温柔地接住——山水成为舞台，故事成为向导，数据成为贴心管家。</p>
         <div class="biz-svc">
@@ -231,13 +223,10 @@ a{color:inherit;text-decoration:none}
     </article>
 
     <article class="biz-item" data-reveal>
-      <div class="b-no-wrap">
-        <div class="b-no">02</div>
-        <span class="b-tag">教育信息化</span>
-      </div>
-      <div>
-        <h3>让知识跨越山海，让课堂触手可及</h3>
-        <div class="b-view">教育的数字化，不是把黑板换成屏幕，而是让优质资源不再被教室的墙壁和地域的天花板困住。</div>
+      <div class="b-no">02</div>
+      <div class="b-body">
+        <h3>教育信息化</h3>
+        <div class="b-view">让知识跨越山海，让课堂触手可及。</div>
         <p class="b-desc">让偏远山区的孩子，与城市孩子拥有同一条起跑线——这是信息化最朴素、也最动人的意义。</p>
         <div class="biz-svc">
           <span>智慧校园综合平台</span><span>在线教学与资源共享体系</span><span>教育数据治理与学情分析</span><span>数字化教学资源开发</span>
@@ -246,13 +235,10 @@ a{color:inherit;text-decoration:none}
     </article>
 
     <article class="biz-item" data-reveal>
-      <div class="b-no-wrap">
-        <div class="b-no">03</div>
-        <span class="b-tag">农业数字化</span>
-      </div>
-      <div>
-        <h3>让土地长出数据，让丰收有据可依</h3>
-        <div class="b-view">把"靠天吃饭"，变成"靠数吃饭"。</div>
+      <div class="b-no">03</div>
+      <div class="b-body">
+        <h3>农业数字化</h3>
+        <div class="b-view">让土地长出数据，让丰收有据可依。</div>
         <p class="b-desc">让每一株作物的长势、每一寸土壤的脾气、每一茬市场的脉动，都化作屏上清晰的数据。农业数字化，是把不确定交给系统，把确定还给农民。</p>
         <div class="biz-svc">
           <span>农业产业数字化平台</span><span>产销一体化与溯源体系</span><span>农业大数据与产销决策</span><span>乡村文旅与农旅融合数字化</span>
@@ -261,13 +247,10 @@ a{color:inherit;text-decoration:none}
     </article>
 
     <article class="biz-item" data-reveal>
-      <div class="b-no-wrap">
-        <div class="b-no">04</div>
-        <span class="b-tag">建设与运营</span>
-      </div>
-      <div>
-        <h3>从蓝图到落地，从上线到生长</h3>
-        <div class="b-view">我们最看重最后一步——让系统被用起来、活起来、长起来。</div>
+      <div class="b-no">04</div>
+      <div class="b-body">
+        <h3>建设与运营</h3>
+        <div class="b-view">从蓝图到落地，从上线到生长。</div>
         <p class="b-desc">十二年的建设与运营经验，让我们相信：系统上线只是开始。真正的价值，在于日复一日的陪跑，在于把交付变成生长。</p>
         <div class="biz-svc">
           <span>信息化顶层设计</span><span>系统落地实施</span><span>长期运营陪跑</span><span>项目运营经验沉淀</span>
