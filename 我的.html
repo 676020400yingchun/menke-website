@@ -104,11 +104,18 @@ a{color:inherit;text-decoration:none}
 .tl-content p{margin-top:6px;color:var(--muted);font-size:.9rem;line-height:1.85;max-width:40em}
 
 /* 团队 */
-.team{margin-top:clamp(44px,6vw,72px);background:var(--card);border-radius:24px;box-shadow:var(--shadow);padding:clamp(28px,4vw,46px);border:1px solid var(--line)}
-.team h3{font-family:var(--serif);font-weight:900;color:var(--ink);font-size:clamp(1.3rem,3vw,1.7rem)}
-.team p{margin-top:14px;color:var(--muted);line-height:2;font-size:1rem;max-width:52em}
-.team-points{margin-top:22px;display:flex;flex-wrap:wrap;gap:12px}
-.team-points span{background:var(--grad-soft);color:var(--ink);font-size:.9rem;font-weight:600;padding:8px 16px;border-radius:999px}
+.team{margin-top:clamp(44px,6vw,72px);position:relative;background:linear-gradient(160deg,#fff,#f0f7ff);border-radius:24px;padding:clamp(28px,4vw,46px);border:1px solid #e3eeff;box-shadow:0 12px 34px rgba(22,119,255,.08);overflow:hidden;transition:box-shadow .35s,border-color .35s}
+.team::before{content:"";position:absolute;inset:0;border-radius:24px;padding:1px;background:linear-gradient(150deg,rgba(22,119,255,.5),rgba(0,180,255,.14) 60%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.55;transition:opacity .35s;pointer-events:none}
+.team::after{content:"";position:absolute;top:-60px;right:-60px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(0,180,255,.13),transparent 70%);pointer-events:none}
+.team:hover{box-shadow:0 20px 50px rgba(22,119,255,.16);border-color:rgba(22,119,255,.25)}
+.team:hover::before{opacity:1}
+.team h3{position:relative;z-index:1;font-family:var(--serif);font-weight:900;color:var(--ink);font-size:clamp(1.3rem,3vw,1.7rem);line-height:1.45}
+.team p{position:relative;z-index:1;margin-top:14px;color:var(--muted);line-height:2;font-size:1rem;max-width:52em}
+.team-points{position:relative;z-index:1;margin-top:24px;display:flex;flex-wrap:wrap;gap:12px}
+.team-points span{position:relative;display:inline-flex;align-items:center;gap:8px;font-size:.9rem;font-weight:600;color:#1256c4;background:linear-gradient(135deg,#fff,#f0f7ff);border:1px solid #d3e6ff;padding:9px 17px 9px 15px;border-radius:999px;transition:all .28s;box-shadow:0 1px 3px rgba(22,119,255,.06)}
+.team-points span::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--grad);transform:rotate(45deg);flex:none}
+.team-points span:hover{color:#fff;background:linear-gradient(135deg,#1677FF,#00B4FF);border-color:transparent;box-shadow:0 6px 18px rgba(22,119,255,.28);transform:translateY(-2px)}
+.team-points span:hover::before{background:#fff}
 
 /* 联系 */
 .contact{margin-top:clamp(44px,6vw,72px);background:var(--ink);border-radius:26px;color:#fff;padding:clamp(30px,5vw,50px);position:relative;overflow:hidden;scroll-margin-top:80px}
