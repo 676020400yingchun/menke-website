@@ -338,5 +338,78 @@ a{color:inherit;text-decoration:none}
 })();
 </script>
 
+
+<style id="ai-kit-style">
+.ai-kit{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif}
+#aiFab{position:fixed;right:18px;bottom:calc(env(safe-area-inset-bottom) + 82px);z-index:9998;width:58px;height:58px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,#1677FF 0%,#00B4FF 100%);box-shadow:0 10px 30px rgba(22,119,255,.45);display:flex;align-items:center;justify-content:center;transition:transform .25s,box-shadow .25s}
+#aiFab:hover{transform:translateY(-2px) scale(1.03)}
+#aiFab svg{width:30px;height:30px;fill:#fff}
+#aiFab .ai-dot{position:absolute;top:6px;right:6px;width:10px;height:10px;border-radius:50%;background:#2EE6A8;border:2px solid #fff}
+#aiPanel{position:fixed;right:18px;bottom:calc(env(safe-area-inset-bottom) + 82px);z-index:9999;width:min(360px,92vw);max-height:min(560px,calc(100vh - 140px));background:#fff;border-radius:18px;box-shadow:0 18px 60px rgba(10,30,74,.28);overflow:hidden;display:none;flex-direction:column;transform-origin:bottom right;animation:aiPop .28s cubic-bezier(.2,.9,.3,1)}
+@keyframes aiPop{from{opacity:0;transform:scale(.9) translateY(12px)}to{opacity:1;transform:none}}
+#aiPanel.open{display:flex}
+.ai-head{background:linear-gradient(120deg,#0A1E4A 0%,#1677FF 55%,#00B4FF 100%);color:#fff;padding:14px 16px;display:flex;align-items:center;gap:10px}
+.ai-head .ai-ico{width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;flex:none}
+.ai-head .ai-ico svg{width:20px;height:20px;fill:#fff}
+.ai-head b{font-size:15px;font-weight:700;letter-spacing:.02em}
+.ai-head .ai-sub{font-size:11px;opacity:.8;margin-top:2px}
+.ai-close{margin-left:auto;width:30px;height:30px;border-radius:50%;border:none;background:rgba(255,255,255,.16);color:#fff;font-size:16px;cursor:pointer;line-height:1}
+.ai-close:hover{background:rgba(255,255,255,.3)}
+.ai-body{flex:1;overflow-y:auto;padding:16px;background:#F5F9FF;display:flex;flex-direction:column;gap:12px}
+.ai-msg{max-width:82%;padding:10px 13px;border-radius:12px;font-size:13px;line-height:1.7;word-break:break-word;white-space:pre-wrap}
+.ai-msg.bot{align-self:flex-start;background:#fff;color:#12203F;border:1px solid #E3EEFF;border-top-left-radius:4px;box-shadow:0 2px 8px rgba(10,30,74,.05)}
+.ai-msg.user{align-self:flex-end;background:linear-gradient(135deg,#1677FF,#00B4FF);color:#fff;border-top-right-radius:4px}
+.ai-msg.think{align-self:flex-start;background:transparent;color:#8AA0C0;font-size:12px;border:none;padding:4px 6px}
+.ai-input{display:flex;gap:10px;padding:12px;border-top:1px solid #E7F0FF;background:#fff}
+.ai-input input{flex:1;border:1px solid #D6E6FF;border-radius:10px;padding:10px 12px;font-size:13px;color:#12203F;outline:none;background:#F7FBFF}
+.ai-input input:focus{border-color:#1677FF;box-shadow:0 0 0 3px rgba(22,119,255,.15)}
+.ai-input button{flex:none;width:44px;height:44px;border-radius:11px;border:none;cursor:pointer;background:linear-gradient(135deg,#1677FF,#00B4FF);color:#fff;display:flex;align-items:center;justify-content:center}
+.ai-input button:disabled{opacity:.5;cursor:not-allowed}
+.ai-input button svg{width:20px;height:20px;fill:#fff}
+@media(max-width:860px){#aiFab{right:14px;bottom:calc(env(safe-area-inset-bottom) + 78px)}#aiPanel{right:14px;bottom:calc(env(safe-area-inset-bottom) + 78px);width:min(400px,94vw)}}
+@media(min-width:861px){#aiFab{bottom:26px}#aiPanel{bottom:26px}}
+</style>
+<div class="ai-kit">
+  <button id="aiFab" aria-label="AI Assistant"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7v1h.5A2.5 2.5 0 0 1 22 12.5v4A2.5 2.5 0 0 1 19.5 19H17v2H9v-5h2v3h4v-3h-1.5A2.5 2.5 0 0 1 11 13.5v-1a2.5 2.5 0 0 1 2.5-2.5h.5V9a5 5 0 0 0-10 0v5H3a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2v-2H3v-4h2v-1H4a3 3 0 0 1 3-3V9a7 7 0 0 1 5-7z" transform="translate(1,0)"/></svg><span class="ai-dot"></span></button>
+  <div id="aiPanel" role="dialog" aria-label="AI Assistant">
+    <div class="ai-head">
+      <span class="ai-ico"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7v1h.5A2.5 2.5 0 0 1 22 12.5v4A2.5 2.5 0 0 1 19.5 19H17v2H9v-5h2v3h4v-3h-1.5A2.5 2.5 0 0 1 11 13.5v-1a2.5 2.5 0 0 1 2.5-2.5h.5V9a5 5 0 0 0-10 0v5H3a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2v-2H3v-4h2v-1H4a3 3 0 0 1 3-3V9a7 7 0 0 1 5-7z" transform="translate(1,0)"/></svg></span>
+      <div><b>AI Assistant</b><div class="ai-sub">MENKE · 24/7 smart support</div></div>
+      <button class="ai-close" aria-label="Close">✕</button>
+    </div>
+    <div class="ai-body"></div>
+    <div class="ai-input">
+      <input type="text" placeholder="Type your question…" maxlength="200">
+      <button aria-label="Send"><svg viewBox="0 0 24 24"><path d="M3 11 21 3l-8 18-2.6-7.4L3 11z" transform="translate(1,0)"/></svg></button>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var fab=document.getElementById("aiFab"),panel=document.getElementById("aiPanel"),body=panel.querySelector(".ai-body"),input=panel.querySelector("input"),send=panel.querySelector("button");
+  var open=false,busy=false,greet="Hi, I'm MENKE's AI assistant. I can help you with our digital tourism, education IT, agri-digital services, our cases and contact details. How can I help you?";
+  function add(text,who){
+    var m=document.createElement("div");m.className="ai-msg "+who;m.textContent=text;body.appendChild(m);body.scrollTop=body.scrollHeight;
+  }
+  function toast(t){var m=document.createElement("div");m.className="ai-msg think";m.textContent=t;body.appendChild(m);body.scrollTop=body.scrollHeight;}
+  function openKit(){panel.classList.add("open");open=true;if(body.children.length===0){add(greet,"bot");}}
+  function closeKit(){panel.classList.remove("open");open=false;}
+  fab.addEventListener("click",function(){open?closeKit():openKit();});
+  panel.querySelector(".ai-close").addEventListener("click",closeKit);
+  function ask(text){
+    if(busy||!text.trim())return;busy=true;send.disabled=true;
+    add(text,"user");
+    toast("Thinking…");
+    fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:text})})
+    .then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();})
+    .then(function(d){var t=body.querySelector(".ai-msg.think");if(t)t.remove();if(d&&d.reply){add(d.reply,"bot");}else{throw new Error("empty");}})
+    .catch(function(){var t=body.querySelector(".ai-msg.think");if(t)t.remove();add("The assistant is a bit busy. Please try again later, or call us at 1898008681.","bot");})
+    .finally(function(){busy=false;send.disabled=false;input.focus();});
+  }
+  send.addEventListener("click",function(){ask(input.value);input.value="";});
+  input.addEventListener("keydown",function(e){if(e.key==="Enter"){ask(input.value);input.value="";}});
+})();
+</script>
+
 </body>
 </html>

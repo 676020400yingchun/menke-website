@@ -38,7 +38,17 @@
 - 地址：成都市高新区梓州大道 4111 号易上创客中心
 - 英文版地址：Yishang Maker Center, 4111 Zizhou Avenue, Chengdu Hi-Tech Zone
 
-## 五、安全加固
+## 五、AI 智客服
+
+全站右下角悬浮「AI 智客服」，由**豆包（火山方舟）**提供真实自动应答：
+
+- **前端**：8 页统一悬浮按钮 + 对话面板（中英文案自适应），同源 `fetch('/api/chat')`
+- **后端代理**：`ai-proxy.js`（Node 无依赖），Nginx `/api/` 反向代理到 `127.0.0.1:3100`
+- **安全**：豆包 API Key / 推理接入点只存放于服务器 `/www/wwwroot/menke-api/.env`（chmod 600），**不进前端、不入 GitHub**；代理做同源 Origin 校验
+- **运行**：PM2 守护（`menke-ai`），系统提示词内置门客业务/联系方式口径
+- **模型**：火山方舟推理接入点 `ep-20260930080508-5vwdx`
+
+## 六、安全加固
 
 - **页面级**：CSP meta、禁止复制（`user-select:none` + contextmenu/copy/cut/dragstart 拦截），联系区单独放行可复制
 - **服务器级**（Nginx `/etc/nginx/conf.d/menke.conf`）：`X-Frame-Options: DENY`、`X-Content-Type-Options: nosniff`、`Referrer-Policy`、`Permissions-Policy`、`server_tokens off`、assets 缓存、gzip
@@ -59,6 +69,7 @@
 ├── 首页-en.html / 业务-en.html / 案例-en.html / 我的-en.html  # 英文四页
 ├── assets/                                          # Hero/案例图、logo
 ├── deploy.sh                                        # 一键部署脚本
+├── ai-proxy.js                                      # AI 智客服后端代理（豆包）
 ├── README.md
 ├── _backup/                                         # 历史版本备份（不入库）
 └── _shots/                                          # 自检截图（.gitignore 排除）
