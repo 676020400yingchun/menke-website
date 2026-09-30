@@ -438,5 +438,39 @@ a{color:inherit;text-decoration:none}
 })();
 </script>
 
+
+<script id="ai-drag-script">
+(function(){
+  var fab=document.getElementById("aiFab"); if(!fab)return;
+  var KEY="menke-ai-fab-pos", sx=0, sy=0, dragging=false, wasDrag=false, R=29;
+  function setPos(x,y){
+    var r=fab.getBoundingClientRect();
+    x=Math.max(8,Math.min(window.innerWidth-r.width-8,x));
+    y=Math.max(8,Math.min(window.innerHeight-r.height-8,y));
+    fab.style.left=x+"px"; fab.style.right="auto";
+    fab.style.top=y+"px"; fab.style.bottom="auto";
+    fab.dataset.moved="1";
+  }
+  try{var p=JSON.parse(localStorage.getItem(KEY)); if(p&&typeof p.x==="number"){setPos(p.x,p.y);}}catch(e){}
+  fab.addEventListener("pointerdown",function(e){
+    sx=e.clientX; sy=e.clientY; dragging=false; wasDrag=false;
+    try{fab.setPointerCapture(e.pointerId);}catch(_){}
+  });
+  fab.addEventListener("pointermove",function(e){
+    var dx=e.clientX-sx, dy=e.clientY-sy;
+    if(!dragging && (Math.abs(dx)>6||Math.abs(dy)>6)) dragging=true;
+    if(dragging){ setPos(e.clientX-R, e.clientY-R); wasDrag=true; }
+  });
+  fab.addEventListener("pointerup",function(e){
+    if(wasDrag){
+      try{localStorage.setItem(KEY, JSON.stringify({x:parseFloat(fab.style.left),y:parseFloat(fab.style.top)}));}catch(_){}
+    }
+  });
+  fab.addEventListener("click",function(e){
+    if(wasDrag){ e.preventDefault(); e.stopPropagation(); wasDrag=false; }
+  }, true);
+})();
+</script>
+
 </body>
 </html>
