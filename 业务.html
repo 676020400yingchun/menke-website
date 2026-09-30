@@ -181,6 +181,31 @@ a{color:inherit;text-decoration:none}
   box-shadow:0 12px 30px rgba(10,30,74,.3);opacity:0;transition:all .35s;pointer-events:none;max-width:86vw;text-align:center;
 }
 .toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ===== 业务页 分层优化：页首横幅 / 业务卡片网格 ===== */
+.biz-hero{
+  position:relative;color:#fff;background:var(--ink);
+  padding:clamp(118px,16vw,150px) clamp(20px,5vw,56px) clamp(58px,8vw,80px);
+  overflow:hidden;
+}
+.biz-hero::before{content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(900px 460px at 80% 22%,rgba(22,119,255,.38),transparent 66%),
+    radial-gradient(680px 420px at 6% 88%,rgba(0,180,255,.26),transparent 60%),
+    linear-gradient(180deg,rgba(10,30,74,.1),rgba(10,30,74,0) 45%);
+}
+.biz-hero::after{content:"";position:absolute;inset:auto -12% -70px -12%;height:130px;background:radial-gradient(58% 100% at 50% 0%,rgba(0,180,255,.3),transparent 72%);filter:blur(9px)}
+.biz-hero .bh-in{position:relative;z-index:1;width:min(1120px,100%);margin:0 auto}
+.biz-hero .sec-kicker{display:flex;align-items:center;gap:12px;font-size:.84rem;font-weight:700;letter-spacing:.22em;color:#7cc0ff}
+.biz-hero .sec-kicker::before{content:"";width:26px;height:2px;background:var(--grad)}
+.biz-hero h1{font-family:var(--serif);font-weight:900;font-size:clamp(2rem,5.5vw,3.1rem);line-height:1.16;margin-top:18px;letter-spacing:.01em}
+.biz-hero h1 .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.biz-hero .bh-sub{margin-top:18px;max-width:46em;color:rgba(255,255,255,.82);font-weight:300;line-height:1.9;font-size:.95rem}
+
+.section{padding:clamp(60px,7vw,88px) clamp(20px,5vw,56px)}
+.biz-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,3vw,26px)}
+.biz-item{margin-top:0;height:100%}
+@media (max-width:860px){.biz-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -201,20 +226,24 @@ a{color:inherit;text-decoration:none}
   </nav>
 </header>
 
+<!-- ===== 页首横幅 ===== -->
+<header class="biz-hero">
+  <div class="bh-in">
+    <div class="sec-kicker" data-reveal>业务介绍 · 我们能为您做什么</div>
+    <h1 data-reveal>以文旅为支点，<br><span class="grad">向产业纵深延伸</span></h1>
+    <p class="bh-sub" data-reveal>门客的核心业务是文旅数字化，并以文旅为支点，向教育、农业等行业延伸信息化与数字化服务。十二年里，我们交付的不只是系统，更是运营；打通的不仅是数据，更是体验。</p>
+  </div>
+</header>
+
 <!-- ===== 业务介绍 ===== -->
 <section class="section" id="business">
   <div class="wrap">
-    <div class="sec-head" data-reveal>
-      <div class="sec-kicker">业务介绍 · 我们能为您做什么</div>
-      <h2>以文旅为支点，<br>向产业纵深延伸</h2>
-      <p class="sec-sub">门客的核心业务是文旅数字化，并以文旅为支点，向教育、农业等行业延伸信息化与数字化服务。十二年里，我们交付的不只是系统，更是运营；打通的不仅是数据，更是体验。</p>
-    </div>
-
     <div class="biz-statement" data-reveal>
       <div class="bs-mark">门客之道</div>
       <p>我们始终相信，<em>好的数字化，应该让人感觉不到技术，只感觉到被照顾</em>。它不打扰任何一种美好，却在每一个需要被接住的地方，稳稳地托住。</p>
     </div>
 
+    <div class="biz-grid">
     <article class="biz-item" data-reveal>
       <div class="b-no">01</div>
       <div class="b-body">
@@ -262,6 +291,7 @@ a{color:inherit;text-decoration:none}
         </div>
       </div>
     </article>
+    </div>
 
     <div class="method-wrap" data-reveal>
       <div class="method-head">
