@@ -48,7 +48,7 @@ echo "==> 1/4 上传页面与素材…"
 "${SCP_CMD[@]}" -r "$PROJ_DIR/assets/." "$REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR/assets/"
 
 echo "==> 2/4 设置入口(index.html)与权限…"
-"${SSH_CMD[@]}" "cd $REMOTE_DIR && cp -f 首页.html index.html && chmod 644 *.html && chmod -R 644 assets && echo files-ok"
+"${SSH_CMD[@]}" "cd $REMOTE_DIR && cp -f 首页.html index.html && chmod 644 *.html && find assets -type d -exec chmod 755 {} + && find assets -type f -exec chmod 644 {} + && echo files-ok"
 
 echo "==> 3/4 Nginx 校验并 reload…"
 "${SSH_CMD[@]}" "nginx -t && systemctl reload nginx && echo nginx-ok"
