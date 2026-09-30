@@ -207,6 +207,58 @@ a{color:inherit;text-decoration:none}
   box-shadow:0 12px 30px rgba(10,30,74,.3);opacity:0;transition:all .35s;pointer-events:none;max-width:86vw;text-align:center;
 }
 .toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ===== 首页 分层优化：CTA / 数据背书 / 业务 / 行动号召 ===== */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:999px;font-family:var(--sans);font-size:.98rem;font-weight:700;letter-spacing:.04em;cursor:pointer;transition:all .3s;border:none;line-height:1}
+.btn svg{width:17px;height:17px;flex:none}
+.btn-primary{background:var(--grad);color:#fff;box-shadow:0 10px 26px rgba(22,119,255,.42),0 0 0 1px rgba(122,190,255,.5)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 36px rgba(22,119,255,.52)}
+.btn-ghost{background:rgba(255,255,255,.07);color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.32)}
+.btn-ghost:hover{background:rgba(255,255,255,.16)}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+
+.band{width:100%;padding:82px clamp(20px,4vw,40px)}
+.band-inner{width:min(1120px,100%);margin:0 auto}
+.sec-head{text-align:center;margin-bottom:48px}
+.sec-kicker{display:inline-flex;align-items:center;gap:12px;font-size:.8rem;font-weight:700;letter-spacing:.3em;color:var(--warm);margin-bottom:16px}
+.sec-kicker::before,.sec-kicker::after{content:"";width:26px;height:1.5px;background:var(--grad)}
+.sec-title{font-family:var(--serif);font-weight:900;font-size:var(--fs-h2);line-height:1.28;color:var(--ink)}
+.sec-title .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* 数据背书 2×2 数据卡 */
+.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.m-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:32px 22px;text-align:center;box-shadow:var(--shadow);position:relative;overflow:hidden;transition:transform .35s,box-shadow .35s}
+.m-card::before{content:"";position:absolute;inset:0;background:linear-gradient(160deg,rgba(22,119,255,.07),transparent 62%)}
+.m-card:hover{transform:translateY(-5px);box-shadow:0 24px 56px rgba(10,30,74,.16)}
+.m-card .m-num{font-family:var(--serif);font-weight:900;font-size:clamp(2.2rem,5vw,3.2rem);line-height:1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.m-card .m-num .unit{font-size:.5em;color:var(--warm);-webkit-text-fill-color:var(--warm)}
+.m-card .m-cap{margin-top:12px;font-size:.86rem;font-weight:600;letter-spacing:.12em;color:var(--muted)}
+
+/* 业务四卡（深蓝底） */
+.biz-band{background:var(--ink);color:#fff}
+.biz-band .sec-title{color:#fff}
+.biz-band .sec-kicker{color:#7cc0ff}
+.biz-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.biz-card{position:relative;background:linear-gradient(150deg,rgba(255,255,255,.09),rgba(22,119,255,.06));border:1px solid rgba(255,255,255,.14);border-radius:20px;padding:26px 22px;cursor:pointer;display:block;transition:transform .35s,box-shadow .35s,border-color .35s;overflow:hidden}
+.biz-card::before{content:"";position:absolute;inset:0;border-radius:20px;padding:1px;background:linear-gradient(160deg,rgba(0,180,255,.65),rgba(255,255,255,.05) 60%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.7;transition:opacity .35s;pointer-events:none}
+.biz-card::after{content:"";position:absolute;top:-42px;right:-42px;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle,rgba(0,180,255,.18),transparent 70%);pointer-events:none}
+.biz-card:hover{transform:translateY(-5px);box-shadow:0 18px 46px rgba(22,119,255,.3);border-color:rgba(0,180,255,.5)}
+.biz-card:hover::before{opacity:1}
+.biz-card .b-no{position:absolute;top:18px;right:18px;font-family:var(--serif);font-weight:900;font-size:1.18rem;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:.1em}
+.biz-card .b-icon{position:relative;z-index:1;width:48px;height:48px;border-radius:13px;background:linear-gradient(135deg,rgba(22,119,255,.4),rgba(0,180,255,.22));border:1px solid rgba(122,190,255,.36);box-shadow:inset 0 0 12px rgba(0,180,255,.18);display:flex;align-items:center;justify-content:center;color:#e8f4ff;margin-bottom:16px}
+.biz-card h3{position:relative;z-index:1;font-family:var(--serif);font-weight:700;font-size:1.12rem;line-height:1.4}
+.biz-card p{position:relative;z-index:1;margin-top:8px;font-size:.7rem;color:rgba(255,255,255,.72);line-height:1.65}
+
+/* 行动号召带 */
+.cta-band{background:var(--grad);color:#fff;text-align:center}
+.cta-inner{padding:88px clamp(20px,4vw,40px)}
+.cta-band .cta-t{font-family:var(--serif);font-weight:900;font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.32;letter-spacing:.02em}
+.cta-band .cta-s{margin-top:14px;font-size:1rem;opacity:.92;font-weight:300;line-height:1.8}
+.cta-band .btn{margin-top:28px;background:#fff;color:var(--warm);box-shadow:0 12px 30px rgba(10,30,74,.28)}
+.cta-band .btn:hover{transform:translateY(-2px);box-shadow:0 16px 38px rgba(10,30,74,.36)}
+
+@media (max-width:860px){.metrics-grid{grid-template-columns:1fr 1fr}.biz-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.biz-card{padding:18px 16px}.band{padding:64px 18px}}
 </style>
 </head>
 <body>
@@ -233,37 +285,70 @@ a{color:inherit;text-decoration:none}
   <div class="hero-inner">
     <div class="hero-load d1 hero-kicker"><span class="k-line">成都门客文化传播有限公司</span><span class="k-sub">十二年数字深耕 · 与产业同行</span></div>
     <h1 class="hero-load d2">以数字为笔<br><span class="grad">为产业立传</span></h1>
-    <p class="hero-lead hero-load d3">十二年，我们不曾离开现场。真正的数字化，从来不在机房，而在游客的脚步、孩子的课堂、田埂上的收成里。我们愿做每一位合作伙伴身边，那位"最懂行的座上客"。</p>
-    <div class="hero-metrics hero-load d4">
-      <div class="metric"><div class="num" data-count="12">0</div><div class="cap">年专注深耕</div></div>
-      <div class="metric"><div class="num" data-count="4">0</div><div class="cap">大行业纵深</div></div>
-      <div class="metric"><div class="num"><span data-count="300">0</span><span class="unit">+</span></div><div class="cap">标杆项目落地</div></div>
-      <div class="metric"><div class="num"><span data-count="200">0</span><span class="unit">+</span></div><div class="cap">家合作伙伴</div></div>
-    </div>
-    <div class="biz-grid-hero hero-load d5">
-      <a class="biz-tile" href="业务.html" data-tag="文旅">
-        <span class="t-no">01</span>
-        <div class="t-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 19 L9 9 L13 13 L17 5 L21 19 Z"/><path d="M3 21 h18"/></svg></div>
-        <h4>文旅数字化</h4><p>让山水会说话，让景区会思考</p>
-      </a>
-      <a class="biz-tile" href="业务.html" data-tag="教育">
-        <span class="t-no">02</span>
-        <div class="t-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19 L12 14 L20 19 L12 24 Z"/><path d="M4 19 L4 10"/><path d="M20 19 L20 10"/><path d="M4 10 L12 5 L20 10 L12 15 Z"/></svg></div>
-        <h4>教育信息化</h4><p>让知识跨越山海，让课堂触手可及</p>
-      </a>
-      <a class="biz-tile" href="业务.html" data-tag="农业">
-        <span class="t-no">03</span>
-        <div class="t-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 21 C11 14 13 8 19 4 C20 10 19 15 13 20 Z"/><path d="M6 21 C6 17 8 13 13 10"/><path d="M11 21 h5"/></svg></div>
-        <h4>农业数字化</h4><p>让土地长出数据，让丰收有据可依</p>
-      </a>
-      <a class="biz-tile" href="业务.html" data-tag="运营">
-        <span class="t-no">04</span>
-        <div class="t-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2 v4 M12 18 v4 M2 12 h4 M18 12 h4 M5 5 l3 3 M16 16 l3 3 M19 5 l-3 3 M8 16 l-3 3"/></svg></div>
-        <h4>建设与运营服务</h4><p>从蓝图到落地，从上线到生长</p>
-      </a>
+    <p class="hero-lead hero-load d3">十二年，我们不曾离开现场。真正的数字化，从来不在机房，而在游客的脚步、孩子的课堂、田埂上的收成里。</p>
+    <div class="hero-cta hero-load d4">
+      <a class="btn btn-primary" href="业务.html">探索门客业务<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn btn-ghost" href="案例.html">查看合作案例</a>
     </div>
   </div>
   <div class="scroll-hint hero-load d5"><span>向心滑动 · 遇见门客</span><span class="wheel"></span></div>
+</section>
+
+<!-- ===== 数据背书 ===== -->
+<section class="band metrics-band" id="metrics">
+  <div class="band-inner">
+    <div class="sec-head" data-reveal>
+      <div class="sec-kicker">十二年深耕</div>
+      <div class="sec-title">用数字，<span class="grad">丈量产业足迹</span></div>
+    </div>
+    <div class="metrics-grid">
+      <div class="m-card" data-reveal><div class="m-num" data-count="12">0</div><div class="m-cap">年专注深耕</div></div>
+      <div class="m-card" data-reveal><div class="m-num" data-count="4">0</div><div class="m-cap">大行业纵深</div></div>
+      <div class="m-card" data-reveal><div class="m-num"><span data-count="300">0</span><span class="unit">+</span></div><div class="m-cap">标杆项目落地</div></div>
+      <div class="m-card" data-reveal><div class="m-num"><span data-count="200">0</span><span class="unit">+</span></div><div class="m-cap">家合作伙伴</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 核心业务四卡 ===== -->
+<section class="band biz-band" id="biz">
+  <div class="band-inner">
+    <div class="sec-head" data-reveal>
+      <div class="sec-kicker">核心业务</div>
+      <div class="sec-title">以数字为笔，<span class="grad">为四大产业立传</span></div>
+    </div>
+    <div class="biz-grid">
+      <a class="biz-card" href="业务.html" data-reveal>
+        <span class="b-no">01</span>
+        <div class="b-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 19 L9 9 L13 13 L17 5 L21 19 Z"/><path d="M3 21 h18"/></svg></div>
+        <h3>文旅数字化</h3><p>让山水会说话，让景区会思考</p>
+      </a>
+      <a class="biz-card" href="业务.html" data-reveal>
+        <span class="b-no">02</span>
+        <div class="b-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19 L12 14 L20 19 L12 24 Z"/><path d="M4 19 L4 10"/><path d="M20 19 L20 10"/><path d="M4 10 L12 5 L20 10 L12 15 Z"/></svg></div>
+        <h3>教育信息化</h3><p>让知识跨越山海，让课堂触手可及</p>
+      </a>
+      <a class="biz-card" href="业务.html" data-reveal>
+        <span class="b-no">03</span>
+        <div class="b-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 21 C11 14 13 8 19 4 C20 10 19 15 13 20 Z"/><path d="M6 21 C6 17 8 13 13 10"/><path d="M11 21 h5"/></svg></div>
+        <h3>农业数字化</h3><p>让土地长出数据，让丰收有据可依</p>
+      </a>
+      <a class="biz-card" href="业务.html" data-reveal>
+        <span class="b-no">04</span>
+        <div class="b-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2 v4 M12 18 v4 M2 12 h4 M18 12 h4 M5 5 l3 3 M16 16 l3 3 M19 5 l-3 3 M8 16 l-3 3"/></svg></div>
+        <h3>建设与运营服务</h3><p>从蓝图到落地，从上线到生长</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 行动号召 ===== -->
+<section class="cta-band" id="contact">
+  <div class="cta-inner">
+    <div class="cta-t" data-reveal>让您的产业，被数字重新点亮</div>
+    <div class="cta-s" data-reveal>无论文旅、教育、农业，还是从零到一的信息化建设，我们都愿做您身边最懂行的那位座上客。</div>
+    <a class="btn" href="我的.html#contact" data-reveal>立即联系我们<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
 </section>
 
 <!-- ===== footer ===== -->
