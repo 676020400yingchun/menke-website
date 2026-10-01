@@ -48,7 +48,7 @@ function callArk(messages, cb) {
       "Authorization": "Bearer " + ARK_KEY,
       "Content-Length": Buffer.byteLength(body),
     },
-    timeout: 60000,
+    timeout: 300000,
   }, (res) => {
     const chunks = [];
     res.on("data", (c) => chunks.push(c));
@@ -72,6 +72,7 @@ function callArk(messages, cb) {
 const server = http.createServer((req, res) => {
   const cors = (req.headers["origin"] || "").replace(/^https?:\/\//, "").replace(/:\d+$/, "").toLowerCase();
   const allowed = cors === "" || cors === "mk-cd.cn" || cors === "www.mk-cd.cn" ||
+    cors === "mkwh.work" || cors === "www.mkwh.work" || cors.endsWith(".mkwh.work") ||
     cors.endsWith(".doubaoapps.com") || cors.endsWith(".aiforce.cloud");
   res.setHeader("Access-Control-Allow-Origin", req.headers["origin"] || "*");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
