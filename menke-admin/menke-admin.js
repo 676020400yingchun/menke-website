@@ -124,21 +124,43 @@ const DEFAULT_CONTENT = {
 function ensureData() {
   fs.mkdirSync(DATA_DIR, { recursive: true });
   if (!fs.existsSync(DATA_FILE)) {
-    const seed = Object.assign({}, DEFAULT_CONTENT);
+    const seed = JSON.parse(JSON.stringify(DEFAULT_CONTENT));
     seed.meta = { updatedAt: new Date().toISOString() };
+    ensureIds(seed);
     fs.writeFileSync(DATA_FILE, JSON.stringify(seed, null, 2), "utf-8");
   }
+}
+// 为每条条目数据补齐/校验唯一 ID（幂等：已有 id 保留；缺失或重复则生成 UUID，终身不变）
+function ensureIds(content) {
+  const PATHS = [
+    ["stats", "items"], ["biz", "items"], ["cases", "items"],
+    ["en", "stats", "items"], ["en", "biz", "items"], ["en", "cases", "items"]
+  ];
+  const seen = {};
+  PATHS.forEach(function (seg) {
+    var o = content;
+    for (var i = 0; i < seg.length - 1; i++) { o = (o && o[seg[i]]) || {}; }
+    var list = o[seg[seg.length - 1]];
+    if (!Array.isArray(list)) return;
+    list.forEach(function (it) {
+      if (!it || typeof it !== "object") return;
+      if (!it.id || seen[it.id]) it.id = crypto.randomUUID();
+      seen[it.id] = true;
+    });
+  });
+  return content;
 }
 function readContent() {
   ensureData();
   try {
     var c = JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"));
     if (!c.en) c.en = JSON.parse(JSON.stringify(DEFAULT_CONTENT.en)); // 旧数据兜底英文模型
-    return c;
+    return ensureIds(c);
   }
   catch (e) { return Object.assign({}, DEFAULT_CONTENT); }
 }
 function writeContent(content) {
+  ensureIds(content);
   content.meta = content.meta || {};
   content.meta.updatedAt = new Date().toISOString();
   fs.writeFileSync(DATA_FILE, JSON.stringify(content, null, 2), "utf-8");
