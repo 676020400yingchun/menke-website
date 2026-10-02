@@ -197,12 +197,15 @@ const server = http.createServer((req, res) => {
   const url = (req.url || "").split("?")[0];
   const method = req.method || "GET";
 
-  // CORS：允许同源 mkwh.work 及其子域、本地
+  // CORS：仅允许可信来源（同源 mkwh.work、doubaoapps、aiforce、本地）；其余不反射 Origin
   const origin = req.headers["origin"] || "";
-  res.setHeader("Access-Control-Allow-Origin", origin || "*");
+  const o = origin.replace(/^https?:\/\//, "").replace(/:\d+$/, "").toLowerCase();
+  const okOrigin = o === "" || o === "mkwh.work" || o.endsWith(".mkwh.work") ||
+    o.endsWith(".doubaoapps.com") || o.endsWith(".aiforce.cloud") || o === "localhost" || o === "127.0.0.1";
+  res.setHeader("Access-Control-Allow-Origin", okOrigin ? (origin || "*") : "");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
+  if (okOrigin) res.setHeader("Access-Control-Allow-Credentials", "true");
   if (method === "OPTIONS") { res.writeHead(204); return res.end(); }
 
   // 公开：官网读取内容
@@ -235,6 +238,11 @@ const server = http.createServer((req, res) => {
       return readBody(req, body => {
         let c = null;
         try { c = JSON.parse(body); } catch (e) { return json(res, 400, { ok: false, error: "JSON 解析失败" }); }
+        // 结构校验：必须为对象且含核心字段，防止任意结构污染内容库
+        if (!c || typeof c !== "object" || Array.isArray(c) ||
+            !c.stats || !c.biz || !c.cases || !c.contact || !c.ai) {
+          return json(res, 400, { ok: false, error: "内容结构不完整（缺少 stats/biz/cases/contact/ai）" });
+        }
         writeContent(c);
         return json(res, 200, { ok: true, updatedAt: c.meta.updatedAt });
       });
@@ -250,8 +258,21 @@ const server = http.createServer((req, res) => {
         const m = /^data:image\/([\w.+-]+);base64,/.exec(data);
         if (m) { ext = m[1].toLowerCase().replace("jpeg", "jpg"); b64 = data.slice(m[0].length); }
         if (/^[a-z0-9_.+-]{1,12}$/.test(field) === false) return json(res, 400, { ok: false, error: "field 非法" });
+        // 扩展名白名单：仅允许安全位图，拒绝 SVG 等可携带脚本的类型（防存储型 XSS）
+        if (["png", "jpg", "gif", "webp"].indexOf(ext) === -1) {
+          return json(res, 400, { ok: false, error: "仅支持 png/jpg/gif/webp 图片" });
+        }
         const buf = Buffer.from(b64, "base64");
         if (!buf.length) return json(res, 400, { ok: false, error: "图片数据解码失败" });
+        // 魔术字节校验：确认为真实图片，防止伪造/非图片内容
+        const m0 = buf[0], m1 = buf[1], m2 = buf[2], m3 = buf[3];
+        const ascii = (s, a, n) => buf.toString("ascii", a, a + n) === s;
+        const magicOk =
+          ext === "png" ? (m0 === 0x89 && m1 === 0x50 && m2 === 0x4e && m3 === 0x47) :
+          ext === "jpg" ? (m0 === 0xff && m1 === 0xd8 && m2 === 0xff) :
+          ext === "gif" ? (ascii("GIF", 0, 3) && (m3 === 0x38)) :
+          ext === "webp" ? (ascii("RIFF", 0, 4) && ascii("WEBP", 8, 4)) : false;
+        if (!magicOk) return json(res, 400, { ok: false, error: "图片内容校验失败（非有效图片文件）" });
         const dir = path.join(WEB_ROOT, "assets", "upload");
         fs.mkdirSync(dir, { recursive: true });
         const fname = Date.now() + "_" + field + "." + ext;
