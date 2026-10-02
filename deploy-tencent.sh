@@ -90,6 +90,23 @@ server {
         proxy_http_version 1.1;
         proxy_set_header Host \$host;
     }
+    location /admin {
+        proxy_pass http://127.0.0.1:3200;
+        proxy_http_version 1.1;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+    }
+    location /api/admin/ {
+        proxy_pass http://127.0.0.1:3200;
+        proxy_http_version 1.1;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+    }
+    location = /api/content {
+        proxy_pass http://127.0.0.1:3200;
+        proxy_http_version 1.1;
+        proxy_set_header Host \$host;
+    }
     location ~* \.(jpg|jpeg|png|gif|webp|svg|ico|css|js)$ {
         expires 7d;
         add_header Cache-Control 'public';

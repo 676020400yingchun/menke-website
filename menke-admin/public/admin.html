@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>门客官网 · 内容管理后台</title>
+<style>
+:root{--ink:#0A1E4A;--warm:#1677FF;--cool:#00B4FF;--bg:#F4F7FC;--card:#fff;--line:#E3EEFF;--muted:#6b7a99;--ok:#12b76a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+button{font-family:inherit;cursor:pointer}
+input,textarea{font-family:inherit;width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:.88rem;color:var(--ink);outline:none;background:#FBFDFF}
+input:focus,textarea:focus{border-color:var(--warm);box-shadow:0 0 0 3px rgba(22,119,255,.12)}
+textarea{resize:vertical;min-height:70px;line-height:1.6}
+label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0 5px}
+
+/* 登录 */
+#loginView{display:flex;align-items:center;justify-content:center;min-height:100vh}
+.login-card{width:min(380px,92vw);background:var(--card);border:1px solid var(--line);border-radius:20px;padding:36px 34px;box-shadow:0 18px 48px rgba(10,30,74,.08)}
+.login-card h1{font-size:1.35rem;letter-spacing:.02em}
+.login-card .sub{font-size:.8rem;color:var(--muted);margin-top:6px;margin-bottom:22px}
+.btn{display:inline-flex;align-items:center;justify-content:center;border:none;border-radius:999px;padding:11px 22px;font-weight:700;font-size:.85rem;letter-spacing:.03em;color:#fff;background:linear-gradient(135deg,var(--warm),var(--cool));box-shadow:0 8px 20px rgba(22,119,255,.28)}
+.btn:hover{filter:brightness(1.05)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.btn.ghost{background:#E8F1FF;color:var(--warm);box-shadow:none}
+.err{color:#d92d20;font-size:.8rem;margin-top:10px;min-height:1em}
+
+/* 主界面 */
+#appView{display:none}
+.topbar{background:var(--ink);color:#fff;padding:14px 24px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:20}
+.topbar .logo{font-weight:900;font-size:1.05rem;letter-spacing:.04em}
+.topbar .logo b{background:linear-gradient(90deg,#7cc0ff,#00B4FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.topbar .sp{flex:1}
+.topbar .meta{font-size:.76rem;color:rgba(255,255,255,.6)}
+.topbar .saved{font-size:.76rem;color:#7CF5B0;min-width:120px;text-align:right}
+.tabs{display:flex;gap:8px;padding:14px 24px 0;flex-wrap:wrap}
+.tab{padding:9px 18px;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:.85rem;font-weight:600;color:#4a5b7a}
+.tab.active{background:linear-gradient(135deg,var(--warm),var(--cool));color:#fff;border-color:transparent}
+.wrap{max-width:1080px;margin:0 auto;padding:22px 24px 60px}
+.panel{display:none;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin-top:16px}
+.panel.active{display:block}
+.panel h2{font-size:1.1rem;margin-bottom:4px}
+.panel .p-sub{font-size:.8rem;color:var(--muted);margin-bottom:14px}
+.divider{height:1px;background:var(--line);margin:18px 0}
+.card-block{border:1px dashed #CFE3FF;border-radius:12px;padding:14px 16px;margin-top:14px;background:#F8FBFF}
+.card-block h3{font-size:.92rem;color:var(--ink)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+.hint{font-size:.72rem;color:#9aa8c0;margin-top:4px}
+.save-bar{display:flex;align-items:center;gap:14px;margin-top:22px;position:sticky;bottom:16px}
+.save-status{font-size:.82rem;color:var(--muted)}
+@media(max-width:640px){.grid2{grid-template-columns:1fr}}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:11px 22px;border-radius:999px;font-size:.85rem;opacity:0;transition:all .3s;z-index:99;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- 登录 -->
+<div id="loginView">
+  <div class="login-card">
+    <h1>门客官网 · 内容管理后台</h1>
+    <div class="sub">MENKE Website Admin · 登录后管理官网内容</div>
+    <form id="loginForm">
+      <label>账号</label>
+      <input id="lUser" autocomplete="username" placeholder="请输入管理员账号" required>
+      <label>密码</label>
+      <input id="lPass" type="password" autocomplete="current-password" placeholder="请输入密码" required>
+      <div class="err" id="loginErr"></div>
+      <button class="btn" style="width:100%;margin-top:14px" id="loginBtn" type="submit">登 录</button>
+    </form>
+  </div>
+</div>
+
+<!-- 主界面 -->
+<div id="appView">
+  <div class="topbar">
+    <div class="logo">门客 <b>内容管理后台</b></div>
+    <div class="sp"></div>
+    <div class="saved" id="saveStatus"></div>
+    <div class="meta" id="metaInfo"></div>
+    <button class="btn ghost" id="logoutBtn" style="padding:8px 16px;font-size:.8rem">退出</button>
+  </div>
+  <div class="tabs">
+    <button class="tab active" data-tab="cases">案例项目</button>
+    <button class="tab" data-tab="biz">业务条目</button>
+    <button class="tab" data-tab="stats">数据指标</button>
+    <button class="tab" data-tab="contact">联系方式</button>
+    <button class="tab" data-tab="ai">AI 客服</button>
+  </div>
+
+  <div class="wrap">
+
+    <!-- 案例 -->
+    <div class="panel active" id="panel-cases">
+      <h2>案例项目</h2><div class="p-sub">案例页的标题与 4 个案例卡片内容</div>
+      <label>页眉小标题（kicker）</label><input id="c_kicker">
+      <label>主标题（换行即分行显示）</label><textarea id="c_title" rows="2"></textarea>
+      <label>导语</label><textarea id="c_sub" rows="2"></textarea>
+      <div id="caseItems"></div>
+      <div class="save-bar"><button class="btn" onclick="save()">保存全部更改</button><span class="save-status">保存后官网（mkwh.work）即时生效</span></div>
+    </div>
+
+    <!-- 业务 -->
+    <div class="panel" id="panel-biz">
+      <h2>业务条目</h2><div class="p-sub">业务页首屏标语与 4 个业务条目</div>
+      <label>首屏小标题（kicker）</label><input id="b_kicker">
+      <div class="grid2">
+        <div><label>首屏标题·第一行</label><input id="b_l1"></div>
+        <div><label>首屏标题·第二行</label><input id="b_l2"></div>
+      </div>
+      <label>首屏说明段</label><textarea id="b_sub" rows="3"></textarea>
+      <label>品牌理念段</label><textarea id="b_stmt" rows="2"></textarea>
+      <div id="bizItems"></div>
+      <div class="save-bar"><button class="btn" onclick="save()">保存全部更改</button><span class="save-status">保存后官网（mkwh.work）即时生效</span></div>
+    </div>
+
+    <!-- 指标 -->
+    <div class="panel" id="panel-stats">
+      <h2>数据指标</h2><div class="p-sub">首页「数字见证实力」数据带（4 项）</div>
+      <div class="grid2">
+        <div><label>数据带标题</label><input id="s_title"></div>
+        <div><label>数据带副标题</label><input id="s_subtitle"></div>
+      </div>
+      <div id="statItems"></div>
+      <div class="save-bar"><button class="btn" onclick="save()">保存全部更改</button><span class="save-status">保存后官网（mkwh.work）即时生效</span></div>
+    </div>
+
+    <!-- 联系 -->
+    <div class="panel" id="panel-contact">
+      <h2>联系方式</h2><div class="p-sub">我的页联系区内容（图标旁文字）</div>
+      <div class="grid2">
+        <div><label>地址</label><input id="ct_address"></div>
+        <div><label>官网</label><input id="ct_website"></div>
+        <div><label>邮箱</label><input id="ct_email"></div>
+        <div><label>电话</label><input id="ct_phone"></div>
+      </div>
+      <label>CTA 按钮文案</label><input id="ct_cta">
+      <div class="save-bar"><button class="btn" onclick="save()">保存全部更改</button><span class="save-status">保存后官网（mkwh.work）即时生效</span></div>
+    </div>
+
+    <!-- AI -->
+    <div class="panel" id="panel-ai">
+      <h2>AI 客服配置</h2><div class="p-sub">AI 智客服欢迎语与副标题</div>
+      <label>副标题（悬浮球内小字）</label><input id="ai_subtitle">
+      <label>欢迎语（客服首条消息）</label><textarea id="ai_welcome" rows="4"></textarea>
+      <div class="hint">后端系统提示词（业务口径）如需调整，请在 ai-proxy.js 的 SYS 中维护。</div>
+      <div class="save-bar"><button class="btn" onclick="save()">保存全部更改</button><span class="save-status">保存后官网（mkwh.work）即时生效</span></div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  var TOKEN = localStorage.getItem("menke_admin_token") || "";
+  var content = null;
+
+  var $ = function(id){ return document.getElementById(id); };
+  function toast(msg){ var t=$("toast"); t.textContent=msg; t.classList.add("show"); setTimeout(function(){t.classList.remove("show");},2200); }
+
+  function api(url, opts){
+    opts = opts || {};
+    opts.headers = opts.headers || {};
+    opts.headers["Content-Type"] = "application/json";
+    if(TOKEN) opts.headers["Authorization"] = "Bearer " + TOKEN;
+    return fetch(url, opts).then(function(r){
+      if(r.status === 401) { logout(); throw new Error("unauth"); }
+      return r.json().then(function(j){ if(!j.ok) throw new Error(j.error||"请求失败"); return j; });
+    });
+  }
+
+  // 登录
+  $("loginForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    $("loginErr").textContent="";
+    var btn=$("loginBtn"); btn.disabled=true; btn.textContent="登录中…";
+    fetch("/api/admin/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({user:$("lUser").value,pass:$("lPass").value})})
+      .then(function(r){ return r.json().then(function(j){ return {s:r.status, j:j}; }); })
+      .then(function(r){
+        if(r.s!==200 || !r.j.token){ $("loginErr").textContent = r.j.error||"登录失败"; }
+        else { TOKEN=r.j.token; localStorage.setItem("menke_admin_token",TOKEN); enterApp(); }
+      })
+      .catch(function(){ $("loginErr").textContent="网络错误，请重试"; })
+      .finally(function(){ btn.disabled=false; btn.textContent="登 录"; });
+  });
+  $("logoutBtn").addEventListener("click", logout);
+  function logout(){ TOKEN=""; localStorage.removeItem("menke_admin_token"); $("appView").style.display="none"; $("loginView").style.display="flex"; }
+
+  // 进入主界面
+  function enterApp(){
+    $("loginView").style.display="none";
+    $("appView").style.display="block";
+    api("/api/admin/content").then(function(r){
+      content = r.content;
+      fillForms();
+      $("saveStatus").textContent = "上次保存：" + (content.meta.updatedAt||"-");
+      $("metaInfo").textContent = "内容已就绪";
+    }).catch(function(e){ toast("加载失败"); });
+  }
+
+  // Tab 切换
+  Array.prototype.slice.call(document.querySelectorAll(".tab")).forEach(function(tab){
+    tab.addEventListener("click", function(){
+      Array.prototype.slice.call(document.querySelectorAll(".tab")).forEach(function(x){x.classList.remove("active");});
+      tab.classList.add("active");
+      Array.prototype.slice.call(document.querySelectorAll(".panel")).forEach(function(p){p.classList.remove("active");});
+      $("panel-"+tab.getAttribute("data-tab")).classList.add("active");
+    });
+  });
+
+  function esc(v){ var d=document.createElement("div"); d.textContent=(v==null?"":String(v)); return d.innerHTML; }
+
+  // ---- 渲染表单 ----
+  function fillForms(){
+    var c=content;
+    $("c_kicker").value=c.cases.kicker;
+    $("c_title").value=c.cases.title;
+    $("c_sub").value=c.cases.sub;
+    renderCases();
+
+    $("b_kicker").value=c.biz.heroKicker;
+    $("b_l1").value=c.biz.heroLine1;
+    $("b_l2").value=c.biz.heroLine2;
+    $("b_sub").value=c.biz.heroSub;
+    $("b_stmt").value=c.biz.statement;
+    renderBiz();
+
+    $("s_title").value=c.stats.title;
+    $("s_subtitle").value=c.stats.subtitle;
+    renderStats();
+
+    $("ct_address").value=c.contact.address;
+    $("ct_website").value=c.contact.website;
+    $("ct_email").value=c.contact.email;
+    $("ct_phone").value=c.contact.phone;
+    $("ct_cta").value=c.contact.ctaText;
+
+    $("ai_subtitle").value=c.ai.subtitle;
+    $("ai_welcome").value=c.ai.welcome;
+  }
+
+  function renderCases(){
+    var h="";
+    content.cases.items.forEach(function(it,i){
+      h+='<div class="card-block"><h3>案例 '+(i+1)+' · 标签 '+esc(it.tag)+'</h3>'+
+        '<div class="grid2"><div><label>标签</label><input data-case="tag" data-i="'+i+'"></div>'+
+        '<div><label>脚注（如：文旅智慧化 · 2025）</label><input data-case="foot" data-i="'+i+'"></div></div>'+
+        '<label>标题</label><input data-case="title" data-i="'+i+'">'+
+        '<label>标语</label><input data-case="slogan" data-i="'+i+'">'+
+        '<label>描述</label><textarea data-case="desc" data-i="'+i+'" rows="4"></textarea>'+
+        '</div>';
+    });
+    $("caseItems").innerHTML=h;
+    content.cases.items.forEach(function(it,i){
+      var el=$("caseItems").querySelectorAll("[data-case][data-i='"+i+"']");
+      var map={tag:it.tag,foot:it.foot,title:it.title,slogan:it.slogan,desc:it.desc};
+      el.forEach(function(f){ f.value=map[f.getAttribute("data-case")]||""; });
+    });
+  }
+  function renderBiz(){
+    var h="";
+    content.biz.items.forEach(function(it,i){
+      h+='<div class="card-block"><h3>业务 '+(i+1)+' · '+esc(it.title)+'</h3>'+
+        '<div class="grid2"><div><label>编号</label><input data-biz="no" data-i="'+i+'"></div>'+
+        '<div><label>标题</label><input data-biz="title" data-i="'+i+'"></div></div>'+
+        '<label>金句</label><input data-biz="view" data-i="'+i+'">'+
+        '<label>描述</label><textarea data-biz="desc" data-i="'+i+'" rows="3"></textarea>'+
+        '<label>服务标签（用逗号分隔）</label><textarea data-biz="services" data-i="'+i+'" rows="2"></textarea>'+
+        '</div>';
+    });
+    $("bizItems").innerHTML=h;
+    content.biz.items.forEach(function(it,i){
+      $("bizItems").querySelectorAll("[data-biz][data-i='"+i+"']").forEach(function(f){
+        var k=f.getAttribute("data-biz");
+        f.value = k==="services" ? it.services.join("，") : (it[k]||"");
+      });
+    });
+  }
+  function renderStats(){
+    var h="";
+    content.stats.items.forEach(function(it,i){
+      h+='<div class="card-block"><h3>指标 '+(i+1)+' · '+esc(it.cap)+'</h3>'+
+        '<div class="grid2"><div><label>数字</label><input data-stat="num" data-i="'+i+'"></div>'+
+        '<div><label>单位（如 +、%）</label><input data-stat="unit" data-i="'+i+'"></div></div>'+
+        '<label>说明</label><input data-stat="cap" data-i="'+i+'">'+
+        '</div>';
+    });
+    $("statItems").innerHTML=h;
+    content.stats.items.forEach(function(it,i){
+      $("statItems").querySelectorAll("[data-stat][data-i='"+i+"']").forEach(function(f){
+        f.value=it[f.getAttribute("data-stat")]||"";
+      });
+    });
+  }
+
+  function readItems(containerId, sel, keyAttr, fieldAttr, target){
+    Array.prototype.slice.call(document.querySelectorAll("#"+containerId+" ["+fieldAttr+"]")).forEach(function(f){
+      var i=f.getAttribute("data-i"); var k=f.getAttribute(fieldAttr);
+      var v=f.value;
+      if(sel==="[data-biz]" && k==="services"){ target[i].services = v.split(/[,，]/).map(function(s){return s.trim();}).filter(Boolean); }
+      else { target[i][k]=v; }
+    });
+  }
+
+  // 保存
+  window.save = function(){
+    // 读取所有面板当前输入到 content
+    content.cases.kicker=$("c_kicker").value;
+    content.cases.title=$("c_title").value;
+    content.cases.sub=$("c_sub").value;
+    readItems("caseItems","[data-case]","data-i","data-case",content.cases.items);
+
+    content.biz.heroKicker=$("b_kicker").value;
+    content.biz.heroLine1=$("b_l1").value;
+    content.biz.heroLine2=$("b_l2").value;
+    content.biz.heroSub=$("b_sub").value;
+    content.biz.statement=$("b_stmt").value;
+    readItems("bizItems","[data-biz]","data-i","data-biz",content.biz.items);
+
+    content.stats.title=$("s_title").value;
+    content.stats.subtitle=$("s_subtitle").value;
+    readItems("statItems","[data-stat]","data-i","data-stat",content.stats.items);
+
+    content.contact.address=$("ct_address").value;
+    content.contact.website=$("ct_website").value;
+    content.contact.email=$("ct_email").value;
+    content.contact.phone=$("ct_phone").value;
+    content.contact.ctaText=$("ct_cta").value;
+    content.contact.ctaMailTo="mailto:"+content.contact.email;
+
+    content.ai.subtitle=$("ai_subtitle").value;
+    content.ai.welcome=$("ai_welcome").value;
+
+    api("/api/admin/content",{method:"PUT",body:JSON.stringify(content)}).then(function(r){
+      $("saveStatus").textContent="上次保存："+r.updatedAt;
+      toast("保存成功，官网已更新");
+    }).catch(function(e){ toast("保存失败："+e.message); });
+  };
+
+  // 已登录则直接进入
+  if(TOKEN){ enterApp(); }
+})();
+</script>
+</body>
+</html>

@@ -304,7 +304,7 @@ a{color:inherit;text-decoration:none}
 <script>
 (function(){
   var fab=document.getElementById("aiFab"),panel=document.getElementById("aiPanel"),body=panel.querySelector(".ai-body"),input=panel.querySelector("input"),send=panel.querySelector("button");
-  var open=false,busy=false,greet="您好，我是门客的 AI 智客服。我可以为您介绍文旅智慧化、教育智慧化、农业智慧化等业务，以及我们的合作案例与联系方式。请问有什么可以帮您？";
+  var open=false,busy=false,greet=(window.__aiWelcome||"您好，我是门客的 AI 智客服。我可以为您介绍文旅智慧化、教育智慧化、农业智慧化等业务，以及我们的合作案例与联系方式。请问有什么可以帮您？");
   function add(text,who){
     var m=document.createElement("div");m.className="ai-msg "+who;m.textContent=text;body.appendChild(m);body.scrollTop=body.scrollHeight;
   }
@@ -362,5 +362,52 @@ a{color:inherit;text-decoration:none}
 })();
 </script>
 
+<script>
+/* 门客官网 · 内容动态渲染（管理后台 content.json 即时生效，API 不可用时保留静态内容） */
+(function(){
+  var fmt=function(v){return v==null?"":String(v);};
+  function txt(el,v){if(el)el.textContent=fmt(v);}
+  function html(el,v){if(!el)return;el.innerHTML=fmt(v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/\n/g,"<br>");}
+  function icon(el,v){if(!el)return;var icons=el.querySelectorAll("svg");el.textContent="";for(var i=0;i<icons.length;i++)el.appendChild(icons[i]);el.appendChild(document.createTextNode(fmt(v)));}
+  function apply(c){
+    if(c.stats){
+      txt(document.querySelector(".metrics-title"),c.stats.title);
+      txt(document.querySelector(".metrics-sub"),c.stats.subtitle);
+      var cards=document.querySelectorAll(".m-card");
+      c.stats.items.forEach(function(it,i){var card=cards[i];if(!card)return;var n=card.querySelector(".m-num");if(n){n.textContent=fmt(it.num);var u=n.querySelector(".unit");if(u)u.textContent=fmt(it.unit);if(n.hasAttribute("data-count"))n.setAttribute("data-count",fmt(it.num));}txt(card.querySelector(".m-cap"),it.cap);});
+    }
+    if(c.biz){
+      txt(document.querySelector(".biz-hero .sec-kicker"),c.biz.heroKicker);
+      var h1=document.querySelector(".biz-hero h1");if(h1)h1.innerHTML=fmt(c.biz.heroLine1).replace(/&/g,"&amp;").replace(/</g,"&lt;")+"<br><span class=\"grad\">"+fmt(c.biz.heroLine2).replace(/&/g,"&amp;").replace(/</g,"&lt;")+"</span>";
+      txt(document.querySelector(".biz-hero .bh-sub"),c.biz.heroSub);
+      txt(document.querySelector(".biz-statement p"),c.biz.statement);
+      var bit=document.querySelectorAll(".biz-item");c.biz.items.forEach(function(it,i){var el=bit[i];if(!el)return;txt(el.querySelector(".b-no"),it.no);txt(el.querySelector("h3"),it.title);txt(el.querySelector(".b-view"),it.view);txt(el.querySelector(".b-desc"),it.desc);var svc=el.querySelector(".biz-svc");if(svc)svc.innerHTML=it.services.map(function(s){return "<span>"+fmt(s).replace(/&/g,"&amp;").replace(/</g,"&lt;")+"</span>";}).join("");});
+      var bc=document.querySelectorAll(".biz-card");c.biz.items.forEach(function(it,i){var el=bc[i];if(!el)return;txt(el.querySelector(".b-no"),it.no);txt(el.querySelector("h3"),it.title);txt(el.querySelector("p"),it.view);});
+    }
+    if(c.cases){
+      var sec=document.getElementById("cases");if(sec){
+        txt(sec.querySelector(".sec-kicker"),c.cases.kicker);
+        html(sec.querySelector("h2"),c.cases.title);
+        txt(sec.querySelector(".sec-sub"),c.cases.sub);
+        var cc=sec.querySelectorAll(".case-card");c.cases.items.forEach(function(it,i){var el=cc[i];if(!el)return;txt(el.querySelector(".c-tag"),it.tag);txt(el.querySelector(".c-body h3"),it.title);txt(el.querySelector(".c-slogan"),it.slogan);txt(el.querySelector(".c-desc"),it.desc);txt(el.querySelector(".c-foot"),it.foot);});
+      }
+    }
+    if(c.contact){
+      var con=document.getElementById("contact");if(con){
+        var ln=con.querySelectorAll(".c-line");
+        if(ln[0])icon(ln[0],c.contact.address);
+        if(ln[1]){var a=ln[1].querySelector("a");if(a){a.textContent=fmt(c.contact.website);a.href="https://"+fmt(c.contact.website);}}
+        var cta=con.querySelector("a.btn-primary");if(cta){cta.textContent=fmt(c.contact.ctaText);cta.href="mailto:"+fmt(c.contact.email);}
+      }
+    }
+    if(c.ai){
+      txt(document.querySelector(".ai-head .ai-sub"),c.ai.subtitle);
+      window.__aiWelcome=fmt(c.ai.welcome);
+    }
+  }
+  function run(){try{fetch("/api/content").then(function(r){if(!r.ok)throw new Error("http"+r.status);return r.json();}).then(function(d){if(d&&d.content)apply(d.content);}).catch(function(){});}catch(e){}}
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);else run();
+})();
+</script>
 </body>
 </html>
