@@ -104,6 +104,13 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
 @media(max-width:640px){.grid2{grid-template-columns:1fr}.ov-cards{grid-template-columns:1fr 1fr}}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:11px 22px;border-radius:999px;font-size:.85rem;opacity:0;transition:all .3s;z-index:99;box-shadow:0 8px 24px rgba(0,0,0,.2)}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.img-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:6px}
+.img-item{border:1px solid #E2E8F0;border-radius:12px;padding:14px;background:#fff}
+.img-lab{font-weight:700;font-size:.86rem;color:var(--ink);margin-bottom:10px}
+.img-prev{height:130px;display:flex;align-items:center;justify-content:center;background:#F6F8FB;border-radius:9px;margin-bottom:10px;overflow:hidden;border:1px solid #EAF0F6}
+.img-prev img{max-width:100%;max-height:100%;object-fit:contain;transition:opacity .2s}
+.img-item input[type=file]{width:100%;font-size:.76rem;color:#374151}
+.img-url{font-size:.72rem;color:#6B7280;margin-top:8px;word-break:break-all}
 </style>
 </head>
 <body>
@@ -136,6 +143,7 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
       <button class="nav-item" data-tab="cases"><span class="dot"></span><span>案例项目</span></button>
       <button class="nav-item" data-tab="contact"><span class="dot"></span><span>联系方式</span></button>
       <button class="nav-item" data-tab="ai"><span class="dot"></span><span>AI 客服</span></button>
+      <button class="nav-item" data-tab="images"><span class="dot"></span><span>首页图片</span></button>
     </div>
     <div class="sp"></div>
     <div class="user"><div class="avatar">M</div><div class="nm" id="whoName">menke</div><button class="out" id="logoutBtn">退出登录</button></div>
@@ -219,6 +227,14 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
         <div class="save-bar"><button class="btn" onclick="save()">保存全部更改</button><span class="save-status">保存后官网（mkwh.work）即时生效</span></div>
       </div>
 
+      <!-- 首页图片 -->
+      <div class="panel" id="panel-images">
+        <div class="panel-head"><h2>首页图片</h2><div class="p-sub">更换官网首页的品牌 Logo 与首屏主视觉图（支持新增/更换）</div></div>
+        <div class="img-grid" id="imgGrid"></div>
+        <div class="hint">点击各区域的「选择文件」上传新图，上传后需点「保存全部更改」才写入官网。</div>
+        <div class="save-bar"><button class="btn" onclick="save()">保存全部更改</button><span class="save-status">保存后官网（mkwh.work）即时生效</span></div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -229,7 +245,7 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
 (function(){
   var TOKEN = localStorage.getItem("menke_admin_token") || "";
   var content = null;
-  var TITLES = {total:["数据总览","门客官网当前内容规模与状态"],stats:["数据指标","首页数据带 · 可增删排序"],biz:["业务条目","业务页 · 可增删排序"],cases:["案例项目","案例页 · 可增删排序"],contact:["联系方式","我的页联系区"],ai:["AI 客服","AI 智客服配置"]};
+  var TITLES = {total:["数据总览","门客官网当前内容规模与状态"],stats:["数据指标","首页数据带 · 可增删排序"],biz:["业务条目","业务页 · 可增删排序"],cases:["案例项目","案例页 · 可增删排序"],contact:["联系方式","我的页联系区"],ai:["AI 客服","AI 智客服配置"],images:["首页图片","首页 Logo 与首屏主视觉"]};
 
   var $ = function(id){ return document.getElementById(id); };
   function toast(msg){ var t=$("toast"); t.textContent=msg; t.classList.add("show"); setTimeout(function(){t.classList.remove("show");},2200); }
@@ -321,6 +337,8 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
 
     $("ai_subtitle").value=c.ai.subtitle;
     $("ai_welcome").value=c.ai.welcome;
+
+    renderImages();
   }
 
   function renderCases(){
@@ -385,6 +403,36 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
       });
     });
   }
+
+  // ---- 首页图片 ----
+  function renderImages(){
+    var c=content.images||{};
+    var fields=[["logo","品牌 Logo（顶部左上角）"],["hero","首屏主视觉大图"],["hero2","首屏辅图（悬浮层）"]];
+    var h=fields.map(function(f){
+      var key=f[0],lab=f[1],url=c[key]||"";
+      return '<div class="img-item"><div class="img-lab">'+esc(lab)+'</div>'+
+        '<div class="img-prev"><img data-prev="'+key+'" src="'+esc(url)+'" onerror="this.style.opacity=.15"></div>'+
+        '<input type="file" accept="image/*" onchange="pickImg(\''+key+'\',this)">'+
+        '<div class="img-url">当前：'+esc(url||"（使用页面内置默认图，未更换）")+'</div></div>';
+    }).join("");
+    $("imgGrid").innerHTML=h;
+  }
+  window.pickImg = function(field, input){
+    var f=input.files&&input.files[0]; if(!f) return;
+    if(!/^image\//.test(f.type)) { toast("请选择图片文件"); return; }
+    var rd=new FileReader();
+    rd.onload=function(){
+      api("/api/admin/upload",{method:"POST",body:JSON.stringify({field:field,data:rd.result})})
+        .then(function(j){
+          content.images = content.images||{};
+          content.images[field]=j.url;
+          var prev=document.querySelector('[data-prev="'+field+'"]'); if(prev){prev.src=j.url;prev.style.opacity="";}
+          toast("图片已上传，请点「保存全部更改」生效");
+        })
+        .catch(function(e){ toast("上传失败："+e.message); });
+    };
+    rd.readAsDataURL(f);
+  };
 
   // ---- 数据总览 ----
   function renderTotal(){

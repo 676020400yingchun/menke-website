@@ -617,6 +617,11 @@ a{color:inherit;text-decoration:none}
       txt(document.querySelector(".ai-head .ai-sub"),c.ai.subtitle);
       window.__aiWelcome=fmt(c.ai.welcome);
     }
+    if(c.images){
+      var lg=document.querySelector('img[alt="门客"]');if(lg&&c.images.logo)lg.src=fmt(c.images.logo);
+      var hb=document.querySelector('.hero-bg img');if(hb&&c.images.hero)hb.src=fmt(c.images.hero);
+      var hs=document.querySelector('.hero-stage img');if(hs&&c.images.hero2)hs.src=fmt(c.images.hero2);
+    }
   }
   function run(){try{fetch("/api/content").then(function(r){if(!r.ok)throw new Error("http"+r.status);return r.json();}).then(function(d){if(d&&d.content)apply(d.content);}).catch(function(){});}catch(e){}}
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);else run();

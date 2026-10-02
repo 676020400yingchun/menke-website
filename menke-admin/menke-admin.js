@@ -14,10 +14,12 @@ const ADMIN_PASS = process.env.ADMIN_PASS || "menke@2026";
 const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, "data");
 const DATA_FILE = path.join(DATA_DIR, "content.json");
 const PUBLIC_DIR = path.join(__dirname, "public");
+const WEB_ROOT = process.env.WEB_ROOT || "/www/wwwroot/menke-web"; // 官网静态根（上传图片落盘目录）
 
 // ---------- 默认内容（初始值，对应官网当前文案） ----------
 const DEFAULT_CONTENT = {
   meta: { updatedAt: null },
+  images: { logo: "assets/logo-main.png", hero: "", hero2: "" },
   stats: {
     title: "数字见证实力",
     subtitle: "十二年深耕 · 从现场到产业的每一步",
@@ -110,7 +112,7 @@ function json(res, code, obj) {
 }
 function readBody(req, cb) {
   let b = "";
-  req.on("data", c => { b += c; if (b.length > 3 * 1024 * 1024) req.destroy(); });
+  req.on("data", c => { b += c; if (b.length > 15 * 1024 * 1024) req.destroy(); });
   req.on("end", () => cb(b));
 }
 
@@ -158,6 +160,26 @@ const server = http.createServer((req, res) => {
         try { c = JSON.parse(body); } catch (e) { return json(res, 400, { ok: false, error: "JSON 解析失败" }); }
         writeContent(c);
         return json(res, 200, { ok: true, updatedAt: c.meta.updatedAt });
+      });
+    }
+    // 图片上传：保存文件到官网静态目录，返回相对 URL（images 字段由 PUT 统一保存）
+    if (method === "POST" && url === "/api/admin/upload") {
+      return readBody(req, body => {
+        let field = "", data = "";
+        try { const d = JSON.parse(body); field = String(d.field || ""); data = String(d.data || ""); } catch (e) {}
+        if (!field || !data) return json(res, 400, { ok: false, error: "缺少 field 或图片数据" });
+        let b64 = data;
+        let ext = "png";
+        const m = /^data:image\/([\w.+-]+);base64,/.exec(data);
+        if (m) { ext = m[1].toLowerCase().replace("jpeg", "jpg"); b64 = data.slice(m[0].length); }
+        if (/^[a-z0-9_.+-]{1,12}$/.test(field) === false) return json(res, 400, { ok: false, error: "field 非法" });
+        const buf = Buffer.from(b64, "base64");
+        if (!buf.length) return json(res, 400, { ok: false, error: "图片数据解码失败" });
+        const dir = path.join(WEB_ROOT, "assets", "upload");
+        fs.mkdirSync(dir, { recursive: true });
+        const fname = Date.now() + "_" + field + "." + ext;
+        fs.writeFileSync(path.join(dir, fname), buf);
+        return json(res, 200, { ok: true, url: "/assets/upload/" + fname, field: field });
       });
     }
     return json(res, 404, { ok: false, error: "not found" });
