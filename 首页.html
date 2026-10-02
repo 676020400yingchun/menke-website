@@ -602,7 +602,7 @@ a{color:inherit;text-decoration:none}
         txt(sec.querySelector(".sec-kicker"),c.cases.kicker);
         html(sec.querySelector("h2"),c.cases.title);
         txt(sec.querySelector(".sec-sub"),c.cases.sub);
-        var cc=sec.querySelectorAll(".case-card");c.cases.items.forEach(function(it,i){var el=elAt(cc,i);if(!el)return;txt(el.querySelector(".c-tag"),it.tag);txt(el.querySelector(".c-body h3"),it.title);txt(el.querySelector(".c-slogan"),it.slogan);txt(el.querySelector(".c-desc"),it.desc);txt(el.querySelector(".c-foot"),it.foot);});
+        var cc=sec.querySelectorAll(".case-card");c.cases.items.forEach(function(it,i){var el=elAt(cc,i);if(!el)return;txt(el.querySelector(".c-tag"),it.tag);txt(el.querySelector(".c-body h3"),it.title);txt(el.querySelector(".c-slogan"),it.slogan);txt(el.querySelector(".c-desc"),it.desc);txt(el.querySelector(".c-foot"),it.foot);var ci=el.querySelector(".c-media img");if(ci&&it.img)ci.src=fmt(it.img);});
       }
     }
     if(c.contact){
