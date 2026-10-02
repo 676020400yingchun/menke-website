@@ -25,22 +25,40 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
 .btn.ghost{background:#E8F1FF;color:var(--warm);box-shadow:none}
 .err{color:#d92d20;font-size:.8rem;margin-top:10px;min-height:1em}
 
-/* 主界面 */
+/* ===== 看板布局：左侧导航 + 主区 ===== */
 #appView{display:none}
-.topbar{background:var(--ink);color:#fff;padding:14px 24px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:20}
-.topbar .logo{font-weight:900;font-size:1.05rem;letter-spacing:.04em}
-.topbar .logo b{background:linear-gradient(90deg,#7cc0ff,#00B4FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:236px;background:linear-gradient(180deg,#0A1E4A,#122a63);color:#fff;padding:20px 0;display:flex;flex-direction:column;z-index:30;overflow-y:auto}
+.sidebar .brand{padding:0 22px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sidebar .brand .cn{font-size:1.15rem;font-weight:900;letter-spacing:.04em}
+.sidebar .brand .cn b{background:linear-gradient(90deg,#7cc0ff,#00B4FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sidebar .brand .en{font-size:.66rem;color:rgba(255,255,255,.5);margin-top:4px;letter-spacing:.06em}
+.sidebar .nav-group{margin-top:18px}
+.sidebar .nav-label{font-size:.66rem;color:rgba(255,255,255,.45);padding:0 24px;letter-spacing:.1em;margin-bottom:6px}
+.nav-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:transparent;border:none;color:rgba(255,255,255,.82);font-size:.86rem;font-weight:500;padding:10px 24px;transition:background .18s}
+.nav-item:hover{background:rgba(255,255,255,.07)}
+.nav-item.active{background:linear-gradient(135deg,rgba(22,119,255,.35),rgba(0,180,255,.28));color:#fff;font-weight:700;border-left:3px solid #4DA3FF}
+.nav-item .dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.35);flex:none}
+.nav-item.active .dot{background:#7CF5B0}
+.sidebar .sp{flex:1}
+.sidebar .user{display:flex;align-items:center;gap:10px;padding:12px 24px;border-top:1px solid rgba(255,255,255,.08)}
+.sidebar .user .avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--warm),var(--cool));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem}
+.sidebar .user .nm{font-size:.82rem;color:rgba(255,255,255,.85);flex:1}
+.sidebar .user .out{font-size:.7rem;color:rgba(255,255,255,.55);border:none;background:transparent;padding:6px 10px;border-radius:8px;cursor:pointer}
+.sidebar .user .out:hover{background:rgba(255,255,255,.12);color:#fff}
+
+.main{margin-left:236px;min-height:100vh}
+.topbar{background:#fff;border-bottom:1px solid var(--line);padding:14px 26px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:20}
+.topbar h1{font-size:1.08rem;font-weight:800}
+.topbar .crumb{font-size:.72rem;color:var(--muted);margin-top:2px}
 .topbar .sp{flex:1}
-.topbar .meta{font-size:.76rem;color:rgba(255,255,255,.6)}
-.topbar .saved{font-size:.76rem;color:#7CF5B0;min-width:120px;text-align:right}
-.tabs{display:flex;gap:8px;padding:14px 24px 0;flex-wrap:wrap}
-.tab{padding:9px 18px;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:.85rem;font-weight:600;color:#4a5b7a}
-.tab.active{background:linear-gradient(135deg,var(--warm),var(--cool));color:#fff;border-color:transparent}
-.wrap{max-width:1080px;margin:0 auto;padding:22px 24px 60px}
-.panel{display:none;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin-top:16px}
+.topbar .upd{font-size:.76rem;color:var(--muted)}
+.topbar .upd b{color:var(--ok);font-weight:700}
+.wrap{max-width:1180px;margin:0 auto;padding:22px 26px 60px}
+.panel{display:none}
 .panel.active{display:block}
-.panel h2{font-size:1.1rem;margin-bottom:4px}
-.panel .p-sub{font-size:.8rem;color:var(--muted);margin-bottom:14px}
+.panel-head{margin-bottom:16px}
+.panel-head h2{font-size:1.12rem}
+.panel-head .p-sub{font-size:.8rem;color:var(--muted);margin-top:2px}
 .divider{height:1px;background:var(--line);margin:18px 0}
 .card-block{border:1px dashed #CFE3FF;border-radius:12px;padding:14px 16px;margin-top:14px;background:#F8FBFF}
 .card-block h3{font-size:.92rem;color:var(--ink)}
@@ -57,7 +75,33 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
 .add-row .btn{font-size:.78rem;padding:8px 18px}
 .save-bar{display:flex;align-items:center;gap:14px;margin-top:22px;position:sticky;bottom:16px}
 .save-status{font-size:.82rem;color:var(--muted)}
-@media(max-width:640px){.grid2{grid-template-columns:1fr}}
+
+/* 数据总览卡片 */
+.ov-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.ov-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 18px;box-shadow:0 10px 26px rgba(10,30,74,.05)}
+.ov-card .num{font-size:1.7rem;font-weight:900;color:var(--ink)}
+.ov-card .num small{font-size:.8rem;color:var(--muted);font-weight:600}
+.ov-card .lbl{font-size:.82rem;color:var(--muted);margin-top:4px}
+.ov-card .sub{font-size:.7rem;color:#9aa8c0;margin-top:6px}
+.ov-card .trend{font-size:.72rem;font-weight:700;margin-top:6px}
+.ov-card .trend.g{color:var(--ok)}
+.ov-card.grad{background:linear-gradient(135deg,#0A1E4A,#16308f);border:none}
+.ov-card.grad .num,.ov-card.grad .lbl{color:#fff}
+.ov-card.grad .num small{color:rgba(255,255,255,.6)}
+.ov-card.grad .sub{color:rgba(255,255,255,.55)}
+.ov-panels{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.ov-panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px}
+.ov-panel h4{font-size:.92rem;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.ov-panel h4 .bar{width:4px;height:14px;background:linear-gradient(180deg,var(--warm),var(--cool));border-radius:2px}
+.ov-list{list-style:none}
+.ov-list li{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.82rem}
+.ov-list li:last-child{border-bottom:none}
+.ov-list .t{flex:1;color:var(--ink)}
+.ov-list .v{font-weight:700;color:var(--warm)}
+.ov-list .tag{font-size:.68rem;padding:2px 8px;border-radius:999px;background:#E8F1FF;color:var(--warm)}
+
+@media(max-width:760px){.sidebar{width:74px}.sidebar .brand .en,.sidebar .nav-label,.nav-item span,.sidebar .user .nm{display:none}.nav-item{padding:12px 0;justify-content:center}.sidebar .brand{padding:0;text-align:center}.sidebar .brand .cn{font-size:.9rem}.sidebar .user{justify-content:center;padding:10px 0}.main{margin-left:74px}.wrap{padding:16px 14px 60px}.ov-cards{grid-template-columns:repeat(2,1fr)}.ov-panels{grid-template-columns:1fr}}
+@media(max-width:640px){.grid2{grid-template-columns:1fr}.ov-cards{grid-template-columns:1fr 1fr}}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:11px 22px;border-radius:999px;font-size:.85rem;opacity:0;transition:all .3s;z-index:99;box-shadow:0 8px 24px rgba(0,0,0,.2)}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
@@ -80,85 +124,102 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
   </div>
 </div>
 
-<!-- 主界面 -->
+<!-- 主界面：左侧导航 + 主区 -->
 <div id="appView">
-  <div class="topbar">
-    <div class="logo">门客 <b>内容管理后台</b></div>
+  <aside class="sidebar">
+    <div class="brand"><div class="cn">门客 <b>内容管理后台</b></div><div class="en">MENKE WEBSITE ADMIN</div></div>
+    <div class="nav-group">
+      <div class="nav-label">内容管理</div>
+      <button class="nav-item active" data-tab="total"><span class="dot"></span><span>数据总览</span></button>
+      <button class="nav-item" data-tab="stats"><span class="dot"></span><span>数据指标</span></button>
+      <button class="nav-item" data-tab="biz"><span class="dot"></span><span>业务条目</span></button>
+      <button class="nav-item" data-tab="cases"><span class="dot"></span><span>案例项目</span></button>
+      <button class="nav-item" data-tab="contact"><span class="dot"></span><span>联系方式</span></button>
+      <button class="nav-item" data-tab="ai"><span class="dot"></span><span>AI 客服</span></button>
+    </div>
     <div class="sp"></div>
-    <div class="saved" id="saveStatus"></div>
-    <div class="meta" id="metaInfo"></div>
-    <button class="btn ghost" id="logoutBtn" style="padding:8px 16px;font-size:.8rem">退出</button>
-  </div>
-  <div class="tabs">
-    <button class="tab active" data-tab="cases">案例项目</button>
-    <button class="tab" data-tab="biz">业务条目</button>
-    <button class="tab" data-tab="stats">数据指标</button>
-    <button class="tab" data-tab="contact">联系方式</button>
-    <button class="tab" data-tab="ai">AI 客服</button>
-  </div>
+    <div class="user"><div class="avatar">M</div><div class="nm" id="whoName">menke</div><button class="out" id="logoutBtn">退出登录</button></div>
+  </aside>
 
-  <div class="wrap">
-
-    <!-- 案例 -->
-    <div class="panel active" id="panel-cases">
-      <h2>案例项目</h2><div class="p-sub">案例页的标题与 4 个案例卡片内容</div>
-      <label>页眉小标题（kicker）</label><input id="c_kicker">
-      <label>主标题（换行即分行显示）</label><textarea id="c_title" rows="2"></textarea>
-      <label>导语</label><textarea id="c_sub" rows="2"></textarea>
-      <div id="caseItems"></div>
-      <div class="add-row"><button class="btn ghost" onclick="addItem('cases')">＋ 新增案例</button></div>
-      <div class="save-bar"><button class="btn" onclick="save()">保存全部更改</button><span class="save-status">保存后官网（mkwh.work）即时生效</span></div>
+  <div class="main">
+    <div class="topbar">
+      <div><h1 id="pageTitle">数据总览</h1><div class="crumb" id="pageCrumb">门客官网 · 内容管理后台</div></div>
+      <div class="sp"></div>
+      <div class="upd">更新于 <b id="updateTime">—</b></div>
+      <button class="btn ghost" id="refreshBtn" style="padding:8px 16px;font-size:.78rem">刷新</button>
     </div>
 
-    <!-- 业务 -->
-    <div class="panel" id="panel-biz">
-      <h2>业务条目</h2><div class="p-sub">业务页首屏标语与 4 个业务条目</div>
-      <label>首屏小标题（kicker）</label><input id="b_kicker">
-      <div class="grid2">
-        <div><label>首屏标题·第一行</label><input id="b_l1"></div>
-        <div><label>首屏标题·第二行</label><input id="b_l2"></div>
+    <div class="wrap">
+
+      <!-- 数据总览 -->
+      <div class="panel active" id="panel-total">
+        <div class="panel-head"><h2>数据总览</h2><div class="p-sub">门客官网当前各板块内容规模与状态</div></div>
+        <div class="ov-cards" id="ovCards"></div>
+        <div class="ov-panels" id="ovPanels"></div>
+        <div class="save-bar"><span class="save-status">内容即点即改，进入各板块编辑后保存生效</span></div>
       </div>
-      <label>首屏说明段</label><textarea id="b_sub" rows="3"></textarea>
-      <label>品牌理念段</label><textarea id="b_stmt" rows="2"></textarea>
-      <div id="bizItems"></div>
-      <div class="add-row"><button class="btn ghost" onclick="addItem('biz')">＋ 新增业务条目</button></div>
-      <div class="save-bar"><button class="btn" onclick="save()">保存全部更改</button><span class="save-status">保存后官网（mkwh.work）即时生效</span></div>
-    </div>
 
-    <!-- 指标 -->
-    <div class="panel" id="panel-stats">
-      <h2>数据指标</h2><div class="p-sub">首页「数字见证实力」数据带（4 项）</div>
-      <div class="grid2">
-        <div><label>数据带标题</label><input id="s_title"></div>
-        <div><label>数据带副标题</label><input id="s_subtitle"></div>
+      <!-- 数据指标 -->
+      <div class="panel" id="panel-stats">
+        <div class="panel-head"><h2>数据指标</h2><div class="p-sub">首页「数字见证实力」数据带（可增删排序）</div></div>
+        <div class="grid2">
+          <div><label>数据带标题</label><input id="s_title"></div>
+          <div><label>数据带副标题</label><input id="s_subtitle"></div>
+        </div>
+        <div id="statItems"></div>
+        <div class="add-row"><button class="btn ghost" onclick="addItem('stats')">＋ 新增指标</button></div>
+        <div class="save-bar"><button class="btn" onclick="save()">保存全部更改</button><span class="save-status">保存后官网（mkwh.work）即时生效</span></div>
       </div>
-      <div id="statItems"></div>
-      <div class="add-row"><button class="btn ghost" onclick="addItem('stats')">＋ 新增指标</button></div>
-      <div class="save-bar"><button class="btn" onclick="save()">保存全部更改</button><span class="save-status">保存后官网（mkwh.work）即时生效</span></div>
-    </div>
 
-    <!-- 联系 -->
-    <div class="panel" id="panel-contact">
-      <h2>联系方式</h2><div class="p-sub">我的页联系区内容（图标旁文字）</div>
-      <div class="grid2">
-        <div><label>地址</label><input id="ct_address"></div>
-        <div><label>官网</label><input id="ct_website"></div>
-        <div><label>邮箱</label><input id="ct_email"></div>
-        <div><label>电话</label><input id="ct_phone"></div>
+      <!-- 业务条目 -->
+      <div class="panel" id="panel-biz">
+        <div class="panel-head"><h2>业务条目</h2><div class="p-sub">业务页首屏标语与业务条目（可增删排序）</div></div>
+        <label>首屏小标题（kicker）</label><input id="b_kicker">
+        <div class="grid2">
+          <div><label>首屏标题·第一行</label><input id="b_l1"></div>
+          <div><label>首屏标题·第二行</label><input id="b_l2"></div>
+        </div>
+        <label>首屏说明段</label><textarea id="b_sub" rows="3"></textarea>
+        <label>品牌理念段</label><textarea id="b_stmt" rows="2"></textarea>
+        <div id="bizItems"></div>
+        <div class="add-row"><button class="btn ghost" onclick="addItem('biz')">＋ 新增业务条目</button></div>
+        <div class="save-bar"><button class="btn" onclick="save()">保存全部更改</button><span class="save-status">保存后官网（mkwh.work）即时生效</span></div>
       </div>
-      <label>CTA 按钮文案</label><input id="ct_cta">
-      <div class="save-bar"><button class="btn" onclick="save()">保存全部更改</button><span class="save-status">保存后官网（mkwh.work）即时生效</span></div>
-    </div>
 
-    <!-- AI -->
-    <div class="panel" id="panel-ai">
-      <h2>AI 客服配置</h2><div class="p-sub">AI 智客服欢迎语与副标题</div>
-      <label>副标题（悬浮球内小字）</label><input id="ai_subtitle">
-      <label>欢迎语（客服首条消息）</label><textarea id="ai_welcome" rows="4"></textarea>
-      <div class="hint">后端系统提示词（业务口径）如需调整，请在 ai-proxy.js 的 SYS 中维护。</div>
-      <div class="save-bar"><button class="btn" onclick="save()">保存全部更改</button><span class="save-status">保存后官网（mkwh.work）即时生效</span></div>
-    </div>
+      <!-- 案例项目 -->
+      <div class="panel" id="panel-cases">
+        <div class="panel-head"><h2>案例项目</h2><div class="p-sub">案例页标题与案例卡片内容（可增删排序）</div></div>
+        <label>页眉小标题（kicker）</label><input id="c_kicker">
+        <label>主标题（换行即分行显示）</label><textarea id="c_title" rows="2"></textarea>
+        <label>导语</label><textarea id="c_sub" rows="2"></textarea>
+        <div id="caseItems"></div>
+        <div class="add-row"><button class="btn ghost" onclick="addItem('cases')">＋ 新增案例</button></div>
+        <div class="save-bar"><button class="btn" onclick="save()">保存全部更改</button><span class="save-status">保存后官网（mkwh.work）即时生效</span></div>
+      </div>
 
+      <!-- 联系方式 -->
+      <div class="panel" id="panel-contact">
+        <div class="panel-head"><h2>联系方式</h2><div class="p-sub">我的页联系区内容（图标旁文字）</div></div>
+        <div class="grid2">
+          <div><label>地址</label><input id="ct_address"></div>
+          <div><label>官网</label><input id="ct_website"></div>
+          <div><label>邮箱</label><input id="ct_email"></div>
+          <div><label>电话</label><input id="ct_phone"></div>
+        </div>
+        <label>CTA 按钮文案</label><input id="ct_cta">
+        <div class="save-bar"><button class="btn" onclick="save()">保存全部更改</button><span class="save-status">保存后官网（mkwh.work）即时生效</span></div>
+      </div>
+
+      <!-- AI 客服 -->
+      <div class="panel" id="panel-ai">
+        <div class="panel-head"><h2>AI 客服配置</h2><div class="p-sub">AI 智客服欢迎语与副标题</div></div>
+        <label>副标题（悬浮球内小字）</label><input id="ai_subtitle">
+        <label>欢迎语（客服首条消息）</label><textarea id="ai_welcome" rows="4"></textarea>
+        <div class="hint">后端系统提示词（业务口径）如需调整，请在 ai-proxy.js 的 SYS 中维护。</div>
+        <div class="save-bar"><button class="btn" onclick="save()">保存全部更改</button><span class="save-status">保存后官网（mkwh.work）即时生效</span></div>
+      </div>
+
+    </div>
   </div>
 </div>
 
@@ -168,6 +229,7 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
 (function(){
   var TOKEN = localStorage.getItem("menke_admin_token") || "";
   var content = null;
+  var TITLES = {total:["数据总览","门客官网当前内容规模与状态"],stats:["数据指标","首页数据带 · 可增删排序"],biz:["业务条目","业务页 · 可增删排序"],cases:["案例项目","案例页 · 可增删排序"],contact:["联系方式","我的页联系区"],ai:["AI 客服","AI 智客服配置"]};
 
   var $ = function(id){ return document.getElementById(id); };
   function toast(msg){ var t=$("toast"); t.textContent=msg; t.classList.add("show"); setTimeout(function(){t.classList.remove("show");},2200); }
@@ -204,21 +266,29 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
   function enterApp(){
     $("loginView").style.display="none";
     $("appView").style.display="block";
+    loadContent();
+  }
+  function loadContent(){
     api("/api/admin/content").then(function(r){
       content = r.content;
       fillForms();
-      $("saveStatus").textContent = "上次保存：" + (content.meta.updatedAt||"-");
-      $("metaInfo").textContent = "内容已就绪";
+      renderTotal();
+      $("updateTime").textContent = (content.meta.updatedAt||"-").replace("T"," ").slice(0,19);
     }).catch(function(e){ toast("加载失败"); });
   }
+  $("refreshBtn").addEventListener("click", function(){ loadContent(); toast("已刷新"); });
 
-  // Tab 切换
-  Array.prototype.slice.call(document.querySelectorAll(".tab")).forEach(function(tab){
+  // 侧栏导航切换
+  Array.prototype.slice.call(document.querySelectorAll(".nav-item")).forEach(function(tab){
     tab.addEventListener("click", function(){
-      Array.prototype.slice.call(document.querySelectorAll(".tab")).forEach(function(x){x.classList.remove("active");});
+      Array.prototype.slice.call(document.querySelectorAll(".nav-item")).forEach(function(x){x.classList.remove("active");});
       tab.classList.add("active");
+      var name=tab.getAttribute("data-tab");
       Array.prototype.slice.call(document.querySelectorAll(".panel")).forEach(function(p){p.classList.remove("active");});
-      $("panel-"+tab.getAttribute("data-tab")).classList.add("active");
+      $("panel-"+name).classList.add("active");
+      var t=TITLES[name]||["",""];
+      $("pageTitle").textContent=t[0]; $("pageCrumb").textContent=t[1];
+      window.scrollTo(0,0);
     });
   });
 
@@ -316,6 +386,24 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
     });
   }
 
+  // ---- 数据总览 ----
+  function renderTotal(){
+    var c=content;
+    var cs=c.cases.items.length, bs=c.biz.items.length, st=c.stats.items.length;
+    $("ovCards").innerHTML =
+      '<div class="ov-card grad"><div class="num">'+cs+'<small> 条</small></div><div class="lbl">案例项目</div><div class="sub">案例页内容卡片</div></div>'+
+      '<div class="ov-card"><div class="num">'+bs+'<small> 项</small></div><div class="lbl">业务条目</div><div class="sub">业务页核心业务</div></div>'+
+      '<div class="ov-card"><div class="num">'+st+'<small> 项</small></div><div class="lbl">数据指标</div><div class="sub">首页数字见证实力</div></div>'+
+      '<div class="ov-card"><div class="num">4<small> 项</small></div><div class="lbl">联系方式</div><div class="sub">地址 · 官网 · 邮箱 · 电话</div></div>';
+    $("ovPanels").innerHTML =
+      '<div class="ov-panel"><h4><span class="bar"></span>业务分布</h4><ul class="ov-list">'+
+        content.biz.items.map(function(it,i){return '<li><span class="tag">0'+(i+1)+'</span><span class="t">'+esc(it.title)+'</span><span class="v">'+esc((it.services||[]).length)+' 项服务</span></li>';}).join("")+
+      '</ul></div>'+
+      '<div class="ov-panel"><h4><span class="bar"></span>案例分布</h4><ul class="ov-list">'+
+        content.cases.items.map(function(it,i){return '<li><span class="tag">'+esc(it.tag)+'</span><span class="t">'+esc(it.title)+'</span></li>';}).join("")+
+      '</ul></div>';
+  }
+
   function readItems(containerId, sel, keyAttr, fieldAttr, target){
     Array.prototype.slice.call(document.querySelectorAll("#"+containerId+" ["+fieldAttr+"]")).forEach(function(f){
       var i=f.getAttribute("data-i"); var k=f.getAttribute(fieldAttr);
@@ -327,7 +415,6 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
 
   // ---- 条目增删 / 排序（可扩展） ----
   function sync(type){
-    // 把当前面板输入先读回数组，避免操作后丢失未保存的编辑
     if(type==="cases"){ readItems("caseItems","[data-case]","data-i","data-case",content.cases.items); }
     else if(type==="biz"){ readItems("bizItems","[data-biz]","data-i","data-biz",content.biz.items); }
     else { readItems("statItems","[data-stat]","data-i","data-stat",content.stats.items); }
@@ -336,6 +423,7 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
     if(type==="cases") renderCases();
     else if(type==="biz") renderBiz();
     else renderStats();
+    renderTotal();
     toast("已更新条目，请点击「保存全部更改」生效");
   }
   window.mv = function(type, i, dir){
@@ -364,7 +452,6 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
 
   // 保存
   window.save = function(){
-    // 读取所有面板当前输入到 content
     content.cases.kicker=$("c_kicker").value;
     content.cases.title=$("c_title").value;
     content.cases.sub=$("c_sub").value;
@@ -392,7 +479,8 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
     content.ai.welcome=$("ai_welcome").value;
 
     api("/api/admin/content",{method:"PUT",body:JSON.stringify(content)}).then(function(r){
-      $("saveStatus").textContent="上次保存："+r.updatedAt;
+      $("updateTime").textContent=(r.updatedAt||"-").replace("T"," ").slice(0,19);
+      renderTotal();
       toast("保存成功，官网已更新");
     }).catch(function(e){ toast("保存失败："+e.message); });
   };
