@@ -56,7 +56,7 @@ const DEFAULT_CONTENT = {
   },
   contact: {
     address: "成都市高新区梓州大道4111号易上创客中心",
-    website: "www.mk-cd.cn",
+    website: "mkwh.work",
     email: "676020400@qq.com",
     phone: "1898008681",
     ctaText: "约一次上门拜访 · 我们聊聊",
@@ -106,7 +106,7 @@ const DEFAULT_CONTENT = {
     },
     contact: {
       address: "Yishang Maker Center, 4111 Zizhou Avenue, Chengdu Hi-Tech Zone",
-      website: "www.mk-cd.cn",
+      website: "mkwh.work",
       email: "676020400@qq.com",
       phone: "1898008681",
       ctaText: "Book a Visit · Let's Talk",
