@@ -61,12 +61,27 @@ echo "==> 3/6 设置入口与权限…"
 echo "==> 4/6 写入 Nginx 配置（${DOMAIN}）…"
 LOCAL_CONF="/tmp/menke-tencent.conf"
 cat > "$LOCAL_CONF" <<NEOF
+# HTTP 80 → HTTPS 跳转
 server {
     listen 80;
     listen [::]:80;
     server_name $DOMAIN;
+    return 301 https://\$host\$request_uri;
+}
+
+# HTTPS 443
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    http2 on;
+    server_name $DOMAIN;
     root $REMOTE_DIR;
     index index.html;
+
+    ssl_certificate /etc/nginx/ssl/$DOMAIN/fullchain.cer;
+    ssl_certificate_key /etc/nginx/ssl/$DOMAIN/$DOMAIN.key;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
 
     add_header X-Frame-Options DENY always;
     add_header X-Content-Type-Options nosniff always;
