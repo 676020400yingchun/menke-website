@@ -66,6 +66,57 @@ const DEFAULT_CONTENT = {
   ai: {
     welcome: "您好，我是门客的 AI 智客服。我可以为您介绍文旅智慧化、教育智慧化、农业智慧化等业务，以及我们的合作案例与联系方式。请问有什么可以帮您？",
     subtitle: "门客 · 7×24 小时智能应答"
+  },
+
+  // ---------- 英文版内容（英文官网 -en.html 使用；未保存时英文页保持静态原文） ----------
+  en: {
+    stats: {
+      title: "Numbers That Speak",
+      subtitle: "Twelve years deep-diving, from site to industry",
+      items: [
+        { num: "12", unit: "", cap: "Years of Focused Work" },
+        { num: "4", unit: "", cap: "Industries in Depth" },
+        { num: "300", unit: "+", cap: "Benchmark Projects Delivered" },
+        { num: "200", unit: "+", cap: "Partners" }
+      ]
+    },
+    biz: {
+      heroKicker: "What We Do · How We Can Help",
+      heroLine1: "Rooted in culture-tech tourism,",
+      heroLine2: "extending deep into industries",
+      heroSub: "Menke's core business is culture-tech tourism, and from that fulcrum we extend information and digitization services into education and agriculture. In twelve years we have delivered not just systems but operations — connected not just data but experiences.",
+      statement: "We believe good digitization should feel invisible to people — only that they are cared for. It never interrupts beauty, yet holds steady wherever it is needed.",
+      items: [
+        { no: "01", title: "Culture-Tech Tourism", view: "Tourism is not about selling tickets but selling an encounter worth remembering.", desc: "Digitization is not about lining a scenic area with screens, but gently catching every visitor from the moment they step in — with landscapes as the stage, stories as the guide, and data as a thoughtful host.", services: ["Integrated Smart-Scenic Platform", "Immersive & Light-Night Experiences", "AR / VR Digital Guides", "Private-Domain Ops & Membership", "Digital Marketing & Traffic", "Tourism Big Data & Decisions"] },
+        { no: "02", title: "Education Digitization", view: "Bringing knowledge across mountains and seas, making classrooms within reach.", desc: "Giving children in remote areas the same starting line as those in cities — this is the simplest and most touching meaning of informatization.", services: ["Smart-Campus Platform", "Online Teaching & Resource Sharing", "Education Data Governance & Analytics", "Digital Teaching Resources"] },
+        { no: "03", title: "Agriculture Digitization", view: "Let the land grow data, and make harvests evidence-based.", desc: "Turn every crop's growth, every field's temperament, every market's rhythm into clear data on screen. Agriculture digitization hands uncertainty to systems and certainty back to farmers.", services: ["Agricultural Industry Platform", "Production-Sales Integration & Traceability", "Agri Big Data & Sales Decisions", "Rural Tourism & Agri-Tourism Digitization"] },
+        { no: "04", title: "Build & Operate", view: "From blueprint to launch, from launch to growth.", desc: "Twelve years of building and operations have taught us that a system going live is only the beginning. Real value lies in day-to-day companionship — turning delivery into growth.", services: ["Top-Level Informatization Design", "System Implementation", "Long-Term Operation Support", "Operations Experience"] }
+      ]
+    },
+    cases: {
+      kicker: "Case Studies · Our Work Speaks",
+      title: "Let every project\nadvance its industry",
+      sub: "For twelve years we have partnered deeply across real estate, tourism, education, and agriculture. The cases below span the four tracks we serve, each grounded in real delivery.",
+      items: [
+        { tag: "Tourism", title: "Let an ancient city speak again", slogan: "Technology is not the goal; letting landscapes hold memory is.", desc: "[Project], an ancient city with a thousand years of heritage. Tourists came and went, yet its stories stayed silent. Menke choreographed its sleeping history into an immersive narrative with digital light and shadow — night tours became history you can walk into. After launch, nighttime traffic and repeat spending rose significantly, and visitors began to stay.", foot: "Culture-Tech Tourism · [Year]" },
+        { tag: "Education", title: "One classroom for every child", slogan: "The warmth of digitization lies where there should be no gap.", desc: "[Project] connects [N] schools, linking urban and rural classrooms. Menke built a network of shared resources, bringing quality teachers across mountains and seas, letting rural children hear the best lessons at their doorstep.", foot: "Education Digitization · [Year]" },
+        { tag: "Agriculture", title: "An orchard that no longer bets on weather", slogan: "Hand uncertainty to systems, return certainty to farmers.", desc: "[Project] runs one data chain from seed to sale. Menke built a production-sales integration platform for [N] mu of orchards, making harvests, prices, and orders clear and evidence-based.", foot: "Agriculture Digitization · [Year]" },
+        { tag: "Real Estate", title: "A community that feels like home", slogan: "Homes are containers; operations are why people stay.", desc: "[Project] marks the start of Menke's twelve-year journey. We helped the developer build a digital operations system, turning a property from delivering concrete to delivering a way of living.", foot: "Real-Estate Informatization · Where Menke Began" }
+      ]
+    },
+    contact: {
+      address: "Yishang Maker Center, 4111 Zizhou Avenue, Chengdu Hi-Tech Zone",
+      website: "www.mk-cd.cn",
+      email: "676020400@qq.com",
+      phone: "1898008681",
+      ctaText: "Book a Visit · Let's Talk",
+      hint: "Call ",
+      ctaMailTo: "mailto:676020400@qq.com"
+    },
+    ai: {
+      welcome: "Hello, I'm Menke's AI assistant. I can introduce our culture-tech tourism, education, and agriculture businesses, our case studies, and contact details. How can I help?",
+      subtitle: "Menke · 24/7 Smart Response"
+    }
   }
 };
 
@@ -80,7 +131,11 @@ function ensureData() {
 }
 function readContent() {
   ensureData();
-  try { return JSON.parse(fs.readFileSync(DATA_FILE, "utf-8")); }
+  try {
+    var c = JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"));
+    if (!c.en) c.en = JSON.parse(JSON.stringify(DEFAULT_CONTENT.en)); // 旧数据兜底英文模型
+    return c;
+  }
   catch (e) { return Object.assign({}, DEFAULT_CONTENT); }
 }
 function writeContent(content) {

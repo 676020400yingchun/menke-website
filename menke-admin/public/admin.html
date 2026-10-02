@@ -116,6 +116,7 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
 .cb-img-r{flex:1}
 .cb-img-r label{font-size:.76rem;color:#6B7280;display:block;margin-bottom:4px}
 .cb-img input[type=file]{width:100%;font-size:.74rem}
+.sec-h{margin:22px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line);font-size:.9rem;color:var(--ink);letter-spacing:.02em}
 </style>
 </head>
 <body>
@@ -149,6 +150,7 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
       <button class="nav-item" data-tab="contact"><span class="dot"></span><span>联系方式</span></button>
       <button class="nav-item" data-tab="ai"><span class="dot"></span><span>AI 客服</span></button>
       <button class="nav-item" data-tab="images"><span class="dot"></span><span>首页图片</span></button>
+      <button class="nav-item" data-tab="en"><span class="dot"></span><span>英文内容</span></button>
     </div>
     <div class="sp"></div>
     <div class="user"><div class="avatar">M</div><div class="nm" id="whoName">menke</div><button class="out" id="logoutBtn">退出登录</button></div>
@@ -240,6 +242,49 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
         <div class="save-bar"><button class="btn" onclick="save()">保存全部更改</button><span class="save-status">保存后官网（mkwh.work）即时生效</span></div>
       </div>
 
+      <!-- 英文内容 -->
+      <div class="panel" id="panel-en">
+        <div class="panel-head"><h2>英文内容</h2><div class="p-sub">英文官网（-en.html）文案 · 与中文后台独立，仅当保存后生效</div></div>
+
+        <h3 class="sec-h">数据指标（英文）</h3>
+        <div class="grid2">
+          <div><label>数据带标题</label><input id="en_s_title"></div>
+          <div><label>数据带副标题</label><input id="en_s_subtitle"></div>
+        </div>
+        <div id="enStatItems"></div>
+
+        <h3 class="sec-h">业务条目（英文）</h3>
+        <label>首屏小标题（kicker）</label><input id="en_b_kicker">
+        <div class="grid2">
+          <div><label>首屏标题·第一行</label><input id="en_b_l1"></div>
+          <div><label>首屏标题·第二行</label><input id="en_b_l2"></div>
+        </div>
+        <label>首屏说明段</label><textarea id="en_b_sub" rows="3"></textarea>
+        <label>品牌理念段</label><textarea id="en_b_stmt" rows="2"></textarea>
+        <div id="enBizItems"></div>
+
+        <h3 class="sec-h">案例项目（英文）</h3>
+        <label>页眉小标题（kicker）</label><input id="en_c_kicker">
+        <label>主标题（换行即分行）</label><textarea id="en_c_title" rows="2"></textarea>
+        <label>导语</label><textarea id="en_c_sub" rows="2"></textarea>
+        <div id="enCaseItems"></div>
+
+        <h3 class="sec-h">联系方式（英文）</h3>
+        <div class="grid2">
+          <div><label>地址</label><input id="en_ct_address"></div>
+          <div><label>官网</label><input id="en_ct_website"></div>
+          <div><label>邮箱</label><input id="en_ct_email"></div>
+          <div><label>电话</label><input id="en_ct_phone"></div>
+        </div>
+        <label>CTA 按钮文案</label><input id="en_ct_cta">
+
+        <h3 class="sec-h">AI 客服（英文）</h3>
+        <label>副标题（悬浮球内小字）</label><input id="en_ai_subtitle">
+        <label>欢迎语（客服首条消息）</label><textarea id="en_ai_welcome" rows="4"></textarea>
+
+        <div class="save-bar"><button class="btn" onclick="save()">保存全部更改</button><span class="save-status">保存后英文官网（-en.html）即时生效</span></div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -250,7 +295,7 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
 (function(){
   var TOKEN = localStorage.getItem("menke_admin_token") || "";
   var content = null;
-  var TITLES = {total:["数据总览","门客官网当前内容规模与状态"],stats:["数据指标","首页数据带 · 可增删排序"],biz:["业务条目","业务页 · 可增删排序"],cases:["案例项目","案例页 · 可增删排序"],contact:["联系方式","我的页联系区"],ai:["AI 客服","AI 智客服配置"],images:["首页图片","首页 Logo 与首屏主视觉"]};
+  var TITLES = {total:["数据总览","门客官网当前内容规模与状态"],stats:["数据指标","首页数据带 · 可增删排序"],biz:["业务条目","业务页 · 可增删排序"],cases:["案例项目","案例页 · 可增删排序"],contact:["联系方式","我的页联系区"],ai:["AI 客服","AI 智客服配置"],images:["首页图片","首页 Logo 与首屏主视觉"],en:["英文内容","英文官网 -en.html 文案编辑"]};
 
   var $ = function(id){ return document.getElementById(id); };
   function toast(msg){ var t=$("toast"); t.textContent=msg; t.classList.add("show"); setTimeout(function(){t.classList.remove("show");},2200); }
@@ -344,7 +389,97 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
     $("ai_welcome").value=c.ai.welcome;
 
     renderImages();
+    fillEn();
   }
+
+  // ---- 英文内容 ----
+  function fillEn(){
+    if(!content.en) content.en={stats:{items:[]},biz:{items:[]},cases:{items:[]},contact:{},ai:{}};
+    var e=content.en;
+    $("en_s_title").value=e.stats.title||"";
+    $("en_s_subtitle").value=e.stats.subtitle||"";
+    renderEnStats();
+
+    $("en_b_kicker").value=e.biz.heroKicker||"";
+    $("en_b_l1").value=e.biz.heroLine1||"";
+    $("en_b_l2").value=e.biz.heroLine2||"";
+    $("en_b_sub").value=e.biz.heroSub||"";
+    $("en_b_stmt").value=e.biz.statement||"";
+    renderEnBiz();
+
+    $("en_c_kicker").value=e.cases.kicker||"";
+    $("en_c_title").value=e.cases.title||"";
+    $("en_c_sub").value=e.cases.sub||"";
+    renderEnCases();
+
+    $("en_ct_address").value=e.contact.address||"";
+    $("en_ct_website").value=e.contact.website||"";
+    $("en_ct_email").value=e.contact.email||"";
+    $("en_ct_phone").value=e.contact.phone||"";
+    $("en_ct_cta").value=e.contact.ctaText||"";
+
+    $("en_ai_subtitle").value=e.ai.subtitle||"";
+    $("en_ai_welcome").value=e.ai.welcome||"";
+  }
+  function renderEnStats(){
+    var items=content.en.stats.items||[];var h="";
+    items.forEach(function(it,i){
+      h+='<div class="card-block"><div class="cb-head"><h3>指标 '+(i+1)+' · '+esc(it.cap)+'</h3>'+
+        '<div class="cb-ops"><button class="mini" onclick="enAdd(\'stats\')">＋</button><button class="mini danger" onclick="enDel(\'stats\','+i+')">删除</button></div></div>'+
+        '<div class="grid2"><div><label>数字</label><input data-estat="num" data-i="'+i+'"></div>'+
+        '<div><label>单位（如 +、%）</label><input data-estat="unit" data-i="'+i+'"></div></div>'+
+        '<label>说明</label><input data-estat="cap" data-i="'+i+'"></div>';
+    });
+    $("enStatItems").innerHTML=h;
+    items.forEach(function(it,i){
+      $("enStatItems").querySelectorAll("[data-estat][data-i='"+i+"']").forEach(function(f){f.value=it[f.getAttribute("data-estat")]||"";});
+    });
+  }
+  function renderEnBiz(){
+    var items=content.en.biz.items||[];var h="";
+    items.forEach(function(it,i){
+      h+='<div class="card-block"><div class="cb-head"><h3>业务 '+(i+1)+' · '+esc(it.title)+'</h3>'+
+        '<div class="cb-ops"><button class="mini" onclick="enAdd(\'biz\')">＋</button><button class="mini danger" onclick="enDel(\'biz\','+i+')">删除</button></div></div>'+
+        '<div class="grid2"><div><label>编号</label><input data-ebiz="no" data-i="'+i+'"></div>'+
+        '<div><label>标题</label><input data-ebiz="title" data-i="'+i+'"></div></div>'+
+        '<label>金句</label><input data-ebiz="view" data-i="'+i+'">'+
+        '<label>描述</label><textarea data-ebiz="desc" data-i="'+i+'" rows="3"></textarea>'+
+        '<label>服务标签（逗号分隔）</label><textarea data-ebiz="services" data-i="'+i+'" rows="2"></textarea></div>';
+    });
+    $("enBizItems").innerHTML=h;
+    items.forEach(function(it,i){
+      $("enBizItems").querySelectorAll("[data-ebiz][data-i='"+i+"']").forEach(function(f){
+        var k=f.getAttribute("data-ebiz");f.value = k==="services" ? (it.services||[]).join(", ") : (it[k]||"");
+      });
+    });
+  }
+  function renderEnCases(){
+    var items=content.en.cases.items||[];var h="";
+    items.forEach(function(it,i){
+      h+='<div class="card-block"><div class="cb-head"><h3>案例 '+(i+1)+' · 标签 '+esc(it.tag)+'</h3>'+
+        '<div class="cb-ops"><button class="mini" onclick="enAdd(\'cases\')">＋</button><button class="mini danger" onclick="enDel(\'cases\','+i+')">删除</button></div></div>'+
+        '<div class="grid2"><div><label>标签</label><input data-ecase="tag" data-i="'+i+'"></div>'+
+        '<div><label>脚注</label><input data-ecase="foot" data-i="'+i+'"></div></div>'+
+        '<label>标题</label><input data-ecase="title" data-i="'+i+'">'+
+        '<label>标语</label><input data-ecase="slogan" data-i="'+i+'">'+
+        '<label>描述</label><textarea data-ecase="desc" data-i="'+i+'" rows="4"></textarea></div>';
+    });
+    $("enCaseItems").innerHTML=h;
+    items.forEach(function(it,i){
+      $("enCaseItems").querySelectorAll("[data-ecase][data-i='"+i+"']").forEach(function(f){f.value=it[f.getAttribute("data-ecase")]||"";});
+    });
+  }
+  window.enAdd = function(type){
+    var tpl = type==="stats" ? {num:"0",unit:"",cap:"New Metric"} :
+              type==="biz" ? {no:"00",title:"New Service",view:"",desc:"",services:[]} :
+              {tag:"Tourism",title:"New Case",slogan:"",desc:"",foot:""};
+    content.en[type].items.push(tpl);
+    if(type==="stats")renderEnStats();else if(type==="biz")renderEnBiz();else renderEnCases();
+  };
+  window.enDel = function(type,i){
+    content.en[type].items.splice(i,1);
+    if(type==="stats")renderEnStats();else if(type==="biz")renderEnBiz();else renderEnCases();
+  };
 
   function renderCases(){
     var h="";
@@ -477,7 +612,7 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
     Array.prototype.slice.call(document.querySelectorAll("#"+containerId+" ["+fieldAttr+"]")).forEach(function(f){
       var i=f.getAttribute("data-i"); var k=f.getAttribute(fieldAttr);
       var v=f.value;
-      if(sel==="[data-biz]" && k==="services"){ target[i].services = v.split(/[,，]/).map(function(s){return s.trim();}).filter(Boolean); }
+      if(k==="services"){ target[i].services = v.split(/[,，]/).map(function(s){return s.trim();}).filter(Boolean); }
       else { target[i][k]=v; }
     });
   }
@@ -546,6 +681,35 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
 
     content.ai.subtitle=$("ai_subtitle").value;
     content.ai.welcome=$("ai_welcome").value;
+
+    // 英文内容（en 存在才收集）
+    if(content.en){
+      content.en.stats.title=$("en_s_title").value;
+      content.en.stats.subtitle=$("en_s_subtitle").value;
+      readItems("enStatItems","[data-estat]","data-i","data-estat",content.en.stats.items);
+
+      content.en.biz.heroKicker=$("en_b_kicker").value;
+      content.en.biz.heroLine1=$("en_b_l1").value;
+      content.en.biz.heroLine2=$("en_b_l2").value;
+      content.en.biz.heroSub=$("en_b_sub").value;
+      content.en.biz.statement=$("en_b_stmt").value;
+      readItems("enBizItems","[data-ebiz]","data-i","data-ebiz",content.en.biz.items);
+
+      content.en.cases.kicker=$("en_c_kicker").value;
+      content.en.cases.title=$("en_c_title").value;
+      content.en.cases.sub=$("en_c_sub").value;
+      readItems("enCaseItems","[data-ecase]","data-i","data-ecase",content.en.cases.items);
+
+      content.en.contact.address=$("en_ct_address").value;
+      content.en.contact.website=$("en_ct_website").value;
+      content.en.contact.email=$("en_ct_email").value;
+      content.en.contact.phone=$("en_ct_phone").value;
+      content.en.contact.ctaText=$("en_ct_cta").value;
+      content.en.contact.ctaMailTo="mailto:"+content.en.contact.email;
+
+      content.en.ai.subtitle=$("en_ai_subtitle").value;
+      content.en.ai.welcome=$("en_ai_welcome").value;
+    }
 
     api("/api/admin/content",{method:"PUT",body:JSON.stringify(content)}).then(function(r){
       $("updateTime").textContent=(r.updatedAt||"-").replace("T"," ").slice(0,19);
