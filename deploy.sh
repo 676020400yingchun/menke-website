@@ -10,7 +10,7 @@ set -euo pipefail
 
 PROJ_DIR="$(cd "$(dirname "$0")" && pwd)"
 REMOTE_USER="root"
-REMOTE_HOST="8.137.12.91"
+REMOTE_HOST="1.14.103.209"
 REMOTE_PORT="22"
 REMOTE_DIR="/www/wwwroot/menke-web"
 SSH_ALIAS="${1:-menke-aliyun}"
@@ -54,6 +54,6 @@ echo "==> 3/4 Nginx 校验并 reload…"
 "${SSH_CMD[@]}" "nginx -t && systemctl reload nginx && echo nginx-ok"
 
 echo "==> 4/4 验证线上访问…"
-"${SSH_CMD[@]}" "for p in '' 业务.html 案例.html 我的.html; do code=\$(curl -s -o /dev/null -w '%{http_code}' -H 'Host: www.mk-cd.cn' \"http://127.0.0.1/\$p\"); echo \"/\$p -> \$code\"; done"
+"${SSH_CMD[@]}" "for p in '' 业务.html 案例.html 我的.html; do code=\$(curl -s -o /dev/null -w '%{http_code}' -H 'Host: mkwh.work' \"http://127.0.0.1/\$p\"); echo \"/\$p -> \$code\"; done"
 
 echo "==> 部署完成"
