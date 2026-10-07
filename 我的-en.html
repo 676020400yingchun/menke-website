@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>About · MENKE — Chengdu Menke Culture Communication Co., Ltd.</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B1626'/%3E%3Cpath d='M16 20 L28 40 L28 20 L40 40 L40 20' fill='none' stroke='%23E8602F' stroke-width='5' stroke-linejoin='round'/%3E%3Cpath d='M40 44 a4 4 0 1 1 0-8 a4 4 0 0 1 0 8 z' fill='%231B9E9C'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231B3BA5'/%3E%3Cpath d='M12 48 L12 16 L32 34 L52 16 L52 48' fill='none' stroke='white' stroke-width='9' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline' 'self'; style-src 'unsafe-inline' https://miaoda.feishu.cn; font-src https://miaoda.feishu.cn data:; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'">
 <style>
@@ -68,12 +68,12 @@ a{color:inherit;text-decoration:none}
 
 /* 品牌故事 */
 .story{
-  display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(28px,4.5vw,60px);align-items:center;
+  display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(28px,4.5vw,60px);align-items:center;
   background:var(--ink);color:#fff;border-radius:26px;overflow:hidden;position:relative;
   padding:clamp(30px,5vw,52px);
 }
 .story::before{content:"";position:absolute;right:-70px;bottom:-70px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(0,180,255,.4),transparent 70%)}
-.story .s-chapter{font-family:var(--serif);font-size:clamp(1.8rem,3vw,2.4rem);font-weight:900;line-height:1.24;text-wrap:balance;position:relative;z-index:1}
+.story .s-chapter{font-family:var(--serif);font-size:clamp(2.6rem,6vw,3.6rem);font-weight:900;line-height:1.1;position:relative;z-index:1}
 .story .s-chapter small{display:block;font-size:.78rem;font-weight:500;letter-spacing:.28em;color:rgba(255,255,255,.55);margin-bottom:16px;font-family:var(--sans)}
 .story .s-chapter .c1{color:var(--warm)}
 .story .s-chapter .c2{color:var(--cool)}
@@ -158,7 +158,7 @@ a{color:inherit;text-decoration:none}
 .tabbar a svg{width:22px;height:22px}
 .tabbar a.active{color:var(--warm)}
 .tabbar a.active svg{stroke:var(--warm)}
-@media (max-width:860px){.nav{display:none}.tabbar{display:grid}.story,.contact-grid{grid-template-columns:1fr}.mvv{grid-template-columns:1fr}.tl,.tl-row{grid-template-columns:96px 34px 1fr}.tl-time{font-size:.9rem;padding-right:14px}.story .s-chapter{font-size:clamp(1.6rem,6.2vw,2rem);line-height:1.3}.sec-head h2{font-size:clamp(1.5rem,6vw,1.9rem)}}
+@media (max-width:860px){.nav{display:none}.tabbar{display:grid}.story,.contact-grid{grid-template-columns:1fr}.mvv{grid-template-columns:1fr}.tl,.tl-row{grid-template-columns:96px 34px 1fr}.tl-time{font-size:.9rem;padding-right:14px}}
 
 /* 滚动揭示 */
 [data-reveal]{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
@@ -168,6 +168,356 @@ a{color:inherit;text-decoration:none}
 /* toast */
 .toast{position:fixed;left:50%;bottom:96px;transform:translate(-50%,20px);z-index:90;background:var(--ink);color:#fff;padding:12px 22px;border-radius:999px;font-size:.9rem;box-shadow:0 12px 30px rgba(10,30,74,.3);opacity:0;transition:all .35s;pointer-events:none;max-width:86vw;text-align:center}
 .toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ============================================================
+   门客 UI 增强层 v2.0
+   ============================================================ */
+
+/* 1. 全局质感：细腻噪声纹理 */
+body::after {
+  content:"";
+  position:fixed;inset:0;z-index:999;pointer-events:none;
+  opacity:.032;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+}
+
+/* 2. Hero：动态渐变光晕 */
+.hero { background: var(--ink); }
+.hero-bg::before {
+  content:"";
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 30%, rgba(22,119,255,.28) 0%, transparent 65%),
+    radial-gradient(ellipse 60% 50% at 85% 70%, rgba(0,180,255,.22) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 70% at 50% 10%, rgba(10,60,140,.35) 0%, transparent 55%);
+  animation: heroGlow 9s ease-in-out infinite alternate;
+}
+@keyframes heroGlow {
+  0%   { opacity:.9; transform:scale(1) translateX(0); }
+  50%  { opacity:1;  transform:scale(1.04) translateX(-10px); }
+  100% { opacity:.85; transform:scale(1.02) translateX(8px); }
+}
+.hero-inner::before {
+  content:"";
+  position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(circle 2px at 18% 28%, rgba(122,190,255,.7) 0%, transparent 100%),
+    radial-gradient(circle 1.5px at 72% 15%, rgba(0,200,255,.6) 0%, transparent 100%),
+    radial-gradient(circle 2px at 88% 55%, rgba(22,119,255,.5) 0%, transparent 100%),
+    radial-gradient(circle 1px at 35% 80%, rgba(100,180,255,.5) 0%, transparent 100%),
+    radial-gradient(circle 1.5px at 58% 65%, rgba(0,180,255,.4) 0%, transparent 100%);
+  animation: floatDots 12s ease-in-out infinite alternate;
+}
+@keyframes floatDots {
+  0%   { transform:translateY(0) }
+  100% { transform:translateY(-18px) }
+}
+@media (prefers-reduced-motion:reduce) {
+  .hero-bg::before,.hero-inner::before { animation:none; }
+}
+
+/* 3. Topbar 磨砂玻璃层次提升 */
+.topbar.solid {
+  background: rgba(8,22,60,.72) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(1.5) !important;
+  backdrop-filter: blur(18px) saturate(1.5) !important;
+  box-shadow: 0 1px 0 rgba(122,190,255,.12), 0 6px 30px rgba(10,30,74,.3) !important;
+}
+.topbar.on-light {
+  background: rgba(248,252,255,.88) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(1.4) !important;
+  backdrop-filter: blur(18px) saturate(1.4) !important;
+  box-shadow: 0 1px 0 rgba(22,119,255,.10), 0 4px 20px rgba(10,30,74,.08) !important;
+}
+
+/* 4. 首页业务卡 */
+.hb-card {
+  box-shadow: 0 2px 8px rgba(10,30,74,.07), 0 12px 32px rgba(22,119,255,.08) !important;
+  border: 1px solid rgba(22,119,255,.12) !important;
+  transform-origin: center bottom;
+  transition: transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s ease, border-color .3s !important;
+}
+.hb-card:hover {
+  transform: translateY(-7px) scale(1.015) !important;
+  box-shadow: 0 4px 12px rgba(10,30,74,.08), 0 22px 52px rgba(22,119,255,.22) !important;
+  border-color: rgba(22,119,255,.3) !important;
+}
+.hb-card .hb-icon {
+  box-shadow: 0 6px 18px rgba(22,119,255,.28), inset 0 1px 0 rgba(255,255,255,.3) !important;
+}
+
+/* 5. 业务条目卡 */
+.biz-item {
+  background: linear-gradient(150deg, #ffffff 0%, #f6faff 100%) !important;
+  border: 1px solid rgba(22,119,255,.10) !important;
+  box-shadow: 0 2px 6px rgba(10,30,74,.05), 0 8px 24px rgba(22,119,255,.05) !important;
+  transition: transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s ease, border-color .3s !important;
+}
+.biz-item:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 6px 16px rgba(10,30,74,.08), 0 20px 48px rgba(22,119,255,.14) !important;
+  border-color: rgba(22,119,255,.22) !important;
+}
+
+/* 服务标签 shine 扫光 */
+.biz-svc span {
+  position:relative;overflow:hidden;
+  transition: all .3s cubic-bezier(.22,1,.36,1) !important;
+}
+.biz-svc span::after {
+  content:"";position:absolute;inset:0;
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.35) 50%, transparent 100%);
+  transform: translateX(-100%);transition: transform .5s ease;
+}
+.biz-svc span:hover::after { transform: translateX(100%); }
+
+/* 6. 案例卡 */
+.case-card {
+  box-shadow: 0 4px 16px rgba(10,30,74,.08), 0 10px 32px rgba(22,119,255,.06) !important;
+  border-radius: 24px !important;
+  transition: transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s ease !important;
+}
+.case-card:hover {
+  transform: translateY(-8px) !important;
+  box-shadow: 0 8px 24px rgba(10,30,74,.10), 0 24px 56px rgba(22,119,255,.18) !important;
+}
+.case-card .c-media::after {
+  background: linear-gradient(160deg, #1677FF, #00B4FF) !important;
+  opacity: .3 !important;
+  transition: opacity .45s ease !important;
+}
+.case-card:hover .c-media::after { opacity: .18 !important; }
+
+/* 7. 按钮精致微交互 */
+.btn {
+  position:relative;overflow:hidden;
+  transition: all .35s cubic-bezier(.22,1,.36,1) !important;
+}
+.btn::before {
+  content:"";
+  position:absolute;top:0;left:-100%;width:60%;height:100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.22), transparent);
+  transition: left .55s ease;pointer-events:none;
+}
+.btn:hover::before { left:130%; }
+.btn-primary:active { transform:translateY(1px) scale(.98) !important; }
+.btn-primary {
+  box-shadow: 0 8px 22px rgba(22,119,255,.38), 0 0 0 1px rgba(122,190,255,.4) !important;
+}
+.btn-primary:hover {
+  box-shadow: 0 14px 34px rgba(22,119,255,.50), 0 0 0 1px rgba(122,190,255,.6) !important;
+  transform: translateY(-2px) !important;
+}
+.nav-cta {
+  box-shadow: 0 6px 18px rgba(22,119,255,.32), 0 0 0 1px rgba(122,190,255,.38) !important;
+  transition: all .3s cubic-bezier(.22,1,.36,1) !important;
+}
+.nav-cta:hover {
+  box-shadow: 0 10px 28px rgba(22,119,255,.46), 0 0 0 1px rgba(122,190,255,.55) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* 8. 方法论步骤 */
+.m-step {
+  transition: transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s ease, border-color .3s !important;
+}
+.m-step:hover {
+  transform: translateY(-6px) !important;
+  box-shadow: 0 18px 48px rgba(22,119,255,.28) !important;
+  border-color: rgba(0,180,255,.5) !important;
+}
+.m-ico {
+  box-shadow: 0 4px 14px rgba(22,119,255,.22), inset 0 0 14px rgba(0,180,255,.18) !important;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.m-step:hover .m-ico {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(22,119,255,.35), inset 0 0 18px rgba(0,180,255,.25) !important;
+}
+
+/* 9. 底部 Tabbar 优化 */
+.tabbar {
+  background: rgba(255,255,255,.94) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(1.5) !important;
+  backdrop-filter: blur(20px) saturate(1.5) !important;
+  border-top: 1px solid rgba(22,119,255,.08) !important;
+  box-shadow: 0 -1px 0 rgba(22,119,255,.06), 0 -8px 32px rgba(10,30,74,.08) !important;
+}
+.tabbar a {
+  position:relative;border-radius:14px;
+  transition: color .25s ease, background .25s ease !important;
+  padding: 6px 4px !important;
+}
+.tabbar a.active {
+  color: var(--warm) !important;
+  background: rgba(22,119,255,.08);
+}
+.tabbar a.active::before {
+  content:"";
+  position:absolute;top:-1px;left:50%;transform:translateX(-50%);
+  width:28px;height:2.5px;border-radius:0 0 3px 3px;
+  background: var(--grad);
+}
+.tabbar a svg {
+  transition: transform .3s cubic-bezier(.22,1,.36,1) !important;
+}
+.tabbar a.active svg { transform:scale(1.12) !important; }
+.tabbar a:active svg { transform:scale(.9) !important; }
+
+/* 10. 四宫格业务 tile */
+.biz-tile {
+  transition: transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s ease, border-color .35s !important;
+}
+.biz-tile:hover {
+  transform: translateY(-5px) scale(1.02) !important;
+  box-shadow: 0 16px 44px rgba(22,119,255,.25) !important;
+  border-color: rgba(0,180,255,.45) !important;
+}
+
+/* 11. AI Fab 脉冲 */
+#aiFab {
+  animation: fabPulse 3s ease-in-out infinite;
+}
+@keyframes fabPulse {
+  0%, 100% { box-shadow: 0 10px 30px rgba(22,119,255,.42), 0 0 0 0 rgba(22,119,255,.3); }
+  50%       { box-shadow: 0 10px 30px rgba(22,119,255,.42), 0 0 0 8px rgba(22,119,255,.0); }
+}
+#aiFab:hover { animation:none; transform:translateY(-2px) scale(1.06) !important; }
+@media (prefers-reduced-motion:reduce) { #aiFab { animation:none; } }
+
+/* 12. Logo hover */
+.brand-logo {
+  transition: transform .3s cubic-bezier(.22,1,.36,1), filter .3s !important;
+}
+.brand:hover .brand-logo {
+  transform: translateY(-2px) scale(1.05) !important;
+  filter: drop-shadow(0 4px 14px rgba(22,119,255,.5)) !important;
+}
+
+/* 13. 业务陈述卡 */
+.biz-statement {
+  background: linear-gradient(150deg, #fff 0%, #f5f9ff 100%) !important;
+  box-shadow: 0 4px 16px rgba(10,30,74,.06), 0 16px 48px rgba(22,119,255,.08) !important;
+}
+
+/* 14. Footer */
+.footer {
+  background: linear-gradient(180deg, #fff 0%, #f8fbff 100%) !important;
+}
+
+/* 15. 案例 note */
+.case-note {
+  border-left-color: var(--warm) !important;
+  background: linear-gradient(90deg, rgba(22,119,255,.06) 0%, transparent 100%) !important;
+}
+
+/* 16. 卡片进入动画 */
+@keyframes cardIn {
+  from { opacity:0; transform: translateY(16px); }
+  to   { opacity:1; transform: none; }
+}
+.hb-card:nth-child(1) { animation: cardIn .55s cubic-bezier(.22,1,.36,1) .1s both; }
+.hb-card:nth-child(2) { animation: cardIn .55s cubic-bezier(.22,1,.36,1) .2s both; }
+.hb-card:nth-child(3) { animation: cardIn .55s cubic-bezier(.22,1,.36,1) .3s both; }
+.hb-card:nth-child(4) { animation: cardIn .55s cubic-bezier(.22,1,.36,1) .4s both; }
+@media (prefers-reduced-motion:reduce) { .hb-card { animation:none !important; } }
+
+/* 17. a11y */
+:focus-visible {
+  outline: 2px solid #1677FF;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+::selection {
+  background: rgba(22,119,255,.18);
+  color: #0A1E4A;
+}
+/* ============================================================ */
+
+/* ========== 版权页 footer-copy ========== */
+.footer-copy {
+  background: linear-gradient(175deg, #e8f2fb 0%, #ddeaf5 50%, #e4eef8 100%);
+  border-top: 1px solid rgba(22,119,255,.10);
+  padding: clamp(38px,8vw,70px) clamp(20px,5vw,56px) clamp(26px,6vw,50px);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.footer-copy::before {
+  content:"";
+  position:absolute;top:-60px;left:50%;transform:translateX(-50%);
+  width:500px;height:200px;border-radius:50%;
+  background:radial-gradient(ellipse, rgba(22,119,255,.07) 0%, transparent 70%);
+  pointer-events:none;
+}
+.fc-inner {
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;align-items:center;gap:clamp(10px,2vw,16px);
+  max-width:680px;margin:0 auto;
+}
+/* 品牌 */
+.fc-brand {
+  display:flex;align-items:center;gap:14px;margin-bottom:4px;
+}
+.fc-logo {
+  width:36px;height:36px;flex:none;
+  filter: drop-shadow(0 2px 8px rgba(22,119,255,.25));
+}
+.fc-name {
+  font-family: var(--serif, "Noto Serif SC", Georgia, serif);
+  font-weight:900;
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  letter-spacing: .32em;
+  color: #1a3a6b;
+}
+/* 副标题 */
+.fc-tagline {
+  font-size: clamp(.72rem, 1.8vw, .86rem);
+  letter-spacing: .22em;
+  color: #4a6a96;
+  font-weight: 400;
+  line-height: 2;
+}
+/* 版权 */
+.fc-copy {
+  font-size: clamp(.64rem, 1.5vw, .76rem);
+  letter-spacing: .28em;
+  color: #7a9ec0;
+  font-weight: 400;
+}
+/* 访客数 */
+.fc-visitor {
+  font-size: clamp(.72rem, 1.8vw, .84rem);
+  letter-spacing: .22em;
+  color: #4a6a96;
+  font-weight: 400;
+  margin-top: 6px;
+}
+.fc-num {
+  font-family: var(--serif, "Noto Serif SC", Georgia, serif);
+  font-weight: 900;
+  font-size: 1.1em;
+  color: #1677FF;
+  letter-spacing: .04em;
+  display: inline-block;
+  min-width: 2ch;
+}
+/* ICP */
+.fc-icp {
+  font-size: clamp(.62rem, 1.4vw, .72rem);
+  color: #9ab8d4;
+  letter-spacing: .1em;
+  margin-top: 4px;
+}
+.fc-icp a {
+  color: inherit;text-decoration:none;
+  transition: color .25s;
+}
+.fc-icp a:hover { color: #1677FF; }
+
+/* 隐藏旧 footer（如果两者都存在） */
+.footer { display: none !important; }
+/* ========================================= */
 </style>
 </head>
 <body>
@@ -199,7 +549,7 @@ a{color:inherit;text-decoration:none}
     <div class="story" data-reveal>
       <div class="s-chapter">
         <small>BRAND STORY · THE NAME "MENKE"</small>
-        <span>The Warring States kept retainers — </span><span class="c1">three thousand</span> MENKE, <span class="c2">each with their own craft</span>
+        The Warring States kept retainers —<br><span class="c1">three thousand</span> MENKE,<br><span class="c2">each with their own craft</span>
       </div>
       <div class="s-body">
         <p>The name "MENKE" comes from the Warring States tradition of keeping retainers. Three thousand retainers, each with their own craft, counseled their enlightened lords and repaid recognition with talent. Today's MENKE carries on precisely this ancient bond of trust.</p>
@@ -269,7 +619,7 @@ a{color:inherit;text-decoration:none}
           <div class="c-line"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21 C12 21 4.5 14.5 4.5 9.5 A7.5 7.5 0 0 1 19.5 9.5 C19.5 14.5 12 21 12 21 Z"/><circle cx="12" cy="9.5" r="2.8"/></svg>Yishang Maker Center, 4111 Zizhou Avenue, Chengdu Hi-Tech Zone</div>
           <div class="c-line"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4 h14 a2 2 0 0 1 2 2 v12 a2 2 0 0 1-2 2 H5 a2 2 0 0 1-2-2 V6 a2 2 0 0 1 2-2 Z"/><path d="M4 7 L12 13 L20 7"/></svg><a href="tel:1898008681">1898008681</a></div>
           <div class="c-line"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4 h16 a2 2 0 0 1 2 2 v12 a2 2 0 0 1-2 2 H4 a2 2 0 0 1-2-2 V6 a2 2 0 0 1 2-2 Z"/><path d="M3 8 L12 14 L21 8"/><path d="M7 20 L7 16 M17 20 L17 16"/></svg><a href="mailto:676020400@qq.com">676020400@qq.com</a></div>
-          <div class="c-line"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12 h18"/><path d="M12 3 a12 12 0 0 1 0 18 a12 12 0 0 1 0-18"/></svg><a href="https://mkwh.work" target="_blank" rel="noopener">mkwh.work</a></div>
+          <div class="c-line"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12 h18"/><path d="M12 3 a12 12 0 0 1 0 18 a12 12 0 0 1 0-18"/></svg><a href="https://www.mk-cd.cn" target="_blank" rel="noopener">www.mk-cd.cn</a></div>
         </div>
         <div class="c-cta">
           <a class="btn-primary" href="mailto:676020400@qq.com">Arrange a Visit · Let's Talk</a>
@@ -281,10 +631,23 @@ a{color:inherit;text-decoration:none}
 </section>
 
 <!-- ===== footer ===== -->
-<footer class="footer">
-  <div class="wrap">
-    <span class="f-brand"><img src="assets/logo-main.png" alt="MENKE">Chengdu Menke Culture Communication Co., Ltd.</span>
-    <span>Website mkwh.work · © 2026 MENKE</span>
+<footer class="footer-copy">
+  <div class="fc-inner">
+    <!-- 品牌行 -->
+    <div class="fc-brand">
+      <svg class="fc-logo" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <rect width="64" height="64" rx="14" fill="#1B3BA5"/><path d="M12 48 L12 16 L32 34 L52 16 L52 48" fill="none" stroke="white" stroke-width="9" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+      <span class="fc-name">门 客 &nbsp;·&nbsp; M E N K E</span>
+    </div>
+    <!-- 副标题 -->
+    <p class="fc-tagline">Smart Tourism &nbsp;·&nbsp; Smart Education &nbsp;·&nbsp; Smart Agriculture &nbsp;·&nbsp; Smart Community</p>
+    <!-- 版权行 -->
+    <p class="fc-copy">&copy;&nbsp;2026 &nbsp;·&nbsp; A L L &nbsp; R I G H T S &nbsp; R E S E R V E D</p>
+    <!-- 访问计数 -->
+    <p class="fc-visitor">You are visitor &nbsp;<span id="visitorNum" class="fc-num">—</span></p>
+    <!-- ICP -->
+    <p class="fc-icp"><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">蜀ICP备2026058652号</a></p>
   </div>
 </footer>
 
@@ -503,5 +866,33 @@ a{color:inherit;text-decoration:none}
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);else run();
 })();
 </script>
+
+<script>
+/* 访客计数（本地 localStorage 演示，生产环境接后端） */
+(function(){
+  var KEY = 'menke_visit_count';
+  var n = 0;
+  try { n = parseInt(localStorage.getItem(KEY) || '0', 10) || 0; } catch(e){}
+  n += 1;
+  try { localStorage.setItem(KEY, n); } catch(e){}
+  var el = document.getElementById('visitorNum');
+  if(!el) return;
+  // 滚动动效
+  var target = n, start = null, dur = 900;
+  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    el.textContent = target; return;
+  }
+  function step(ts){
+    if(!start) start = ts;
+    var p = Math.min((ts-start)/dur,1);
+    var e = 1-Math.pow(1-p,3);
+    el.textContent = Math.round(target * e);
+    if(p < 1) requestAnimationFrame(step);
+    else el.textContent = target;
+  }
+  requestAnimationFrame(step);
+})();
+</script>
+
 </body>
 </html>
