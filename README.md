@@ -54,28 +54,37 @@
 - **服务器级**（Nginx `/etc/nginx/conf.d/menke.conf`）：`X-Frame-Options: DENY`、`X-Content-Type-Options: nosniff`、`Referrer-Policy`、`Permissions-Policy`、`server_tokens off`、assets 缓存、gzip
 - 代码零风险：无 `eval` / `innerHTML` / 内联事件
 
-## 六、响应式与兼容
+## 六、性能优化
+
+- **图片**：全部外链引用 `assets/` 目录，无 base64 内嵌；Hero 图 1920×1080 q75（136KB），案例图 1200×750 q78（121–194KB），Logo PNG 缩至 120×120（约 3KB）
+- **懒加载**：案例页非首屏图加 `loading="lazy"`，首屏 Hero / Logo / 案例首图保持立即加载
+- **HTML 体积**：首页 52KB、案例页 33KB（优化前均 >900KB）
+- **服务器**：Nginx gzip + assets 静态缓存
+
+## 七、响应式与兼容
 
 - `viewport-fit=cover` + `safe-area-inset-bottom` 适配刘海屏
 - `min-height:100dvh` 适配移动端动态视口
 - 断点：桌面（>860px）顶部导航 / 移动端（≤860px）底部 Tab
 - 各区块在不同尺寸下自动栅格化（2×2 / 单列等），无横向溢出
 
-## 七、目录结构
+## 八、目录结构
 
 ```
 门客官网h5/
-├── 首页.html / 业务.html / 案例.html / 我的.html      # 中文四页
+├── 首页.html / index.html                           # 中文首页（双入口）
+├── 业务.html / 案例.html / 我的.html                 # 中文其余三页
 ├── 首页-en.html / 业务-en.html / 案例-en.html / 我的-en.html  # 英文四页
-├── assets/                                          # Hero/案例图、logo
-├── deploy.sh                                        # 一键部署脚本
+├── assets/                                          # Hero/案例图、logo（已压缩）
+├── menke-admin/                                     # 管理后台（Node + 静态页）
+├── deploy.sh / deploy-tencent.sh                    # 阿里云 / 腾讯云部署脚本
 ├── ai-proxy.js                                      # AI 智客服后端代理（豆包）
 ├── README.md
 ├── _backup/                                         # 历史版本备份（不入库）
 └── _shots/                                          # 自检截图（.gitignore 排除）
 ```
 
-## 八、部署与访问
+## 九、部署与访问
 
 **阿里云服务器**（Nginx，域名 www.mk-cd.cn）已部署 8 页 + assets：
 
@@ -87,7 +96,7 @@
 
 https://4m5hv6dtk2c64.doubaoapps.com/app/app_17f2d936eut
 
-## 九、版本控制（GitHub）
+## 十、版本控制（GitHub）
 
 - 仓库：`676020400yingchun/menke-website`（分支 `main`）
 - 本机因代理环境 SSH 22 不通，推送走 **SSH-over-443**：
@@ -98,7 +107,7 @@ GIT_SSH_COMMAND="ssh -o HostName=ssh.github.com -o Port=443 \
   -o StrictHostKeyChecking=accept-new" git push -u origin main
 ```
 
-## 十、本地自检
+## 十一、本地自检
 
 每次改动后运行（桌面 + 移动全页截图 + JSON lint）：
 
