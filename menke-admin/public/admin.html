@@ -119,6 +119,31 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
 .cb-img-r label{font-size:.76rem;color:#6B7280;display:block;margin-bottom:4px}
 .cb-img input[type=file]{width:100%;font-size:.74rem}
 .sec-h{margin:22px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line);font-size:.9rem;color:var(--ink);letter-spacing:.02em}
+/* ===== 咨询线索 ===== */
+.lead-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin:6px 0 16px}
+.lead-filters{display:flex;gap:8px;flex-wrap:wrap}
+.lf-btn{font-size:.8rem;font-weight:600;color:#475569;background:#fff;border:1px solid #E2E8F0;border-radius:999px;padding:7px 15px;cursor:pointer;transition:all .25s}
+.lf-btn:hover{border-color:var(--cool);color:var(--ink)}
+.lf-btn.active{background:linear-gradient(135deg,var(--warm),var(--cool));color:#fff;border-color:transparent;box-shadow:0 4px 14px rgba(22,119,255,.25)}
+.lead-card{border:1px solid #E2E8F0;border-radius:12px;padding:14px 16px;margin-bottom:12px;background:#fff;transition:box-shadow .25s,border-color .25s}
+.lead-card:hover{box-shadow:0 6px 18px rgba(30,64,175,.08);border-color:#CBD5E1}
+.lead-card .lc-top{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.lead-card .lc-name{font-weight:700;color:var(--ink);font-size:.95rem}
+.lead-card .lc-org{color:#475569;font-size:.8rem}
+.lead-card .lc-track{font-size:.72rem;font-weight:600;color:#1677FF;background:#EFF6FF;border:1px solid #BFDBFE;border-radius:999px;padding:3px 10px}
+.lead-card .lc-time{font-size:.72rem;color:#94A3B8}
+.lead-card .lc-status{font-size:.7rem;font-weight:700;border-radius:999px;padding:3px 10px}
+.lc-status.new{color:#B45309;background:#FEF3C7}
+.lc-status.done{color:#047857;background:#D1FAE5}
+.lc-status.closed{color:#64748B;background:#F1F5F9}
+.lead-card .lc-id{font-size:.68rem;color:#CBD5E1;margin-top:6px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.lead-card .lc-phone{margin-top:6px;font-size:.8rem;color:#334155;display:flex;align-items:center;gap:6px}
+.lead-card .lc-msg{margin-top:8px;font-size:.8rem;color:#475569;line-height:1.7;background:#F8FAFC;border-radius:8px;padding:8px 11px;border:1px solid #EAF0F6}
+.lead-card .lc-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.lead-card .lc-btn{font-size:.74rem;font-weight:600;border:1px solid #CBD5E1;background:#fff;color:#334155;border-radius:8px;padding:5px 12px;cursor:pointer;transition:all .22s}
+.lead-card .lc-btn:hover{border-color:var(--cool);color:var(--warm)}
+.lead-empty{text-align:center;color:#94A3B8;font-size:.85rem;padding:40px 0;border:1px dashed #CBD5E1;border-radius:12px}
+@media(max-width:640px){.lead-bar{flex-direction:column;align-items:stretch}.lead-card .lc-top{flex-direction:column;align-items:flex-start;gap:6px}}
 </style>
 </head>
 <body>
@@ -153,6 +178,7 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
       <button class="nav-item" data-tab="ai"><span class="dot"></span><span>AI 客服</span></button>
       <button class="nav-item" data-tab="images"><span class="dot"></span><span>首页图片</span></button>
       <button class="nav-item" data-tab="en"><span class="dot"></span><span>英文内容</span></button>
+      <button class="nav-item" data-tab="leads"><span class="dot"></span><span>咨询线索</span></button>
     </div>
     <div class="sp"></div>
     <div class="user"><div class="avatar">M</div><div class="nm" id="whoName">menke</div><button class="out" id="logoutBtn">退出登录</button></div>
@@ -287,6 +313,21 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
         <div class="save-bar"><button class="btn" onclick="save()">保存全部更改</button><span class="save-status">保存后英文官网（-en.html）即时生效</span></div>
       </div>
 
+      <!-- 咨询线索 -->
+      <div class="panel" id="panel-leads">
+        <div class="panel-head"><h2>咨询线索</h2><div class="p-sub">官网在线预约表单提交的客户咨询线索（唯一 ID，终身不变）</div></div>
+        <div class="lead-bar">
+          <div class="lead-filters">
+            <button class="lf-btn active" data-lf="all" onclick="filterLeads('all')">全部</button>
+            <button class="lf-btn" data-lf="new" onclick="filterLeads('new')">待跟进</button>
+            <button class="lf-btn" data-lf="done" onclick="filterLeads('done')">已跟进</button>
+            <button class="lf-btn" data-lf="closed" onclick="filterLeads('closed')">已关闭</button>
+          </div>
+          <button class="btn ghost" onclick="exportLeads()">导出 CSV</button>
+        </div>
+        <div id="leadList"></div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -294,10 +335,61 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
 <div class="toast" id="toast"></div>
 
 <script>
+/* ===== 咨询线索（全局，供 onclick 引用）===== */
+var __leadFilter = "all";
+var __leads = [];
+function __esc(v){ var d=document.createElement("div"); d.textContent=(v==null?"":String(v)); return d.innerHTML; }
+function loadLeads(){
+  fetch("/api/admin/leads").then(function(r){
+    if(r.status===401){ return Promise.reject("unauth"); }
+    return r.json();
+  }).then(function(j){
+    if(!j || !j.ok) throw new Error((j&&j.error)||"加载失败");
+    __leads = j.leads || [];
+    renderLeads();
+  }).catch(function(){ /* 未登录时静默 */ });
+}
+function renderLeads(){
+  var box = document.getElementById("leadList");
+  if(!box) return;
+  var arr = __leads;
+  if(__leadFilter !== "all") arr = arr.filter(function(l){ return l.status === __leadFilter; });
+  if(!arr.length){ box.innerHTML = '<div class="lead-empty">暂无' + (__leadFilter==="all"?"":"该状态") + '咨询线索</div>'; return; }
+  var html = "";
+  arr.forEach(function(l){
+    var track = l.track || "";
+    var msg = l.msg ? '<div class="lc-msg">' + __esc(l.msg) + '</div>' : "";
+    var actions = "";
+    if(l.status !== "done") actions += '<button class="lc-btn" onclick="setLeadStatus(\'' + l.id + '\',\'done\')">标记已跟进</button>';
+    if(l.status !== "closed") actions += '<button class="lc-btn" onclick="setLeadStatus(\'' + l.id + '\',\'closed\')">关闭</button>';
+    html += '<div class="lead-card">'
+      + '<div class="lc-top">'
+      + '<span class="lc-name">' + __esc(l.name) + '</span>'
+      + '<span class="lc-org">' + __esc(l.org) + '</span>'
+      + '<span class="lc-track">' + __esc(track) + '</span>'
+      + '<span class="lc-status ' + __esc(l.status) + '">' + ({new:"待跟进",done:"已跟进",closed:"已关闭"}[l.status]||__esc(l.status)) + '</span>'
+      + '</div>'
+      + '<div class="lc-phone">电话：' + __esc(l.phone) + '</div>'
+      + msg
+      + '<div class="lc-id">ID: ' + __esc(l.id) + '</div>'
+      + '<div class="lc-time">提交时间：' + __esc((l.createdAt||"").replace("T"," ").slice(0,19)) + '</div>'
+      + (actions ? '<div class="lc-actions">' + actions + '</div>' : "")
+      + '</div>';
+  });
+  box.innerHTML = html;
+}
+function filterLeads(f){ __leadFilter = f; var all=document.querySelectorAll(".lf-btn"); all.forEach(function(b){ b.classList.toggle("active", b.getAttribute("data-lf")===f); }); renderLeads(); }
+function setLeadStatus(id, status){
+  fetch("/api/admin/leads/status?id=" + encodeURIComponent(id) + "&status=" + status, { method:"POST" })
+    .then(function(r){ return r.json(); })
+    .then(function(j){ if(!j.ok) throw new Error(j.error||"操作失败"); loadLeads(); })
+    .catch(function(e){ alert("操作失败：" + (e.message||"网络错误")); });
+}
+function exportLeads(){ window.location.href = "/api/admin/leads/export"; }
 (function(){
   var TOKEN = localStorage.getItem("menke_admin_token") || "";
   var content = null;
-  var TITLES = {total:["数据总览","门客官网当前内容规模与状态"],stats:["数据指标","首页数据带 · 可增删排序"],biz:["业务条目","业务页 · 可增删排序"],cases:["案例项目","案例页 · 可增删排序"],contact:["联系方式","我的页联系区"],ai:["AI 客服","AI 智客服配置"],images:["首页图片","首页 Logo 与首屏主视觉"],en:["英文内容","英文官网 -en.html 文案编辑"]};
+  var TITLES = {total:["数据总览","门客官网当前内容规模与状态"],stats:["数据指标","首页数据带 · 可增删排序"],biz:["业务条目","业务页 · 可增删排序"],cases:["案例项目","案例页 · 可增删排序"],contact:["联系方式","我的页联系区"],ai:["AI 客服","AI 智客服配置"],images:["首页图片","首页 Logo 与首屏主视觉"],en:["英文内容","英文官网 -en.html 文案编辑"],leads:["咨询线索","官网在线预约表单提交的客户咨询"]};
 
   var $ = function(id){ return document.getElementById(id); };
   function toast(msg){ var t=$("toast"); t.textContent=msg; t.classList.add("show"); setTimeout(function(){t.classList.remove("show");},2200); }
@@ -335,6 +427,7 @@ label{display:block;font-size:.78rem;font-weight:600;color:#4a5b7a;margin:12px 0
     $("loginView").style.display="none";
     $("appView").style.display="block";
     loadContent();
+    loadLeads();
   }
   function loadContent(){
     api("/api/admin/content").then(function(r){

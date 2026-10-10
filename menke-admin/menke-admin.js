@@ -166,6 +166,39 @@ function writeContent(content) {
   fs.writeFileSync(DATA_FILE, JSON.stringify(content, null, 2), "utf-8");
 }
 
+// ---------- 咨询线索（leads）读写 ----------
+const LEADS_FILE = path.join(DATA_DIR, "leads.json");
+function readLeads() {
+  try {
+    const arr = JSON.parse(fs.readFileSync(LEADS_FILE, "utf-8"));
+    return Array.isArray(arr) ? arr : [];
+  } catch (e) { return []; }
+}
+function writeLeads(arr) {
+  fs.mkdirSync(DATA_DIR, { recursive: true });
+  fs.writeFileSync(LEADS_FILE, JSON.stringify(arr, null, 2), "utf-8");
+}
+// 校验并规整一条线索（返回规整后的对象；非法返回 null）
+function normalizeLead(input) {
+  if (!input || typeof input !== "object" || Array.isArray(input)) return null;
+  const name = String(input.name || "").trim().slice(0, 30);
+  const org = String(input.org || "").trim().slice(0, 60);
+  const phone = String(input.phone || "").trim().replace(/\s/g, "").slice(0, 20);
+  const track = String(input.track || "").trim().slice(0, 20);
+  const msg = String(input.msg || "").trim().slice(0, 500);
+  const VALID_TRACKS = ["智慧文旅", "智慧教育", "智慧农业", "建设与运营", "其他"];
+  if (name.length < 2) return null;
+  if (org.length < 2) return null;
+  if (!/^[\d+\-() ]{7,20}$/.test(input.phone.trim())) return null;
+  if (VALID_TRACKS.indexOf(track) === -1) return null;
+  return {
+    id: crypto.randomUUID(),   // 唯一、终身不变
+    name, org, phone, track, msg,
+    status: "new",
+    createdAt: new Date().toISOString()
+  };
+}
+
 // ---------- 认证 ----------
 const tokens = new Map(); // token -> expiry
 function issueToken() {
@@ -212,6 +245,24 @@ const server = http.createServer((req, res) => {
   if (method === "GET" && url === "/api/content") {
     const c = readContent();
     return json(res, 200, { ok: true, content: c });
+  }
+
+  // 公开：提交咨询线索（在线预约表单）
+  if (method === "POST" && url === "/api/leads") {
+    return readBody(req, body => {
+      let input = null;
+      try { input = JSON.parse(body); } catch (e) { return json(res, 400, { ok: false, error: "JSON 解析失败" }); }
+      const lead = normalizeLead(input);
+      if (!lead) return json(res, 400, { ok: false, error: "表单校验未通过，请检查填写内容" });
+      const arr = readLeads();
+      // 防重复：同一电话 60 秒内不可重复提交
+      const now = Date.now();
+      const dup = arr.find(l => l.phone === lead.phone && (now - new Date(l.createdAt).getTime()) < 60000);
+      if (dup) return json(res, 429, { ok: false, error: "您刚刚已提交过，请稍后再试" });
+      arr.push(lead);
+      writeLeads(arr);
+      return json(res, 200, { ok: true, id: lead.id, createdAt: lead.createdAt });
+    });
   }
 
   // 登录
@@ -279,6 +330,47 @@ const server = http.createServer((req, res) => {
         fs.writeFileSync(path.join(dir, fname), buf);
         return json(res, 200, { ok: true, url: "/assets/upload/" + fname, field: field });
       });
+    }
+    // 线索列表（支持按状态过滤：?status=new|done|closed）
+    if (method === "GET" && url === "/api/admin/leads") {
+      let arr = readLeads();
+      const status = (req.url || "").split("?")[1] || "";
+      const m = /[?&]status=([^&]+)/.exec("?" + status);
+      if (m && ["new", "done", "closed"].indexOf(m[1]) !== -1) {
+        arr = arr.filter(l => l.status === m[1]);
+      }
+      // 新到旧排序
+      arr.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      return json(res, 200, { ok: true, leads: arr, total: arr.length });
+    }
+    // 更新线索状态：?id=xxx&status=done|closed
+    if (method === "POST" && url === "/api/admin/leads/status") {
+      const q = (req.url || "").split("?")[1] || "";
+      const mid = /id=([^&]+)/.exec(q);
+      const mst = /status=([^&]+)/.exec(q);
+      if (!mid || !mst || ["done", "closed"].indexOf(mst[1]) === -1) {
+        return json(res, 400, { ok: false, error: "缺少 id 或 status 非法" });
+      }
+      const arr = readLeads();
+      const lead = arr.find(l => l.id === decodeURIComponent(mid[1]));
+      if (!lead) return json(res, 404, { ok: false, error: "线索不存在" });
+      lead.status = mst[1];
+      lead.updatedAt = new Date().toISOString();
+      writeLeads(arr);
+      return json(res, 200, { ok: true, id: lead.id, status: lead.status });
+    }
+    // 导出线索 CSV
+    if (method === "GET" && url === "/api/admin/leads/export") {
+      const arr = readLeads().slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      const esc = s => '"' + String(s == null ? "" : s).replace(/"/g, '""') + '"';
+      const lines = [["称呼", "单位", "电话", "赛道", "需求", "状态", "提交时间"].map(esc).join(",")];
+      arr.forEach(l => lines.push([l.name, l.org, l.phone, l.track, l.msg, l.status, l.createdAt].map(esc).join(",")));
+      const csv = "\ufeff" + lines.join("\r\n"); // BOM 便于 Excel 识别 UTF-8
+      res.writeHead(200, {
+        "Content-Type": "text/csv; charset=utf-8",
+        "Content-Disposition": 'attachment; filename="menke-leads.csv"'
+      });
+      return res.end(csv);
     }
     return json(res, 404, { ok: false, error: "not found" });
   }
